@@ -45,7 +45,9 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       proxy: {
         '/api': {
-          target: process.env.VITE_API_URL || 'https://vidyaraut.vercel.app',
+          target: process.env.VITE_API_URL && !process.env.VITE_API_URL.includes('localhost')
+            ? process.env.VITE_API_URL
+            : 'http://localhost:5001',
           changeOrigin: true,
           secure: false
         }

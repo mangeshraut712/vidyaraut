@@ -25,20 +25,6 @@ router.post('/chat', ratelimit, async (req, res) => {
 
     const apiKey = process.env.OPENROUTER_API_KEY;
     
-    // Handle test messages (for health checks)
-    if (trimmedMessage.toLowerCase() === 'test') {
-      return res.status(200).json({
-        success: true,
-        response: 'AI service is operational',
-        answer: 'AI service is operational',
-        metadata: {
-          ai_model_used: 'health-check',
-          isHealthCheck: true,
-        },
-        timestamp: new Date().toISOString(),
-      });
-    }
-    
     if (!apiKey) {
       return res.status(503).json({
         success: false,
@@ -49,8 +35,9 @@ router.post('/chat', ratelimit, async (req, res) => {
     }
 
     const modelsToTry = [
-      'minimax/minimax-m2:free',
-      'openrouter/polaris-alpha',
+      process.env.AI_MODEL_PRIMARY || 'minimax/minimax-m2:free',
+      process.env.AI_MODEL_FALLBACK || 'openrouter/sherlock-think-alpha',
+      process.env.AI_MODEL_SECONDARY || 'openrouter/sherlock-dash-alpha',
     ];
 
     let response;

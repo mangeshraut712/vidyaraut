@@ -130,27 +130,14 @@ export default async function handler(req, res) {
       });
     }
 
-    // Handle test messages (for health checks)
-    if (trimmedMessage.toLowerCase() === 'test') {
-      return res.status(200).json({
-        success: true,
-        response: 'AI service is operational',
-        answer: 'AI service is operational',
-        metadata: {
-          ai_model_used: 'health-check',
-          isHealthCheck: true,
-        },
-        timestamp: new Date().toISOString(),
-      });
-    }
-
     // Prepare the context for the AI
     const contextStr = JSON.stringify(portfolioContext);
 
-    // Use working models based on testing
+    // Use working models available in OpenRouter (updated 2025-11-17)
     const modelsToTry = [
-      "minimax/minimax-m2:free",                  // MiniMax (primary - tested working)
-      "openrouter/polaris-alpha",                 // Polaris Alpha (user's preferred fallback)
+      "minimax/minimax-m2:free",                  // Primary: free general AI
+      "openrouter/sherlock-think-alpha",          // Fallback: advanced reasoning
+      "openrouter/sherlock-dash-alpha",           // Secondary: specialized responses
     ];
 
     let response;

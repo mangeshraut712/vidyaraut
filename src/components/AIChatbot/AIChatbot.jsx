@@ -23,9 +23,30 @@ const AIChatbot = () => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Define API base URL - use environment variable or fallback to Vercel URL for production
-  const API_BASE_URL = import.meta.env.VITE_API_URL ||
-                       (typeof window !== 'undefined' ? window.location.origin : 'https://vidyaraut.vercel.app');
+  // Define API base URL - prioritize environment variable, fallback to smart detection
+  const getApiBaseUrl = () => {
+    // If VITE_API_URL is explicitly set and not localhost, use it
+    const envUrl = import.meta.env.VITE_API_URL;
+    if (envUrl && envUrl !== 'http://localhost:5001' && envUrl !== 'http://localhost:3000' && envUrl !== 'http://localhost:5173') {
+      return envUrl;
+    }
+    
+    // For production builds, use window.location.origin if available
+    if (typeof window !== 'undefined' && !import.meta.env.DEV) {
+      return window.location.origin;
+    }
+    
+    // Development fallback with Vercel proxy support
+    if (import.meta.env.DEV) {
+      // Use Vercel proxy in development if available, otherwise local backend
+      return 'http://localhost:5001';
+    }
+    
+    // Default to Vercel URL for production
+    return 'https://vidyaraut.vercel.app';
+  };
+  
+  const API_BASE_URL = getApiBaseUrl();
 
   // Clear chat history on hard refresh/page reload
   useEffect(() => {
