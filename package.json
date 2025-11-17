@@ -1,0 +1,43 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:vercel": "cross-env VITE_BASE_URL=/ npm run build",
+    "build:github": "cross-env VITE_BASE_URL=/vidyaraut/ npm run build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext js,jsx",
+    "format": "prettier --write \"src/**/*.{js,jsx,css}\"",
+    "dev:full": "concurrently \"npm run dev\" \"cd backend && npm run dev\"",
+    "start:full": "concurrently \"npx serve dist\" \"cd backend && npm start\"",
+    "vercel-build": "npm run build",
+    "deploy": "npm run build && copy dist\\index.html . && if not exist assets mkdir assets && copy dist\\assets\\* assets\\"
+  },
+  "dependencies": {
+    "lucide-react": "^0.553.0",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^5.1.0",
+    "concurrently": "^8.2.2",
+    "cross-env": "^10.1.0",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.22",
+    "globals": "^16.4.0",
+    "prettier": "^3.6.2",
+    "vite": "^7.1.7"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}
