@@ -17,6 +17,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const messages = await getMessages();
 
   return (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     <AppProviders locale={locale} messages={messages as any}>
       <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)]">
         {children}
