@@ -21,7 +21,7 @@ export async function sendChatMessage(
   messages: ChatMessage[],
   apiKey?: string
 ): Promise<string> {
-  const key = apiKey || process.env.NEXT_PUBLIC_OPENROUTER_API_KEY
+  const key = apiKey || process.env.OPENROUTER_API_KEY
 
   if (!key) {
     throw new Error('OpenRouter API key not configured')
