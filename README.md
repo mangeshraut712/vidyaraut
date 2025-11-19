@@ -80,11 +80,18 @@ npm run dev
 
 ## 🔧 Environment Variables
 
-Create a `.env.local` file:
+### Required for AI Chatbot
+Add these environment variables to Vercel:
 
 ```env
-NEXT_PUBLIC_OPENROUTER_API_KEY=your_api_key_here
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
+OPENROUTER_API_KEY=your_api_key_here
+```
+
+**Important**: The API key is accessed server-side through Vercel's environment variables, not exposed to the client. Get your API key from [OpenRouter.ai](https://openrouter.ai/).
+
+### Optional Configuration
+```env
+NEXT_PUBLIC_SITE_URL=https://vidyaraut-five.vercel.app/
 NEXT_PUBLIC_SITE_NAME=Vidya Raut Portfolio
 NEXT_PUBLIC_AI_MODEL=openai/gpt-3.5-turbo
 ```
