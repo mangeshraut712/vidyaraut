@@ -73,11 +73,17 @@ export function AIChatbot() {
     setError(null)
 
     try {
-      // Prepare messages for API call
-      const recentMessages = messages.slice(-4).map(msg => ({
-        role: msg.role as "user" | "assistant",
-        content: msg.content
-      }))
+      // Prepare messages for API call - include the current user message
+      const recentMessages = [
+        ...messages.slice(-4).map(msg => ({
+          role: msg.role as "user" | "assistant",
+          content: msg.content
+        })),
+        {
+          role: "user" as const,
+          content: userMessage.content
+        }
+      ]
 
       // Call our secure API route
       const response = await fetch('/api/chat', {
