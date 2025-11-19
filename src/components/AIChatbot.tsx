@@ -27,19 +27,28 @@ export function AIChatbot() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const initialized = useRef(false)
 
+  const getTranslationSafe = (key: string, fallback: string) => {
+    try {
+      return t(key)
+    } catch {
+      return fallback
+    }
+  }
+
   useEffect(() => {
     if (!initialized.current) {
       setMessages([
         {
           id: "1",
           role: "assistant",
-          content: t("initialMessage"),
+          content: getTranslationSafe("initialMessage", "Hi! I'm Vidya's AI assistant. Ask me anything about her experience, skills, or projects."),
           timestamp: new Date(),
         },
       ])
       initialized.current = true
     }
-  }, [t])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })

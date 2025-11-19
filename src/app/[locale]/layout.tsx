@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { AppProviders } from "@/app/providers";
 import { isLocale, locales } from "@/i18n/config";
-import { getMessages, unstable_setRequestLocale } from "next-intl/server";
+import { getMessages as getServerMessages, unstable_setRequestLocale } from "next-intl/server";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -14,15 +14,13 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     notFound();
   }
   unstable_setRequestLocale(locale);
-  const messages = await getMessages();
+  const messages = await getServerMessages();
 
   return (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    <AppProviders locale={locale} messages={messages as any}>
+    <AppProviders locale={locale} messages={messages}>
       <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)]">
         {children}
       </div>
     </AppProviders>
   );
 }
-
