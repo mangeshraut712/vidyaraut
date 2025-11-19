@@ -10,14 +10,6 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['localhost'],
   },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'http://localhost:5002/api/:path*',
-      },
-    ];
-  },
 };
 
 export default withNextIntl(nextConfig);
