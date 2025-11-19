@@ -16,10 +16,14 @@ A modern, colorful, and feature-rich portfolio website showcasing expertise in E
 - **Custom Scrollbar**: Gradient-themed scrollbar
 - **Responsive Layout**: Perfect on all devices
 
-### 📄 **Multiple Pages**
-1. **Home** (`/en`) - Hero section, about, experience, education, contact
-2. **Skills** (`/en/skills`) - Detailed skill breakdown with progress bars
-3. **Projects** (`/en/projects`) - Portfolio of 6+ major projects
+### 📄 **Multiple Sections (Single Page Application)**
+- **Home** - Hero section with introduction and portfolio overview
+- **Skills** - Comprehensive skill breakdown in energy, data, and technical categories
+- **Projects** - Showcase of analytical and research projects
+- **Experience** - Professional work history with detailed achievements
+- **Education** - Academic background and qualifications
+- **Contact** - Contact form and professional information
+- **Game** - Interactive Marathi crossword puzzle for downtime
 
 ### 🤖 **AI Chatbot**
 - Powered by OpenRouter API
@@ -35,9 +39,9 @@ A modern, colorful, and feature-rich portfolio website showcasing expertise in E
 - **Contact Form**: Beautiful gradient contact section
 
 ### 🌍 **Internationalization**
-- English and Arabic support
-- RTL layout for Arabic
+- English, Hindi, and Marathi support
 - Automatic locale detection
+- Locale-specific content
 
 ## 🎨 Design Highlights
 
@@ -58,7 +62,7 @@ A modern, colorful, and feature-rich portfolio website showcasing expertise in E
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/vidyaraut.git
+git clone https://github.com/mangeshraut712/vidyaraut.git
 cd vidyaraut
 
 # Install dependencies
