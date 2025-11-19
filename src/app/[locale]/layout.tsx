@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { AppProviders } from "@/app/providers";
 import { isLocale, locales } from "@/i18n/config";
-import { getMessages } from "@/i18n/messages";
+import { getMessages } from "next-intl/server";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -14,7 +14,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     notFound();
   }
 
-  const messages = getMessages(locale);
+  const messages = await getMessages({ locale });
 
   return (
     <AppProviders locale={locale} messages={messages}>
