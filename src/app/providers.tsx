@@ -3,7 +3,6 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { NextIntlClientProvider } from "next-intl";
-import type { AbstractIntlMessages } from "next-intl";
 import { ThemeProvider } from "next-themes";
 import {
   QueryClient,
@@ -14,7 +13,8 @@ import type { Locale } from "@/i18n/config";
 type AppProvidersProps = {
   children: ReactNode;
   locale: Locale;
-  messages: AbstractIntlMessages;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  messages: Record<string, any>;
 };
 
 export function AppProviders({ children, locale, messages }: AppProvidersProps) {
