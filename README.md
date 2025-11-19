@@ -154,27 +154,23 @@ vidyaraut/
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
+The portfolio is deployed and live at: **https://vidyaraut-five.vercel.app/**
 
-```bash
-# Push to GitHub
-git add .
-git commit -m "Initial commit"
-git push origin main
+### Vercel Deployment
 
-# Deploy on Vercel
-# 1. Go to vercel.com
-# 2. Import repository
-# 3. Add environment variables
-# 4. Deploy!
-```
+1. **Connect your GitHub repository** to Vercel
+2. **Set Node.js Version** to `20.x` in Vercel project settings
+3. **Add Environment Variables** in Vercel dashboard:
+   - `NEXT_PUBLIC_OPENROUTER_API_KEY`
+   - `NEXT_PUBLIC_SITE_URL` (https://vidyaraut-five.vercel.app/)
+   - `NEXT_PUBLIC_SITE_NAME`
+   - `NEXT_PUBLIC_AI_MODEL`
+4. **Deploy** - Vercel will auto-deploy on every git push
 
-### Environment Variables for Production
-Add these in Vercel dashboard:
-- `NEXT_PUBLIC_OPENROUTER_API_KEY`
-- `NEXT_PUBLIC_SITE_URL` (your production URL)
-- `NEXT_PUBLIC_SITE_NAME`
-- `NEXT_PUBLIC_AI_MODEL`
+### Build Settings
+- **Build Command**: `npm run build` (auto-detected)
+- **Install Command**: `npm install`
+- **Node.js Version**: `20.x`
 
 ## 🧪 Testing
 
