@@ -1,0 +1,221 @@
+{
+  "nav": {
+    "home": "Home",
+    "skills": "Skills",
+    "projects": "Projects",
+    "experience": "Experience",
+    "education": "Education",
+    "contact": "Contact",
+    "game": "Game"
+  },
+  "hero": {
+    "name": "Vidya Raut",
+    "title": "Energy Technology & Market Analyst",
+    "description": "Specializing in market research, data analysis, and energy storage systems. Transforming complex data into actionable insights for the energy sector.",
+    "downloadResume": "Download Resume",
+    "viewWork": "View Work"
+  },
+  "skills": {
+    "title": "Skills & Expertise",
+    "description": "A comprehensive toolkit for analyzing and navigating the energy landscape.",
+    "marketAnalysis": {
+      "title": "Market Analysis",
+      "items": [
+        "Market Research",
+        "Trend Analysis",
+        "Competitive Intelligence",
+        "Data Visualization",
+        "Forecasting"
+      ]
+    },
+    "energyTech": {
+      "title": "Energy Technology",
+      "items": [
+        "Battery Storage Systems",
+        "Renewable Energy Integration",
+        "EV Technology",
+        "Power Systems",
+        "Grid Modernization"
+      ]
+    },
+    "dataTools": {
+      "title": "Data Tools",
+      "items": [
+        "Power BI",
+        "Excel (Advanced)",
+        "SQL",
+        "Python",
+        "Tableau"
+      ]
+    },
+    "technical": {
+      "title": "Technical Skills",
+      "items": [
+        "Data Modeling",
+        "Statistical Analysis",
+        "Report Writing",
+        "Technical Documentation",
+        "Process Optimization"
+      ]
+    }
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "description": "Selected works demonstrating analytical depth and strategic insight.",
+    "viewProject": "View Project",
+    "p1": {
+      "title": "Global Energy Market Analysis",
+      "description": "Comprehensive analysis of global energy trends, focusing on renewable energy adoption rates and market shifts in the post-pandemic era.",
+      "tags": [
+        "Data Analysis",
+        "Market Research",
+        "Power BI"
+      ]
+    },
+    "p2": {
+      "title": "Battery Storage Efficiency Study",
+      "description": "Research project analyzing the efficiency and degradation patterns of lithium-ion batteries under various climatic conditions.",
+      "tags": [
+        "Energy Storage",
+        "Python",
+        "Statistical Analysis"
+      ]
+    },
+    "p3": {
+      "title": "EV Infrastructure Mapping",
+      "description": "Strategic mapping and feasibility study for electric vehicle charging station deployment in urban centers.",
+      "tags": [
+        "GIS",
+        "Infrastructure",
+        "Strategic Planning"
+      ]
+    }
+  },
+  "experience": {
+    "title": "Professional Experience",
+    "analyst": {
+      "title": "Market Research Analyst",
+      "subtitle": "Customized Energy Solutions",
+      "date": "Jul 2023 - Jun 2024",
+      "description": "Analyzed energy sector reports and created strategic dashboards to support market decisions.",
+      "highlights": [
+        "Analyzed 500+ energy sector reports",
+        "Created strategic dashboards in Excel",
+        "Provided market insights for decisions worth $10M+",
+        "Reduced report generation time by 40%"
+      ],
+      "skills": [
+        "Excel",
+        "Market Research",
+        "Data Analysis",
+        "Report Writing"
+      ]
+    },
+    "intern": {
+      "title": "Laboratory Intern",
+      "subtitle": "Customized Energy Solutions",
+      "date": "Jan 2023 - Jun 2023",
+      "description": "Conducted battery tests and assisted with R&D material characterization.",
+      "highlights": [
+        "Conducted 200+ battery tests",
+        "Assisted with R&D material characterization",
+        "Maintained lab safety protocols",
+        "Analyzed battery performance data"
+      ],
+      "skills": [
+        "Battery Testing",
+        "Lab Safety",
+        "Data Analysis"
+      ]
+    },
+    "dataAnalyst": {
+      "title": "Data Analyst",
+      "subtitle": "Customized Energy Solutions",
+      "date": "Nov 2017 - Apr 2018",
+      "description": "Developed interactive Excel dashboards and presented findings to management.",
+      "highlights": [
+        "Developed interactive Excel dashboards",
+        "Presented findings to management",
+        "Improved decision-making processes"
+      ],
+      "skills": [
+        "Excel",
+        "Power BI",
+        "Data Visualization"
+      ]
+    },
+    "teacher": {
+      "title": "Teaching Professional",
+      "subtitle": "S.S.V.M. & Jr. College",
+      "date": "May 2021 - Oct 2021",
+      "description": "Taught Science and Mathematics, developed lesson plans, and mentored students.",
+      "highlights": [
+        "Taught Science and Mathematics",
+        "Developed lesson plans",
+        "Mentored students"
+      ],
+      "skills": [
+        "Communication",
+        "Presentation",
+        "Mentoring"
+      ]
+    }
+  },
+  "education": {
+    "title": "Education",
+    "mtech": {
+      "title": "M.Tech in Energy Technology",
+      "subtitle": "Savitribai Phule Pune University",
+      "date": "July 2025 - May 2027",
+      "description": "Currently pursuing advanced studies in energy technology and systems."
+    },
+    "bed": {
+      "title": "Bachelor of Education (B.Ed) - Science & Mathematics",
+      "subtitle": "Shri Shivaji Maratha Society's Adhyapak Mahavidyalaya",
+      "date": "Sep 2020 - Apr 2022",
+      "description": "Completed teacher training program with specialization in Science and Mathematics."
+    },
+    "msc": {
+      "title": "Master of Science (M.Sc) - Physics",
+      "subtitle": "H.V.Desai Senior College",
+      "date": "Jun 2018 - Apr 2020",
+      "description": "Advanced studies in Physics with focus on materials science and research."
+    },
+    "bsc": {
+      "title": "Bachelor of Science (B.Sc) - Physics",
+      "subtitle": "PES Modern College",
+      "date": "Aug 2014 - Oct 2017",
+      "description": "Foundation studies in Physics with emphasis on theoretical and experimental physics."
+    }
+  },
+  "contact": {
+    "badge": "Get in Touch",
+    "title": "Let's Connect",
+    "description": "Market/Energy Analyst roles where I can improve reporting speed/quality and support data-driven strategy.",
+    "infoTitle": "Contact Info",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "message": "Message",
+      "messagePlaceholder": "How can I help you?",
+      "send": "Send Message"
+    }
+  },
+  "game": {
+    "badge": "Timepass",
+    "title": "Marathi Crossword Game",
+    "description": "Take a break and enjoy this fun Marathi crossword puzzle!"
+  },
+  "chatbot": {
+    "title": "Vidya's AI Assistant",
+    "initialMessage": "Hi! I'm Vidya's AI assistant. Ask me anything about her experience, skills, or projects.",
+    "placeholder": "Ask about Vidya...",
+    "error": "Sorry, I encountered an error. Using fallback response."
+  },
+  "footer": {
+    "rights": "© {year} Vidya Raut. All rights reserved.",
+    "builtWith": "Built with Next.js & Shadcn UI"
+  }
+}
