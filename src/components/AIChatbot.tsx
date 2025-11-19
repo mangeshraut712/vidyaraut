@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import { sendChatMessage, PORTFOLIO_CONTEXT, type ChatMessage } from "@/lib/openrouter"
 import { useTranslations } from "next-intl"
 
 interface Message {
@@ -74,41 +73,33 @@ export function AIChatbot() {
     setError(null)
 
     try {
-      // Check if API key is configured
-      const apiKey = process.env.NEXT_PUBLIC_OPENROUTER_API_KEY
+      // Prepare messages for API call
+      const recentMessages = messages.slice(-4).map(msg => ({
+        role: msg.role as "user" | "assistant",
+        content: msg.content
+      }))
 
-      if (!apiKey) {
-        // Show error if no API key
-        const aiMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          role: "assistant",
-          content: "My AI brain is currently offline (API Key missing). Please check the configuration.",
-          timestamp: new Date(),
-        }
-        setTimeout(() => {
-          setMessages((prev) => [...prev, aiMessage])
-          setIsTyping(false)
-        }, 500)
-        return
+      // Call our secure API route
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: recentMessages
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('API request failed')
       }
 
-      // Prepare messages for API
-      const chatMessages: ChatMessage[] = [
-        { role: "system", content: PORTFOLIO_CONTEXT },
-        ...messages.slice(-5).map(msg => ({
-          role: msg.role as "user" | "assistant",
-          content: msg.content
-        })),
-        { role: "user", content: userMessage.content }
-      ]
-
-      // Call OpenRouter API
-      const responseContent = await sendChatMessage(chatMessages)
+      const data = await response.json()
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: responseContent,
+        content: data.response || getTranslationSafe("error", "I'm having trouble connecting to my AI service right now. Please try again later."),
         timestamp: new Date(),
       }
 
