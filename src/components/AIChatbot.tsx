@@ -40,7 +40,7 @@ export function AIChatbot() {
         {
           id: "1",
           role: "assistant",
-          content: getTranslationSafe("initialMessage", "Hi! I'm Vidya's AI assistant. Ask me anything about her experience, skills, or projects."),
+          content: getTranslationSafe("initialMessage", "Hello! I'm Vidya's AI Assistant. Ask me anything about her background, experience, skills, or qualifications - I can also help with general questions!"),
           timestamp: new Date(),
         },
       ])
