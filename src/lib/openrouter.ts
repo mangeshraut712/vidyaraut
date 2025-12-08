@@ -27,17 +27,21 @@ export async function sendChatMessage(
     throw new Error('OpenRouter API key not configured')
   }
 
+  // Determine site URL: Vercel production -> Vercel preview -> localhost
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+    || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
+
   try {
     const response = await fetch(OPENROUTER_API_URL, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${key}`,
-        'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+        'HTTP-Referer': siteUrl,
         'X-Title': process.env.NEXT_PUBLIC_SITE_NAME || 'Vidya Raut Portfolio',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: process.env.NEXT_PUBLIC_AI_MODEL || 'openai/gpt-3.5-turbo',
+        model: process.env.OPENROUTER_MODEL || 'openai/gpt-3.5-turbo',
         messages,
       }),
     })
