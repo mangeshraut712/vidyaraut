@@ -143,3 +143,60 @@ When asked about Vidya's qualifications, experience, or background, provide deta
 
 GENERAL AI ASSISTANT CAPILITIES:
 You can also answer any general questions about topics like technology, science, business, etc. using your broader knowledge.`
+
+// Fallback responses when API is not available
+export function getFallbackResponse(userMessage: string): string {
+  const msg = userMessage.toLowerCase()
+
+  if (msg.includes('experience') || msg.includes('work')) {
+    return "📊 **Vidya's Professional Experience:**\n\n" +
+      "• **Market Research Analyst** at Customized Energy Solutions (Jul 2023 - Jun 2024)\n" +
+      "  - Analyzed 500+ energy sector reports\n" +
+      "  - Built strategic dashboards, reducing decision time by 40%\n\n" +
+      "• **Laboratory Intern** (Jan 2023 - Jun 2023)\n" +
+      "  - Conducted 200+ battery performance tests\n\n" +
+      "• **Data Analyst** (Nov 2017 - Apr 2018)\n" +
+      "  - Created interactive Excel dashboards\n\n" +
+      "For more details, please contact Vidya at vidyaraut17297@gmail.com"
+  }
+
+  if (msg.includes('skill') || msg.includes('expertise')) {
+    return "💡 **Vidya's Key Skills:**\n\n" +
+      "**Analytics:** Advanced Excel, Power BI, SQL, Python, Tableau\n\n" +
+      "**Energy Tech:** Battery Storage Systems, Renewable Energy, EV Technology\n\n" +
+      "**Research:** Market Analysis, Competitive Intelligence, Strategic Forecasting\n\n" +
+      "**Technical:** Data Modeling, Statistical Analysis, Report Writing"
+  }
+
+  if (msg.includes('education') || msg.includes('study') || msg.includes('degree')) {
+    return "🎓 **Vidya's Education:**\n\n" +
+      "• **M.Tech in Energy Technology** (2025-2027) - Savitribai Phule Pune University *(Currently Pursuing)*\n\n" +
+      "• **M.Sc in Physics** (2018-2020) - H.V.Desai Senior College\n\n" +
+      "• **B.Ed in Science & Mathematics** (2020-2022)\n\n" +
+      "• **B.Sc in Physics** (2014-2017) - PES Modern College"
+  }
+
+  if (msg.includes('contact') || msg.includes('email') || msg.includes('phone')) {
+    return "📞 **Contact Vidya:**\n\n" +
+      "📧 Email: vidyaraut17297@gmail.com\n\n" +
+      "📱 Phone: +91 8446495690\n\n" +
+      "🔗 LinkedIn: linkedin.com/in/vidyaraut17\n\n" +
+      "📍 Location: Pune, Maharashtra, India"
+  }
+
+  if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
+    return "👋 Hello! I'm Vidya's AI assistant. I can tell you about her:\n\n" +
+      "• Professional Experience\n" +
+      "• Skills & Expertise\n" +
+      "• Education Background\n" +
+      "• Contact Information\n\n" +
+      "What would you like to know?"
+  }
+
+  return "I'm Vidya's portfolio assistant. I can help you learn about:\n\n" +
+    "• **Experience** - Her work as a Market Research Analyst\n" +
+    "• **Skills** - Excel, Power BI, Data Analysis\n" +
+    "• **Education** - M.Tech, M.Sc, B.Ed, B.Sc\n" +
+    "• **Contact** - How to reach Vidya\n\n" +
+    "Try asking about any of these topics!"
+}

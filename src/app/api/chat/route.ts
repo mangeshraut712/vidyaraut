@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { sendChatMessage, PORTFOLIO_CONTEXT } from "@/lib/openrouter"
+import { sendChatMessage, PORTFOLIO_CONTEXT, getFallbackResponse } from "@/lib/openrouter"
 
 export async function POST(request: NextRequest) {
     try {
@@ -12,10 +12,18 @@ export async function POST(request: NextRequest) {
             )
         }
 
+        // Check if API key is configured
+        if (!process.env.OPENROUTER_API_KEY) {
+            console.warn("OPENROUTER_API_KEY not configured - using fallback responses")
+            const userMessage = messages[messages.length - 1]?.content || ""
+            const fallback = getFallbackResponse(userMessage)
+            return NextResponse.json({ response: fallback })
+        }
+
         // Add system context as the first message
         const fullMessages = [
             { role: "system", content: PORTFOLIO_CONTEXT },
-            ...messages.slice(-5) // Keep only last 5 messages to avoid token limits
+            ...messages.slice(-5)
         ]
 
         const response = await sendChatMessage(fullMessages)
@@ -24,12 +32,10 @@ export async function POST(request: NextRequest) {
     } catch (error) {
         console.error("Chat API error:", error)
 
-        return NextResponse.json(
-            {
-                error: "Failed to process chat message",
-                response: "I'm currently having trouble connecting to my AI brain. Please try again later, or contact Vidya directly for specific inquiries."
-            },
-            { status: 500 }
-        )
+        // Provide helpful fallback
+        const userMessage = (await request.clone().json()).messages?.slice(-1)[0]?.content || ""
+        const fallback = getFallbackResponse(userMessage)
+
+        return NextResponse.json({ response: fallback })
     }
 }
