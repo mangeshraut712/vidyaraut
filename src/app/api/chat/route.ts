@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
-import { PORTFOLIO_CONTEXT, getFallbackResponse } from "@/lib/openrouter"
-
-// FastAPI backend URL - uses Vercel environment variables
-const FASTAPI_URL = process.env.FASTAPI_URL || "https://vidyaraut-api.vercel.app"
+import { sendChatMessage, PORTFOLIO_CONTEXT, getFallbackResponse } from "@/lib/openrouter"
 
 export async function POST(request: NextRequest) {
+    let lastUserMessage = ""
+
     try {
         const { messages } = await request.json()
 
@@ -15,40 +14,33 @@ export async function POST(request: NextRequest) {
             )
         }
 
+        // Get the last user message for fallback matching
+        lastUserMessage = messages.slice(-1)[0]?.content || ""
+
         // Prepare messages with context
         const fullMessages = [
             { role: "system", content: PORTFOLIO_CONTEXT },
-            ...messages.slice(-5)
+            ...messages.slice(-5) // Keep last 5 messages for context
         ]
 
-        // Call FastAPI backend (which has the API key in Vercel env vars)
-        const response = await fetch(`${FASTAPI_URL}/api/chat`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ messages: fullMessages }),
-        })
-
-        if (!response.ok) {
-            throw new Error(`FastAPI error: ${response.status}`)
-        }
-
-        const data = await response.json()
-        return NextResponse.json({ response: data.response || data.message })
+        // Try OpenRouter API first
+        const aiResponse = await sendChatMessage(fullMessages)
+        return NextResponse.json({ response: aiResponse })
 
     } catch (error) {
         console.error("Chat API error:", error)
 
-        // Use fallback responses
+        // Use intelligent fallback responses
         try {
-            const body = await request.clone().json()
-            const userMessage = body.messages?.slice(-1)[0]?.content || ""
-            const fallback = getFallbackResponse(userMessage)
-            return NextResponse.json({ response: fallback })
+            const fallback = getFallbackResponse(lastUserMessage)
+            return NextResponse.json({
+                response: fallback,
+                fallback: true
+            })
         } catch {
             return NextResponse.json({
-                response: "I'm having trouble connecting. Please contact Vidya at vidyaraut17297@gmail.com"
+                response: "🤖 I'm currently experiencing technical difficulties. Please contact Vidya directly at vidyaraut17297@gmail.com for immediate assistance.",
+                fallback: true
             })
         }
     }
@@ -56,20 +48,9 @@ export async function POST(request: NextRequest) {
 
 // Health check endpoint
 export async function GET() {
-    try {
-        const healthCheck = await fetch(`${FASTAPI_URL}/health`)
-        const isHealthy = healthCheck.ok
-
-        return NextResponse.json({
-            status: isHealthy ? "healthy" : "degraded",
-            backend: FASTAPI_URL,
-            timestamp: new Date().toISOString()
-        })
-    } catch {
-        return NextResponse.json({
-            status: "fallback",
-            message: "Using local fallback responses",
-            timestamp: new Date().toISOString()
-        })
-    }
+    return NextResponse.json({
+        status: "active",
+        message: "OpenRouter API integration active",
+        timestamp: new Date().toISOString()
+    })
 }

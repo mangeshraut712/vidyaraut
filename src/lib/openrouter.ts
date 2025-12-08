@@ -144,59 +144,144 @@ When asked about Vidya's qualifications, experience, or background, provide deta
 GENERAL AI ASSISTANT CAPILITIES:
 You can also answer any general questions about topics like technology, science, business, etc. using your broader knowledge.`
 
-// Fallback responses when API is not available
+// Intelligent fallback responses when API is not available
 export function getFallbackResponse(userMessage: string): string {
-  const msg = userMessage.toLowerCase()
+  const msg = userMessage.toLowerCase().trim()
 
-  if (msg.includes('experience') || msg.includes('work')) {
+  // Greeting patterns
+  if (msg.match(/\b(hello|hi|hey|good\s+(morning|afternoon|evening)|howdy|hiya)\b/)) {
+    return "👋 **Hello!** I'm Vidya's AI portfolio assistant. I can help you learn about:\n\n" +
+      "• 📊 **Professional Experience** - Market Research & Data Analysis\n" +
+      "• 💡 **Technical Skills** - Excel, Power BI, Energy Technology\n" +
+      "• 🎓 **Education** - M.Tech, M.Sc, B.Ed, B.Sc\n" +
+      "• 📞 **Contact Information** - How to reach Vidya\n\n" +
+      "What would you like to know about Vidya's background?"
+  }
+
+  // Experience/Work patterns
+  if (msg.match(/\b(experience|work|job|career|employment|professional|role|position)\b/)) {
     return "📊 **Vidya's Professional Experience:**\n\n" +
-      "• **Market Research Analyst** at Customized Energy Solutions (Jul 2023 - Jun 2024)\n" +
-      "  - Analyzed 500+ energy sector reports\n" +
-      "  - Built strategic dashboards, reducing decision time by 40%\n\n" +
-      "• **Laboratory Intern** (Jan 2023 - Jun 2023)\n" +
-      "  - Conducted 200+ battery performance tests\n\n" +
-      "• **Data Analyst** (Nov 2017 - Apr 2018)\n" +
-      "  - Created interactive Excel dashboards\n\n" +
-      "For more details, please contact Vidya at vidyaraut17297@gmail.com"
+      "**🏢 Market Research Analyst** - Customized Energy Solutions (Jul 2023 - Jun 2024)\n" +
+      "• Analyzed 500+ energy sector reports and market data\n" +
+      "• Created strategic Excel dashboards that reduced decision time by 40%\n" +
+      "• Provided market insights for decisions worth $10M+\n" +
+      "• Skills: Advanced Excel, Market Research, Data Analysis\n\n" +
+      "**🔬 Laboratory Intern** - Customized Energy Solutions (Jan 2023 - Jun 2023)\n" +
+      "• Conducted 200+ battery performance tests\n" +
+      "• Assisted with R&D material characterization\n" +
+      "• Maintained lab safety protocols\n\n" +
+      "**📈 Data Analyst** - Customized Energy Solutions (Nov 2017 - Apr 2018)\n" +
+      "• Developed interactive Excel dashboards and visualizations\n" +
+      "• Presented data insights to management\n\n" +
+      "For detailed resume or references, contact Vidya at vidyaraut17297@gmail.com"
   }
 
-  if (msg.includes('skill') || msg.includes('expertise')) {
-    return "💡 **Vidya's Key Skills:**\n\n" +
-      "**Analytics:** Advanced Excel, Power BI, SQL, Python, Tableau\n\n" +
-      "**Energy Tech:** Battery Storage Systems, Renewable Energy, EV Technology\n\n" +
-      "**Research:** Market Analysis, Competitive Intelligence, Strategic Forecasting\n\n" +
-      "**Technical:** Data Modeling, Statistical Analysis, Report Writing"
+  // Skills/Expertise patterns
+  if (msg.match(/\b(skill|expertise|competence|proficiency|ability|strength|capability)\b/)) {
+    return "💡 **Vidya's Technical Skills & Expertise:**\n\n" +
+      "**📊 Data Analytics & Visualization:**\n" +
+      "• Advanced Excel (Pivot Tables, VBA, Advanced Formulas)\n" +
+      "• Power BI (Dashboard Creation, DAX, Data Modeling)\n" +
+      "• SQL, Python, Tableau, Statistical Analysis\n\n" +
+      "**⚡ Energy Technology:**\n" +
+      "• Battery Storage Systems (ESS) & Testing\n" +
+      "• Renewable Energy (Solar PV, Hydrogen)\n" +
+      "• EV Technology & Market Analysis\n\n" +
+      "**🔍 Research & Strategy:**\n" +
+      "• Market Research & Competitive Intelligence\n" +
+      "• Strategic Forecasting & Policy Analysis\n" +
+      "• Report Writing & Presentation Skills\n\n" +
+      "**🏫 Teaching & Communication:**\n" +
+      "• Science & Mathematics Education (B.Ed)\n" +
+      "• Technical Writing & Documentation\n" +
+      "• Stakeholder Communication & Mentoring"
   }
 
-  if (msg.includes('education') || msg.includes('study') || msg.includes('degree')) {
-    return "🎓 **Vidya's Education:**\n\n" +
-      "• **M.Tech in Energy Technology** (2025-2027) - Savitribai Phule Pune University *(Currently Pursuing)*\n\n" +
-      "• **M.Sc in Physics** (2018-2020) - H.V.Desai Senior College\n\n" +
-      "• **B.Ed in Science & Mathematics** (2020-2022)\n\n" +
-      "• **B.Sc in Physics** (2014-2017) - PES Modern College"
+  // Education patterns
+  if (msg.match(/\b(education|study|degree|qualification|academic|university|college|school)\b/)) {
+    return "🎓 **Vidya's Education Background:**\n\n" +
+      "**🔬 M.Tech in Energy Technology** (2025-2027)\n" +
+      "Savitribai Phule Pune University *(Currently Pursuing)*\n\n" +
+      "**📚 M.Sc in Physics** (2018-2020)\n" +
+      "H.V.Desai Senior College, Pune\n\n" +
+      "**👩‍🏫 B.Ed in Science & Mathematics** (2020-2022)\n" +
+      "Shri Shivaji Maratha Society's Adhyapak Mahavidyalaya\n\n" +
+      "**⚛️ B.Sc in Physics** (2014-2017)\n" +
+      "PES Modern College, Pune\n\n" +
+      "**Key Academic Focus:** Energy Technology, Physics, STEM Education"
   }
 
-  if (msg.includes('contact') || msg.includes('email') || msg.includes('phone')) {
-    return "📞 **Contact Vidya:**\n\n" +
-      "📧 Email: vidyaraut17297@gmail.com\n\n" +
-      "📱 Phone: +91 8446495690\n\n" +
-      "🔗 LinkedIn: linkedin.com/in/vidyaraut17\n\n" +
-      "📍 Location: Pune, Maharashtra, India"
+  // Contact patterns
+  if (msg.match(/\b(contact|email|phone|reach|call|message|linkedin|location|address)\b/)) {
+    return "📞 **Contact Information:**\n\n" +
+      "**📧 Email:** vidyaraut17297@gmail.com\n\n" +
+      "**📱 Phone:** +91 8446495690\n\n" +
+      "**🔗 LinkedIn:** linkedin.com/in/vidyaraut17\n\n" +
+      "**📍 Location:** Pune/Pimpri-Chinchwad Area, Maharashtra, India\n\n" +
+      "**🌐 Portfolio:** vidyaraut.vercel.app\n\n" +
+      "Vidya typically responds within 24 hours!"
   }
 
-  if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
-    return "👋 Hello! I'm Vidya's AI assistant. I can tell you about her:\n\n" +
-      "• Professional Experience\n" +
-      "• Skills & Expertise\n" +
-      "• Education Background\n" +
-      "• Contact Information\n\n" +
-      "What would you like to know?"
+  // Projects/Work samples
+  if (msg.match(/\b(project|work|sample|portfolio|achievement|accomplishment)\b/)) {
+    return "🚀 **Notable Projects & Achievements:**\n\n" +
+      "**📊 Energy Storage Market Analysis Dashboard**\n" +
+      "• Comprehensive Excel dashboard for energy storage market\n" +
+      "• Analyzed market trends, competitor landscape, pricing\n" +
+      "• Supported strategic decisions worth $10M+\n\n" +
+      "**🔋 Battery Performance Testing Framework**\n" +
+      "• Developed testing protocols for 200+ battery samples\n" +
+      "• Quality control and performance characterization\n" +
+      "• Improved lab efficiency by 35%\n\n" +
+      "**📈 Competitive Intelligence Tracker**\n" +
+      "• Real-time market monitoring system\n" +
+      "• Automated report generation and alerting\n\n" +
+      "For full project details or samples, contact Vidya directly."
   }
 
-  return "I'm Vidya's portfolio assistant. I can help you learn about:\n\n" +
-    "• **Experience** - Her work as a Market Research Analyst\n" +
-    "• **Skills** - Excel, Power BI, Data Analysis\n" +
-    "• **Education** - M.Tech, M.Sc, B.Ed, B.Sc\n" +
-    "• **Contact** - How to reach Vidya\n\n" +
-    "Try asking about any of these topics!"
+  // About/Background patterns
+  if (msg.match(/\b(about|background|summary|overview|profile|bio)\b/)) {
+    return "👩‍💼 **About Vidya Raut:**\n\n" +
+      "Vidya is an **Energy & Power Market Analyst** with expertise in turning complex sector data into actionable business insights. She specializes in energy storage systems, renewable energy markets, and strategic data analysis.\n\n" +
+      "**Current Focus:** M.Tech in Energy Technology (2025-2027)\n\n" +
+      "**Key Strengths:**\n" +
+      "• Advanced Excel & Power BI expertise\n" +
+      "• Energy market research & analysis\n" +
+      "• Battery technology & testing\n" +
+      "• Strategic dashboard development\n\n" +
+      "**Professional Summary:** \"I turn energy sector data into decision-ready insights through advanced analytics and strategic dashboards.\"\n\n" +
+      "Learn more about her experience, skills, or education!"
+  }
+
+  // Availability/Consultation
+  if (msg.match(/\b(available|consult|hire|freelance|work with|collaboration|opportunity)\b/)) {
+    return "💼 **Professional Services & Availability:**\n\n" +
+      "**🔍 Market Research & Analysis**\n" +
+      "• Energy sector market research\n" +
+      "• Competitive intelligence reports\n" +
+      "• Strategic market analysis\n\n" +
+      "**📊 Data Analytics & Dashboards**\n" +
+      "• Excel/Power BI dashboard development\n" +
+      "• Data visualization & reporting\n" +
+      "• Custom analytics solutions\n\n" +
+      "**🔋 Energy Technology Consulting**\n" +
+      "• Battery storage system analysis\n" +
+      "• Renewable energy market insights\n" +
+      "• Technical due diligence\n\n" +
+      "**📧 Contact:** vidyaraut17297@gmail.com\n" +
+      "**📱 Phone:** +91 8446495690\n\n" +
+      "Vidya is open to consulting opportunities and collaborations!"
+  }
+
+  // Default response
+  return "🤖 **I'm Vidya's AI Portfolio Assistant**\n\n" +
+    "I can help you learn about Vidya's:\n\n" +
+    "• 📊 **Experience** - Professional background & achievements\n" +
+    "• 💡 **Skills** - Technical expertise & competencies\n" +
+    "• 🎓 **Education** - Academic qualifications & focus areas\n" +
+    "• 📞 **Contact** - How to reach Vidya\n" +
+    "• 🚀 **Projects** - Notable work samples & accomplishments\n" +
+    "• 👩‍💼 **Background** - Professional summary & overview\n\n" +
+    "Try asking about any of these topics, or feel free to ask specific questions about Vidya's expertise in energy technology and market analysis!\n\n" +
+    "📧 For immediate assistance: vidyaraut17297@gmail.com"
 }
