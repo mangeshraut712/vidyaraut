@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
-import { sendChatMessage, PORTFOLIO_CONTEXT, getFallbackResponse } from "@/lib/openrouter"
+import { PORTFOLIO_CONTEXT, getFallbackResponse } from "@/lib/openrouter"
+
+// FastAPI backend URL - uses Vercel environment variables
+const FASTAPI_URL = process.env.FASTAPI_URL || "https://vidyaraut-api.vercel.app"
 
 export async function POST(request: NextRequest) {
     try {
@@ -12,30 +15,61 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        // Check if API key is configured
-        if (!process.env.OPENROUTER_API_KEY) {
-            console.warn("OPENROUTER_API_KEY not configured - using fallback responses")
-            const userMessage = messages[messages.length - 1]?.content || ""
-            const fallback = getFallbackResponse(userMessage)
-            return NextResponse.json({ response: fallback })
-        }
-
-        // Add system context as the first message
+        // Prepare messages with context
         const fullMessages = [
             { role: "system", content: PORTFOLIO_CONTEXT },
             ...messages.slice(-5)
         ]
 
-        const response = await sendChatMessage(fullMessages)
+        // Call FastAPI backend (which has the API key in Vercel env vars)
+        const response = await fetch(`${FASTAPI_URL}/api/chat`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ messages: fullMessages }),
+        })
 
-        return NextResponse.json({ response })
+        if (!response.ok) {
+            throw new Error(`FastAPI error: ${response.status}`)
+        }
+
+        const data = await response.json()
+        return NextResponse.json({ response: data.response || data.message })
+
     } catch (error) {
         console.error("Chat API error:", error)
 
-        // Provide helpful fallback
-        const userMessage = (await request.clone().json()).messages?.slice(-1)[0]?.content || ""
-        const fallback = getFallbackResponse(userMessage)
+        // Use fallback responses
+        try {
+            const body = await request.clone().json()
+            const userMessage = body.messages?.slice(-1)[0]?.content || ""
+            const fallback = getFallbackResponse(userMessage)
+            return NextResponse.json({ response: fallback })
+        } catch {
+            return NextResponse.json({
+                response: "I'm having trouble connecting. Please contact Vidya at vidyaraut17297@gmail.com"
+            })
+        }
+    }
+}
 
-        return NextResponse.json({ response: fallback })
+// Health check endpoint
+export async function GET() {
+    try {
+        const healthCheck = await fetch(`${FASTAPI_URL}/health`)
+        const isHealthy = healthCheck.ok
+
+        return NextResponse.json({
+            status: isHealthy ? "healthy" : "degraded",
+            backend: FASTAPI_URL,
+            timestamp: new Date().toISOString()
+        })
+    } catch {
+        return NextResponse.json({
+            status: "fallback",
+            message: "Using local fallback responses",
+            timestamp: new Date().toISOString()
+        })
     }
 }
