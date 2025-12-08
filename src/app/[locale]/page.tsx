@@ -22,6 +22,10 @@ import { Skills } from "@/components/Skills"
 import { Projects } from "@/components/Projects"
 import { Game } from "@/components/Game"
 import { ScrollToTop } from "@/components/ScrollToTop"
+import { Testimonials } from "@/components/Testimonials"
+import { GitHubStats } from "@/components/GitHubStats"
+import { Newsletter } from "@/components/Newsletter"
+import { BookingSection } from "@/components/BookingSection"
 import { contactInfo } from "@/lib/data"
 import { useTranslations } from "next-intl"
 import dynamic from "next/dynamic"
@@ -164,6 +168,18 @@ export default function PortfolioPage() {
           />
         </div>
       </section>
+
+      {/* Testimonials Section */}
+      <Testimonials />
+
+      {/* GitHub Stats Section */}
+      <GitHubStats />
+
+      {/* Newsletter Section */}
+      <Newsletter />
+
+      {/* Booking Section */}
+      <BookingSection />
 
       {/* Contact Section */}
       <section id="contact" className="py-24">
