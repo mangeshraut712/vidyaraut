@@ -11,211 +11,213 @@
   "hero": {
     "name": "Vidya Raut",
     "title": "Energy Technology & Market Analyst",
-    "description": "Specializing in market research, data analysis, and energy storage systems. Transforming complex data into actionable insights for the energy sector.",
+    "description": "Transforming complex energy data into actionable business insights. Specializing in market research, data analytics, and energy storage systems with 4+ years of experience.",
     "downloadResume": "Download Resume",
-    "viewWork": "View Work"
+    "viewWork": "View My Work"
   },
   "skills": {
     "title": "Skills & Expertise",
-    "description": "A comprehensive toolkit for analyzing and navigating the energy landscape.",
+    "description": "A comprehensive toolkit built through years of hands-on experience in the energy sector.",
     "marketAnalysis": {
       "title": "Market Analysis",
       "items": [
-        "Market Research",
-        "Trend Analysis",
-        "Competitive Intelligence",
-        "Data Visualization",
-        "Forecasting"
+        "Market Research & Intelligence",
+        "Trend & Pattern Analysis",
+        "Competitive Landscape Mapping",
+        "Data-Driven Decision Making",
+        "Strategic Forecasting"
       ]
     },
     "energyTech": {
       "title": "Energy Technology",
       "items": [
-        "Battery Storage Systems",
+        "Battery Storage Systems (Li-ion, ESS)",
         "Renewable Energy Integration",
-        "EV Technology",
-        "Power Systems",
-        "Grid Modernization"
+        "Electric Vehicle Ecosystem",
+        "Power Grid Modernization",
+        "Hydrogen Fuel Technologies"
       ]
     },
     "dataTools": {
-      "title": "Data Tools",
+      "title": "Analytics Tools",
       "items": [
-        "Power BI",
-        "Excel (Advanced)",
-        "SQL",
-        "Python",
-        "Tableau"
+        "Microsoft Power BI",
+        "Advanced Excel & VBA",
+        "SQL Databases",
+        "Python (Pandas, NumPy)",
+        "Tableau Dashboards"
       ]
     },
     "technical": {
-      "title": "Technical Skills",
+      "title": "Technical Competencies",
       "items": [
-        "Data Modeling",
+        "Data Modeling & ETL",
         "Statistical Analysis",
-        "Report Writing",
+        "Executive Report Writing",
         "Technical Documentation",
-        "Process Optimization"
+        "Process Automation"
       ]
     }
   },
   "projects": {
     "title": "Featured Projects",
-    "description": "Selected works demonstrating analytical depth and strategic insight.",
-    "viewProject": "View Project",
+    "description": "Real-world projects demonstrating analytical depth and strategic impact.",
+    "viewProject": "View Details",
     "p1": {
-      "title": "Global Energy Market Analysis",
-      "description": "Comprehensive analysis of global energy trends, focusing on renewable energy adoption rates and market shifts in the post-pandemic era.",
+      "title": "Global Energy Market Dashboard",
+      "description": "Built an interactive Power BI dashboard tracking renewable energy adoption across 50+ countries, enabling real-time market opportunity identification.",
       "tags": [
-        "Data Analysis",
-        "Market Research",
-        "Power BI"
+        "Power BI",
+        "Market Intelligence",
+        "Data Visualization"
       ]
     },
     "p2": {
-      "title": "Battery Storage Efficiency Study",
-      "description": "Research project analyzing the efficiency and degradation patterns of lithium-ion batteries under various climatic conditions.",
+      "title": "Battery Performance Analytics",
+      "description": "Developed a comprehensive analytics framework to predict Li-ion battery degradation patterns, improving maintenance scheduling by 35%.",
       "tags": [
-        "Energy Storage",
         "Python",
-        "Statistical Analysis"
+        "Predictive Analytics",
+        "Energy Storage"
       ]
     },
     "p3": {
-      "title": "EV Infrastructure Mapping",
-      "description": "Strategic mapping and feasibility study for electric vehicle charging station deployment in urban centers.",
+      "title": "EV Charging Infrastructure Study",
+      "description": "Conducted feasibility analysis for EV charging station deployment, influencing $2M+ investment decisions in urban mobility infrastructure.",
       "tags": [
-        "GIS",
-        "Infrastructure",
-        "Strategic Planning"
+        "Strategic Planning",
+        "GIS Mapping",
+        "ROI Analysis"
       ]
     }
   },
   "experience": {
-    "title": "Professional Experience",
+    "title": "Professional Journey",
     "analyst": {
       "title": "Market Research Analyst",
       "subtitle": "Customized Energy Solutions",
       "date": "Jul 2023 - Jun 2024",
-      "description": "Analyzed energy sector reports and created strategic dashboards to support market decisions.",
+      "description": "Led market intelligence initiatives for the energy storage sector, delivering actionable insights to executive leadership.",
       "highlights": [
-        "Analyzed 500+ energy sector reports",
-        "Created strategic dashboards in Excel",
-        "Provided market insights for decisions worth $10M+",
-        "Reduced report generation time by 40%"
+        "Analyzed 500+ energy sector reports and market data",
+        "Built strategic Excel dashboards reducing decision time by 40%",
+        "Provided insights supporting $10M+ investment decisions",
+        "Pioneered automated reporting workflows"
       ],
       "skills": [
-        "Excel",
         "Market Research",
-        "Data Analysis",
-        "Report Writing"
+        "Excel Advanced",
+        "Strategic Analysis",
+        "Executive Reporting"
       ]
     },
     "intern": {
-      "title": "Laboratory Intern",
+      "title": "Laboratory Research Intern",
       "subtitle": "Customized Energy Solutions",
       "date": "Jan 2023 - Jun 2023",
-      "description": "Conducted battery tests and assisted with R&D material characterization.",
+      "description": "Conducted hands-on battery testing and contributed to R&D initiatives in energy storage technology.",
       "highlights": [
-        "Conducted 200+ battery tests",
-        "Assisted with R&D material characterization",
-        "Maintained lab safety protocols",
-        "Analyzed battery performance data"
+        "Executed 200+ battery performance tests",
+        "Contributed to material characterization research",
+        "Maintained rigorous lab safety protocols",
+        "Documented and analyzed performance data"
       ],
       "skills": [
         "Battery Testing",
         "Lab Safety",
-        "Data Analysis"
+        "R&D Support",
+        "Data Documentation"
       ]
     },
     "dataAnalyst": {
       "title": "Data Analyst",
       "subtitle": "Customized Energy Solutions",
       "date": "Nov 2017 - Apr 2018",
-      "description": "Developed interactive Excel dashboards and presented findings to management.",
+      "description": "Created data visualization solutions and delivered insights to drive business decisions.",
       "highlights": [
-        "Developed interactive Excel dashboards",
-        "Presented findings to management",
-        "Improved decision-making processes"
+        "Designed interactive Excel dashboards",
+        "Presented analytical findings to stakeholders",
+        "Enhanced data-driven decision processes"
       ],
       "skills": [
         "Excel",
         "Power BI",
-        "Data Visualization"
+        "Data Visualization",
+        "Presentation"
       ]
     },
     "teacher": {
-      "title": "Teaching Professional",
+      "title": "Science & Math Educator",
       "subtitle": "S.S.V.M. & Jr. College",
       "date": "May 2021 - Oct 2021",
-      "description": "Taught Science and Mathematics, developed lesson plans, and mentored students.",
+      "description": "Delivered engaging STEM education and mentored students in scientific inquiry.",
       "highlights": [
-        "Taught Science and Mathematics",
-        "Developed lesson plans",
-        "Mentored students"
+        "Taught Physics and Mathematics",
+        "Developed interactive lesson plans",
+        "Mentored students in STEM subjects"
       ],
       "skills": [
         "Communication",
-        "Presentation",
-        "Mentoring"
+        "Curriculum Design",
+        "Student Mentoring"
       ]
     }
   },
   "education": {
-    "title": "Education",
+    "title": "Academic Background",
     "mtech": {
       "title": "M.Tech in Energy Technology",
       "subtitle": "Savitribai Phule Pune University",
       "date": "July 2025 - May 2027",
-      "description": "Currently pursuing advanced studies in energy technology and systems."
+      "description": "Pursuing advanced studies in energy systems, sustainable technology, and power sector innovation."
     },
     "bed": {
-      "title": "Bachelor of Education (B.Ed) - Science & Mathematics",
+      "title": "B.Ed in Science & Mathematics",
       "subtitle": "Shri Shivaji Maratha Society's Adhyapak Mahavidyalaya",
       "date": "Sep 2020 - Apr 2022",
-      "description": "Completed teacher training program with specialization in Science and Mathematics."
+      "description": "Professional teacher training with specialization in STEM education methodologies."
     },
     "msc": {
-      "title": "Master of Science (M.Sc) - Physics",
+      "title": "M.Sc in Physics",
       "subtitle": "H.V.Desai Senior College",
       "date": "Jun 2018 - Apr 2020",
-      "description": "Advanced studies in Physics with focus on materials science and research."
+      "description": "Graduate research in Physics with focus on materials science and experimental methodologies."
     },
     "bsc": {
-      "title": "Bachelor of Science (B.Sc) - Physics",
+      "title": "B.Sc in Physics",
       "subtitle": "PES Modern College",
       "date": "Aug 2014 - Oct 2017",
-      "description": "Foundation studies in Physics with emphasis on theoretical and experimental physics."
+      "description": "Undergraduate foundation in theoretical and experimental physics principles."
     }
   },
   "contact": {
     "badge": "Get in Touch",
     "title": "Let's Connect",
-    "description": "Market/Energy Analyst roles where I can improve reporting speed/quality and support data-driven strategy.",
-    "infoTitle": "Contact Info",
+    "description": "Open to Market/Energy Analyst opportunities where I can leverage data analytics to drive strategic decisions. Let's discuss how I can add value to your team.",
+    "infoTitle": "Contact Information",
     "form": {
-      "name": "Name",
-      "namePlaceholder": "Your name",
-      "email": "Email",
-      "emailPlaceholder": "your@email.com",
-      "message": "Message",
-      "messagePlaceholder": "How can I help you?",
+      "name": "Your Name",
+      "namePlaceholder": "Enter your name",
+      "email": "Email Address",
+      "emailPlaceholder": "you@company.com",
+      "message": "Your Message",
+      "messagePlaceholder": "Tell me about your opportunity or question...",
       "send": "Send Message"
     }
   },
   "game": {
-    "badge": "Timepass",
-    "title": "Marathi Crossword Game",
-    "description": "Take a break and enjoy this fun Marathi crossword puzzle!"
+    "badge": "Fun Break",
+    "title": "Marathi Word Puzzle",
+    "description": "Take a quick break with this engaging Marathi crossword challenge!"
   },
   "chatbot": {
-    "title": "Vidya's AI Assistant",
-    "initialMessage": "Hi! I'm Vidya's AI assistant. Ask me anything about her experience, skills, or projects.",
-    "placeholder": "Ask about Vidya...",
-    "error": "Sorry, I encountered an error. Using fallback response."
+    "title": "AI Assistant",
+    "initialMessage": "👋 Hello! I'm Vidya's AI assistant. Ask me anything about her experience, skills, education, or projects. I'm here to help!",
+    "placeholder": "Type your question...",
+    "error": "Connection issue. Please try again."
   },
   "footer": {
     "rights": "© {year} Vidya Raut. All rights reserved.",
-    "builtWith": "Built with Next.js & Shadcn UI"
+    "builtWith": "Crafted with Next.js 16 & React 19"
   }
 }

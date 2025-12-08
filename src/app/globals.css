@@ -6,9 +6,7 @@
   :root {
     /* Light Mode: Solid White Background, Black/Blue Text */
     --background: 0 0% 100%;
-    /* #FFFFFF */
     --foreground: 0 0% 0%;
-    /* #000000 */
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
@@ -18,7 +16,6 @@
 
     /* Blue Primary */
     --primary: 221.2 83.2% 53.3%;
-    /* Blue-600 #2563EB */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96.1%;
@@ -43,9 +40,7 @@
   .dark {
     /* Dark Mode: Solid Black Background, White/Blue Text */
     --background: 0 0% 0%;
-    /* #000000 */
     --foreground: 0 0% 100%;
-    /* #FFFFFF */
 
     --card: 0 0% 0%;
     --card-foreground: 0 0% 100%;
@@ -53,9 +48,7 @@
     --popover: 0 0% 0%;
     --popover-foreground: 0 0% 100%;
 
-    /* Blue Primary (slightly lighter for dark mode visibility if desired, or same) */
     --primary: 217.2 91.2% 59.8%;
-    /* Blue-500 #3B82F6 */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -92,7 +85,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom Utilities */
+/* GPU-Accelerated Animations for 120fps */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -103,6 +96,121 @@ html {
   }
 
   .glass-card {
-    @apply bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm hover:shadow-md transition-all duration-300;
+    @apply bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm hover:shadow-md transition-all duration-200;
+  }
+
+  /* Performance-optimized hover animations */
+  .hover-lift {
+    @apply transition-transform duration-150 ease-out;
+    will-change: transform;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-1;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-150 ease-out;
+    will-change: transform;
+  }
+
+  .hover-scale:hover {
+    @apply scale-105;
+  }
+
+  .hover-glow {
+    @apply transition-shadow duration-150 ease-out;
+  }
+
+  .hover-glow:hover {
+    @apply shadow-lg shadow-primary/20;
+  }
+
+  /* Fast fade animations */
+  .animate-fade-in {
+    animation: fadeIn 0.2s ease-out forwards;
+  }
+
+  .animate-fade-up {
+    animation: fadeUp 0.25s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.15s ease-out forwards;
+  }
+
+  /* Stagger animations for lists */
+  .stagger-1 {
+    animation-delay: 0.05s;
+  }
+
+  .stagger-2 {
+    animation-delay: 0.1s;
+  }
+
+  .stagger-3 {
+    animation-delay: 0.15s;
+  }
+
+  .stagger-4 {
+    animation-delay: 0.2s;
+  }
+
+  .stagger-5 {
+    animation-delay: 0.25s;
+  }
+
+  .stagger-6 {
+    animation-delay: 0.3s;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
   }
 }
