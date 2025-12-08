@@ -1,68 +1,53 @@
-# 🚀 Vidya Raut Portfolio
+# Vidya Raut - Portfolio Website
 
-A modern, colorful, and feature-rich portfolio website showcasing expertise in Energy Technology and Market Analysis.
+A modern, multilingual portfolio website built with Next.js 16, React 19, and TypeScript.
 
-![Next.js](https://img.shields.io/badge/Next.js-15-black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8)
-![Build](https://img.shields.io/badge/build-passing-brightgreen)
+![Next.js](https://img.shields.io/badge/Next.js-16.0.7-black)
+![React](https://img.shields.io/badge/React-19.2.1-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)
+![Node](https://img.shields.io/badge/Node-22.x-green)
+
+## 🚀 Live Demo
+
+**[https://vidyaraut.vercel.app](https://vidyaraut.vercel.app)**
 
 ## ✨ Features
 
-### 🎨 **Premium Design**
-- **Vibrant Color Scheme**: Purple, pink, and blue gradients throughout
-- **Glassmorphism Effects**: Modern frosted glass UI elements
-- **Smooth Animations**: Framer Motion powered transitions
-- **Custom Scrollbar**: Gradient-themed scrollbar
-- **Responsive Layout**: Perfect on all devices
+- **Multilingual Support** - English, Hindi, and Marathi (next-intl)
+- **Dark/Light Theme** - System-aware theming with next-themes
+- **AI Chatbot** - OpenRouter-powered assistant for portfolio Q&A
+- **Responsive Design** - Mobile-first approach with Tailwind CSS
+- **Smooth Animations** - Framer Motion for page transitions
+- **SEO Optimized** - Meta tags, Open Graph, and structured data
+- **Analytics** - Vercel Analytics and Speed Insights
 
-### 📄 **Multiple Sections (Single Page Application)**
-- **Home** - Hero section with introduction and portfolio overview
-- **Skills** - Comprehensive skill breakdown in energy, data, and technical categories
-- **Projects** - Showcase of analytical and research projects
-- **Experience** - Professional work history with detailed achievements
-- **Education** - Academic background and qualifications
-- **Contact** - Contact form and professional information
-- **Game** - Interactive Marathi crossword puzzle for downtime
+## 🛠️ Tech Stack
 
-### 🤖 **AI Chatbot**
-- Powered by OpenRouter API
-- Context-aware responses about Vidya's portfolio
-- Fallback responses when API unavailable
-- Floating chat interface with smooth animations
+| Category | Technology |
+|----------|------------|
+| Framework | Next.js 16 (App Router) |
+| UI Library | React 19 with React Compiler |
+| Styling | Tailwind CSS 3.4 |
+| Language | TypeScript 5.7 |
+| State Management | Zustand 5.0 |
+| Form Handling | React Hook Form + Zod |
+| Animations | Framer Motion 11 |
+| Icons | Lucide React |
+| Internationalization | next-intl 4.x |
+| Analytics | Vercel Analytics |
 
-### 🎯 **Key Components**
-- **Navigation Bar**: Sticky header with logo and smooth scroll
-- **Timeline**: Animated experience and education timeline
-- **Skill Cards**: Color-coded categories with progress indicators
-- **Project Cards**: Detailed project showcases with metrics
-- **Contact Form**: Beautiful gradient contact section
+## 📦 Getting Started
 
-### 🌍 **Internationalization**
-- English, Hindi, and Marathi support
-- Automatic locale detection
-- Locale-specific content
+### Prerequisites
 
-## 🎨 Design Highlights
+- Node.js 22.x or later
+- npm or yarn
 
-### Color Palette
-- **Primary**: Purple (`#8B5CF6`)
-- **Secondary**: Blue (`#3B82F6`)
-- **Accent**: Pink (`#EC4899`)
-- **Success**: Green (`#10B981`)
-- **Warning**: Orange (`#F59E0B`)
-
-### Custom Animations
-- Gradient animations
-- Float effects
-- Fade-in-up on scroll
-- Smooth page transitions
-
-## 📦 Installation
+### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/mangeshraut712/vidyaraut.git
+git clone https://github.com/vidyaraut17297/vidyaraut.git
 cd vidyaraut
 
 # Install dependencies
@@ -70,194 +55,88 @@ npm install
 
 # Set up environment variables
 cp .env.example .env.local
-# Edit .env.local and add your OpenRouter API key
+# Edit .env.local with your API keys
 
-# Run development server
+# Start development server
 npm run dev
-
-# Open http://localhost:3000
 ```
 
-## 🔧 Environment Variables
+### Environment Variables
 
-### Required for AI Chatbot
-Add these environment variables to Vercel:
+Create a `.env.local` file with:
 
 ```env
+# OpenRouter API (for AI Chatbot)
 OPENROUTER_API_KEY=your_api_key_here
-```
+OPENROUTER_MODEL=openai/gpt-3.5-turbo
 
-**Important**: The API key is accessed server-side through Vercel's environment variables, not exposed to the client. Get your API key from [OpenRouter.ai](https://openrouter.ai/).
-
-### Optional Configuration
-```env
-NEXT_PUBLIC_SITE_URL=https://vidyaraut-five.vercel.app/
+# Site Configuration
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NEXT_PUBLIC_SITE_NAME=Vidya Raut Portfolio
-NEXT_PUBLIC_AI_MODEL=openai/gpt-3.5-turbo
 ```
 
-## 📁 Project Structure
+## 🏗️ Project Structure
 
 ```
 vidyaraut/
-├── public/
-│   ├── logo.svg              # Custom VR logo
-│   └── favicon.svg           # Favicon
 ├── src/
-│   ├── app/
-│   │   ├── [locale]/
-│   │   │   ├── page.tsx      # Home page
-│   │   │   ├── skills/       # Skills page
-│   │   │   └── projects/     # Projects page
-│   │   ├── globals.css       # Global styles + animations
-│   │   └── layout.tsx        # Root layout with metadata
-│   ├── components/
-│   │   ├── ui/               # Shadcn UI components
-│   │   ├── AIChatbot.tsx     # AI chatbot
-│   │   ├── Timeline.tsx      # Timeline component
-│   │   └── Navigation.tsx    # Navigation bar
-│   ├── lib/
-│   │   ├── data.ts           # Portfolio content
-│   │   ├── openrouter.ts     # AI API integration
-│   │   └── utils.ts          # Utilities
-│   └── i18n/                 # Internationalization
-├── scripts/
-│   └── test-chatbot.js       # API testing script
-├── package.json
-├── tailwind.config.ts
-└── README.md
+│   ├── app/              # Next.js App Router pages
+│   │   ├── [locale]/     # Internationalized routes
+│   │   ├── api/          # API routes
+│   │   └── globals.css   # Global styles
+│   ├── components/       # React components
+│   │   ├── ui/           # Shadcn UI components
+│   │   └── ...           # Feature components
+│   ├── i18n/             # Internationalization
+│   │   ├── messages/     # Translation files (en, hi, mr)
+│   │   ├── routing.ts    # Route configuration
+│   │   └── request.ts    # Request config
+│   └── lib/              # Utilities and helpers
+├── public/               # Static assets
+├── middleware.ts         # next-intl middleware
+└── next.config.ts        # Next.js configuration
 ```
-
-## 🎯 Pages Overview
-
-### Home Page (`/en`)
-- **Hero Section**: Animated introduction with logo and stats
-- **About Section**: Professional summary with focus areas
-- **Quick Links**: Cards linking to Skills and Projects
-- **Experience Timeline**: Professional work history
-- **Education Timeline**: Academic background
-- **Contact Section**: Contact form and information
-
-### Skills Page (`/en/skills`)
-- **4 Skill Categories**:
-  1. Data Analysis & Visualization (Purple/Pink)
-  2. Energy Technology (Green/Teal)
-  3. Market Research (Blue/Cyan)
-  4. Technical Skills (Orange/Red)
-- **Progress Bars**: Visual skill level indicators
-- **Certifications**: 4 certification cards
-- **Key Strengths**: Impact metrics
-
-### Projects Page (`/en/projects`)
-- **6 Major Projects**:
-  1. Energy Storage Market Analysis Dashboard
-  2. Battery Performance Testing Framework
-  3. Competitive Intelligence Tracker
-  4. Solar PV Market Sizing Study
-  5. Energy Policy Impact Reports
-  6. Data Visualization Portfolio
-- **Project Metrics**: Impact, duration, team size
-- **Color-Coded**: Each project has unique gradient
 
 ## 🚀 Deployment
 
-The portfolio is deployed and live at: **https://vidyaraut-five.vercel.app/**
+### Vercel (Recommended)
 
-### Vercel Deployment
+1. Push to GitHub
+2. Import project in Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy!
 
-1. **Connect your GitHub repository** to Vercel
-2. **Set Node.js Version** to `20.x` in Vercel project settings
-3. **Add Environment Variables** in Vercel dashboard:
-   - `NEXT_PUBLIC_OPENROUTER_API_KEY`
-   - `NEXT_PUBLIC_SITE_URL` (https://vidyaraut-five.vercel.app/)
-   - `NEXT_PUBLIC_SITE_NAME`
-   - `NEXT_PUBLIC_AI_MODEL`
-4. **Deploy** - Vercel will auto-deploy on every git push
+### Environment Variables for Vercel
 
-### Build Settings
-- **Build Command**: `npm run build` (auto-detected)
-- **Install Command**: `npm install`
-- **Node.js Version**: `20.x`
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `OPENROUTER_API_KEY` | Yes | API key for AI chatbot |
+| `OPENROUTER_MODEL` | No | AI model (default: gpt-3.5-turbo) |
 
-## 🧪 Testing
+## 📝 Scripts
 
-### Build Test
 ```bash
-npm run build
+npm run dev      # Start development server with Turbopack
+npm run build    # Build for production
+npm run start    # Start production server
+npm run lint     # Run ESLint
 ```
 
-### AI Chatbot Test
-```bash
-export OPENROUTER_API_KEY=your_key
-npm run test:chatbot
-```
+## 📄 License
 
-### Development Server
-```bash
-npm run dev
-```
+MIT License - feel free to use this project as a template!
 
-## 📊 Build Output
+## 👩‍💼 About Vidya Raut
 
-```
-Route (app)                              Size     First Load JS
-┌ ○ /                                    136 B          99.3 kB
-├ ○ /_not-found                          900 B           100 kB
-├ ● /[locale]                            28.3 kB         172 kB
-├ ● /[locale]/projects                   3.93 kB         148 kB
-└ ● /[locale]/skills                     3.79 kB         147 kB
+Energy Technology Analyst specializing in:
+- Market Research & Data Analysis
+- Energy Storage Systems (ESS)
+- Power BI & Excel Analytics
+- Battery Testing & R&D
 
-✅ Build: Successful
-✅ Lint: Passing
-✅ TypeScript: No errors
-```
-
-## 🎨 Tech Stack
-
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript 5
-- **Styling**: Tailwind CSS 4
-- **UI Components**: Shadcn UI
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
-- **AI**: OpenRouter API
-- **State**: Zustand
-- **Data Fetching**: TanStack Query
-- **i18n**: next-intl
-- **Fonts**: Geist & Geist Mono
-
-## 🎯 Key Improvements
-
-### ✅ What's New
-- ✨ **3 Pages**: Home, Skills, Projects
-- 🎨 **Colorful Design**: Purple, pink, blue gradients
-- 🖼️ **Custom Logo**: SVG logo and favicon
-- 🧭 **Navigation**: Sticky header with smooth scroll
-- 📊 **Skill Breakdown**: Detailed skills with progress bars
-- 💼 **Project Showcase**: 6 detailed project cards
-- 🎭 **Animations**: Custom CSS animations
-- 📱 **Fully Responsive**: Mobile-first design
-- 🚀 **Optimized**: Fast build and load times
-
-### 🗑️ Cleaned Up
-- ❌ Removed `_legacy` folder
-- ❌ Removed unused documentation files
-- ❌ Removed old project versions
-- ✅ Clean project structure
-- ✅ No unused dependencies
-
-## 📝 License
-
-This project is private and belongs to Vidya Raut.
-
-## 🤝 Contact
-
-- **Email**: vidyaraut17297@gmail.com
-- **LinkedIn**: [linkedin.com/in/vidyaraut17](https://www.linkedin.com/in/vidyaraut17/)
-- **Location**: Pune, India
+📧 **Contact**: vidyaraut17297@gmail.com  
+🔗 **LinkedIn**: [linkedin.com/in/vidyaraut17](https://www.linkedin.com/in/vidyaraut17/)
 
 ---
 
-**Built with ❤️ using Next.js 15, Shadcn UI, and OpenRouter AI**
-
-*Last Updated: November 2025*
+Built with ❤️ using Next.js 16 and React 19
