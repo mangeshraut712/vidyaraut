@@ -51,11 +51,22 @@ export function Navigation() {
 
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
-    const element = document.querySelector(href)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-      setIsOpen(false)
-    }
+    setIsOpen(false)
+
+    // Tiny timeout to ensure menu close animation starts/doesn't block visibility
+    setTimeout(() => {
+      const element = document.querySelector(href)
+      if (element) {
+        const headerOffset = 80 // Slightly more than typical 64px to add breathing room
+        const elementPosition = element.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.scrollY - headerOffset
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        })
+      }
+    }, 300)
   }
 
   return (
@@ -106,6 +117,7 @@ export function Navigation() {
                 size="icon"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                 className="ml-2 rounded-full"
+                aria-label="Toggle theme"
               >
                 {theme === "dark" ? (
                   <Sun className="w-4 h-4" />
@@ -122,6 +134,7 @@ export function Navigation() {
                 size="icon"
                 onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
                 className="rounded-full"
+                aria-label="Change language"
               >
                 <Globe className="w-4 h-4" />
               </Button>
@@ -139,8 +152,8 @@ export function Navigation() {
                         key={lang}
                         onClick={() => switchLanguage(lang)}
                         className={cn(
-                          "w-full text-left px-4 py-2 text-sm hover:bg-secondary transition-colors",
-                          currentLocale === lang ? "font-bold text-primary" : "text-muted-foreground"
+                          "w-full text-left px-4 py-2 text-sm transition-colors hover:bg-primary/5 hover:text-primary",
+                          currentLocale === lang ? "font-bold text-primary bg-primary/5" : "text-muted-foreground"
                         )}
                       >
                         {lang === 'en' ? 'English' : lang === 'hi' ? 'Hindi' : 'Marathi'}
@@ -173,6 +186,7 @@ export function Navigation() {
               size="icon"
               onClick={() => setIsOpen(!isOpen)}
               className="rounded-full"
+              aria-label="Toggle menu"
             >
               {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </Button>
@@ -187,7 +201,7 @@ export function Navigation() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden border-t bg-background/98 backdrop-blur-lg"
+            className="lg:hidden border-t bg-background border-b shadow-2xl"
           >
             <div className="container mx-auto px-4 py-4 space-y-2">
               {navigation.map((item) => {
@@ -197,7 +211,7 @@ export function Navigation() {
                     key={item.name}
                     href={item.href}
                     onClick={(e) => handleScrollTo(e, item.href)}
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors hover:bg-secondary"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors hover:bg-primary/5 hover:text-primary"
                   >
                     <Icon className="w-5 h-5" />
                     <span className="font-medium">{item.name}</span>
@@ -213,10 +227,10 @@ export function Navigation() {
                       key={lang}
                       onClick={() => switchLanguage(lang)}
                       className={cn(
-                        "py-2 rounded-lg text-sm font-medium transition-colors border border-border",
+                        "py-2 rounded-lg text-sm font-medium transition-colors border border-border/50",
                         currentLocale === lang
                           ? "bg-primary text-primary-foreground border-primary"
-                          : "hover:bg-secondary text-muted-foreground"
+                          : "bg-card hover:bg-primary/5 hover:text-primary text-foreground"
                       )}
                     >
                       {lang === 'en' ? 'EN' : lang === 'hi' ? 'HI' : 'MR'}

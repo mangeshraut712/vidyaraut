@@ -1,34 +1,53 @@
 "use client"
 
-import React from "react"
+import React, { useState } from "react"
 import { motion } from "framer-motion"
 import {
   Mail,
   Phone,
   MapPin,
-  Linkedin
+  Linkedin,
+  Briefcase,
+  GraduationCap,
+  Loader2,
+  CheckCircle2
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Timeline } from "@/components/Timeline"
-import { AIChatbot } from "@/components/AIChatbot"
 import { Navigation } from "@/components/Navigation"
 import { Hero } from "@/components/Hero"
 import { Skills } from "@/components/Skills"
 import { Projects } from "@/components/Projects"
 import { Game } from "@/components/Game"
 import { ScrollToTop } from "@/components/ScrollToTop"
-import {
-  contactInfo
-} from "@/lib/data"
-import { Briefcase, GraduationCap } from "lucide-react"
+import { contactInfo } from "@/lib/data"
 import { useTranslations } from "next-intl"
+import dynamic from "next/dynamic"
+
+// Lazy load the chatbot for better initial performance
+const AIChatbot = dynamic(() => import("@/components/AIChatbot").then(mod => mod.AIChatbot), {
+  ssr: false,
+  loading: () => null
+})
+
+// Define interfaces for data structures
+interface TimelineItem {
+  type: "education" | "experience"
+  date: string
+  title: string
+  subtitle: string
+  description: string
+  highlights?: string[]
+  skills?: string[]
+}
 
 export default function PortfolioPage() {
   const t = useTranslations()
+  const [formState, setFormState] = useState<"idle" | "submitting" | "success" | "error">("idle")
 
-  const experienceData = [
+  const experienceData: TimelineItem[] = [
     {
       type: "experience",
       title: t("experience.analyst.title"),
@@ -67,7 +86,7 @@ export default function PortfolioPage() {
     }
   ]
 
-  const educationData = [
+  const educationData: TimelineItem[] = [
     {
       type: "education",
       title: t("education.mtech.title"),
@@ -98,6 +117,22 @@ export default function PortfolioPage() {
     }
   ]
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setFormState("submitting")
+
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500))
+
+    setFormState("success")
+    // Reset form after 3 seconds
+    setTimeout(() => setFormState("idle"), 3000)
+
+    // In a real app, you would send the data to an API route here
+    // const formData = new FormData(e.currentTarget)
+    // await fetch('/api/contact', { method: 'POST', body: formData })
+  }
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navigation />
@@ -112,8 +147,7 @@ export default function PortfolioPage() {
       <section id="experience" className="py-24">
         <div className="container mx-auto px-4 max-w-5xl">
           <Timeline
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            items={experienceData as any[]}
+            items={experienceData}
             title={t("experience.title")}
             icon={Briefcase}
           />
@@ -121,11 +155,10 @@ export default function PortfolioPage() {
       </section>
 
       {/* Education Section */}
-      <section id="education" className="py-24 bg-secondary/30">
+      <section id="education" className="py-24">
         <div className="container mx-auto px-4 max-w-5xl">
           <Timeline
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            items={educationData as any[]}
+            items={educationData}
             title={t("education.title")}
             icon={GraduationCap}
           />
@@ -145,14 +178,14 @@ export default function PortfolioPage() {
               <Mail className="w-4 h-4 mr-2 inline" />
               {t("contact.badge")}
             </Badge>
-            <h2 className="text-4xl font-bold mb-4">{t("contact.title")}</h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">{t("contact.title")}</h2>
             <p className="text-muted-foreground text-lg">
               {t("contact.description")}
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <Card className="bg-zinc-900 text-zinc-50 dark:bg-zinc-800 dark:text-zinc-50 border-none shadow-2xl">
+            <Card className="bg-primary text-primary-foreground border-none shadow-2xl hover:shadow-xl hover:shadow-primary/5 transition-all duration-200">
               <CardContent className="p-8 flex flex-col justify-center h-full space-y-6">
                 <h3 className="text-2xl font-bold">{t("contact.infoTitle")}</h3>
                 <div className="space-y-4">
@@ -182,6 +215,7 @@ export default function PortfolioPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 bg-white/10 rounded-full hover:bg-white/20 transition-colors"
+                    aria-label="LinkedIn Profile"
                   >
                     <Linkedin className="w-6 h-6" />
                   </a>
@@ -189,34 +223,61 @@ export default function PortfolioPage() {
               </CardContent>
             </Card>
 
-            <Card className="border border-border/50">
+            <Card className="bg-card border border-border/50 shadow-2xl hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 transition-all duration-200">
               <CardContent className="p-8">
-                <form className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">{t("contact.form.name")}</label>
+                    <label htmlFor="name" className="text-sm font-medium">{t("contact.form.name")}</label>
                     <input
+                      id="name"
+                      name="name"
                       type="text"
+                      required
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                       placeholder={t("contact.form.namePlaceholder")}
+                      autoComplete="name"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">{t("contact.form.email")}</label>
+                    <label htmlFor="email" className="text-sm font-medium">{t("contact.form.email")}</label>
                     <input
+                      id="email"
+                      name="email"
                       type="email"
+                      required
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                       placeholder={t("contact.form.emailPlaceholder")}
+                      autoComplete="email"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">{t("contact.form.message")}</label>
+                    <label htmlFor="message" className="text-sm font-medium">{t("contact.form.message")}</label>
                     <textarea
+                      id="message"
+                      name="message"
+                      required
                       className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                       placeholder={t("contact.form.messagePlaceholder")}
                     />
                   </div>
-                  <Button className="w-full">
-                    {t("contact.form.send")}
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={formState === "submitting" || formState === "success"}
+                  >
+                    {formState === "submitting" ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Sending...
+                      </>
+                    ) : formState === "success" ? (
+                      <>
+                        <CheckCircle2 className="mr-2 h-4 w-4" />
+                        Sent Successfully
+                      </>
+                    ) : (
+                      t("contact.form.send")
+                    )}
                   </Button>
                 </form>
               </CardContent>
@@ -228,7 +289,7 @@ export default function PortfolioPage() {
       <Game />
 
       {/* Footer */}
-      <footer className="py-8 border-t bg-secondary/30">
+      <footer className="py-8 border-t">
         <div className="container mx-auto px-4 text-center">
           <p className="text-muted-foreground">{t("footer.rights", { year: new Date().getFullYear() })}</p>
           <p className="text-sm mt-2 text-muted-foreground">{t("footer.builtWith")}</p>

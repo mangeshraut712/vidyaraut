@@ -135,7 +135,7 @@ export function AIChatbot() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-20 right-4 z-50 w-[350px] md:w-[400px]"
+            className="fixed bottom-20 right-4 left-4 sm:left-auto z-50 w-auto sm:w-[350px] md:w-[400px]"
           >
             <Card className="border-primary/20 shadow-2xl overflow-hidden">
               <CardHeader className="bg-primary text-primary-foreground p-4 flex flex-row items-center justify-between space-y-0">
@@ -239,6 +239,7 @@ export function AIChatbot() {
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-4 right-4 z-50 h-14 w-14 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 transition-colors"
+        aria-label="Toggle chat"
       >
         {isOpen ? (
           <X className="w-6 h-6" />

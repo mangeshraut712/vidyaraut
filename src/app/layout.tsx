@@ -25,9 +25,20 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Vidya Raut" }],
   metadataBase: new URL("https://vidyaraut.vercel.app"),
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Vidya Raut | Energy Technology & Market Analyst",
+    description: "Professional portfolio of Vidya Raut - Energy Technology Analyst specializing in market research, data analysis, and energy storage systems.",
+    url: "https://vidyaraut.vercel.app",
+    siteName: "Vidya Raut Portfolio",
+    locale: "en_US",
+    type: "website",
+  },
   icons: {
-    icon: "/favicon.svg",
-    apple: "/logo.svg",
+    icon: "/logo.png",
+    apple: "/logo.png",
   },
 };
 

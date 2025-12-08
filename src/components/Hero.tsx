@@ -11,6 +11,10 @@ export function Hero() {
 
     return (
         <section id="home" className="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute top-20 left-10 w-[300px] h-[300px] bg-primary/5 rounded-full blur-3xl -z-10" />
+            <div className="absolute bottom-20 right-10 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-3xl -z-10" />
+
             <div className="container mx-auto px-4 z-10">
                 <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20">
                     <motion.div
@@ -19,7 +23,7 @@ export function Hero() {
                         transition={{ duration: 0.8, ease: "easeOut" }}
                         className="flex-1 text-center md:text-left"
                     >
-                        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6">
+                        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">
                             {t("name")}
                         </h1>
                         <h2 className="text-2xl md:text-3xl text-muted-foreground mb-8 font-medium">
@@ -56,6 +60,7 @@ export function Hero() {
                                     alt="Vidya Raut"
                                     fill
                                     className="object-cover"
+                                    sizes="(max-width: 768px) 300px, 500px"
                                     priority
                                 />
                             </div>
