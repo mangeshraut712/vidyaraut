@@ -33,16 +33,13 @@ export function Hero() {
                             {t("description")}
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <div className="flex justify-center md:justify-start">
                             <a href="/Vidya_Raut_Resume.md" download>
-                                <Button size="lg" className="rounded-full px-8 w-full sm:w-auto gap-2">
+                                <Button size="lg" className="rounded-full px-8 gap-2">
                                     <Download className="w-4 h-4" />
                                     {t("downloadResume")}
                                 </Button>
                             </a>
-                            <Button variant="outline" size="lg" className="rounded-full px-8 w-full sm:w-auto" onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}>
-                                {t("viewWork")}
-                            </Button>
                         </div>
                     </motion.div>
 

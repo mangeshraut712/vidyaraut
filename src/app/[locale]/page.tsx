@@ -24,7 +24,6 @@ import { Game } from "@/components/Game"
 import { ScrollToTop } from "@/components/ScrollToTop"
 import { Testimonials } from "@/components/Testimonials"
 import { GitHubStats } from "@/components/GitHubStats"
-import { Newsletter } from "@/components/Newsletter"
 import { BookingSection } from "@/components/BookingSection"
 import { contactInfo } from "@/lib/data"
 import { useTranslations } from "next-intl"
@@ -174,9 +173,6 @@ export default function PortfolioPage() {
 
       {/* GitHub Stats Section */}
       <GitHubStats />
-
-      {/* Newsletter Section */}
-      <Newsletter />
 
       {/* Booking Section */}
       <BookingSection />
