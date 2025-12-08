@@ -1,10 +1,9 @@
 "use client"
 
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { MessageSquare, X, Send, Sparkles, Bot, User } from "lucide-react"
+import { MessageSquare, X, Send, Sparkles, Bot, User, RefreshCw, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
@@ -16,23 +15,31 @@ interface Message {
   timestamp: Date
 }
 
+// Quick action suggestions
+const QUICK_ACTIONS = [
+  "What's Vidya's experience?",
+  "Tell me about her skills",
+  "Education background",
+  "Contact information"
+]
+
 export function AIChatbot() {
   const t = useTranslations("chatbot")
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
   const initialized = useRef(false)
 
-  const getTranslationSafe = (key: string, fallback: string) => {
+  const getTranslationSafe = useCallback((key: string, fallback: string) => {
     try {
       return t(key)
     } catch {
       return fallback
     }
-  }
+  }, [t])
 
   useEffect(() => {
     if (!initialized.current) {
@@ -40,14 +47,13 @@ export function AIChatbot() {
         {
           id: "1",
           role: "assistant",
-          content: getTranslationSafe("initialMessage", "Hello! I'm Vidya's AI Assistant. Ask me anything about her background, experience, skills, or qualifications - I can also help with general questions!"),
+          content: getTranslationSafe("initialMessage", "👋 Hello! I'm Vidya's AI Assistant. Ask me anything about her background, experience, skills, or qualifications. I can also help with general questions!"),
           timestamp: new Date(),
         },
       ])
       initialized.current = true
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [getTranslationSafe])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -57,25 +63,31 @@ export function AIChatbot() {
     scrollToBottom()
   }, [messages])
 
-  const handleSend = async () => {
-    if (!input.trim()) return
+  // Focus input when chat opens
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [isOpen])
+
+  const handleSend = async (messageText?: string) => {
+    const text = messageText || input
+    if (!text.trim()) return
 
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
-      content: input,
+      content: text,
       timestamp: new Date(),
     }
 
     setMessages((prev) => [...prev, userMessage])
     setInput("")
     setIsTyping(true)
-    setError(null)
 
     try {
-      // Prepare messages for API call - include the current user message
       const recentMessages = [
-        ...messages.slice(-4).map(msg => ({
+        ...messages.slice(-6).map(msg => ({
           role: msg.role as "user" | "assistant",
           content: msg.content
         })),
@@ -85,7 +97,6 @@ export function AIChatbot() {
         }
       ]
 
-      // Call our secure API route
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -105,25 +116,41 @@ export function AIChatbot() {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: data.response || getTranslationSafe("error", "I'm having trouble connecting to my AI service right now. Please try again later."),
+        content: data.response || "I'm having trouble connecting right now. Please try again.",
         timestamp: new Date(),
       }
 
       setMessages((prev) => [...prev, aiMessage])
     } catch (err) {
       console.error("Chat error:", err)
-      setError(t("error"))
 
-      // Fallback response on error - simpler and less misleading
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: "I'm currently having trouble connecting to the AI service. Please try again later, or contact Vidya directly for specific inquiries.",
+        content: "⚠️ I'm currently having trouble connecting. Please try again later, or contact Vidya directly at vidyaraut17297@gmail.com",
         timestamp: new Date(),
       }
       setMessages((prev) => [...prev, aiMessage])
     } finally {
       setIsTyping(false)
+    }
+  }
+
+  const clearChat = () => {
+    setMessages([
+      {
+        id: Date.now().toString(),
+        role: "assistant",
+        content: "🔄 Chat cleared! How can I help you?",
+        timestamp: new Date(),
+      },
+    ])
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleSend()
     }
   }
 
@@ -135,81 +162,120 @@ export function AIChatbot() {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-20 right-4 left-4 sm:left-auto z-50 w-auto sm:w-[350px] md:w-[400px]"
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="fixed bottom-20 right-4 left-4 sm:left-auto z-50 w-auto sm:w-[380px] md:w-[420px]"
           >
-            <Card className="border-primary/20 shadow-2xl overflow-hidden">
-              <CardHeader className="bg-primary text-primary-foreground p-4 flex flex-row items-center justify-between space-y-0">
+            <Card className="border-primary/20 shadow-2xl overflow-hidden backdrop-blur-sm">
+              <CardHeader className="bg-gradient-to-r from-primary to-blue-600 text-primary-foreground p-4 flex flex-row items-center justify-between space-y-0">
                 <div className="flex items-center gap-2">
-                  <div className="p-1.5 bg-background/20 rounded-full">
+                  <div className="p-1.5 bg-white/20 rounded-full animate-pulse">
                     <Sparkles className="w-4 h-4" />
                   </div>
-                  <CardTitle className="text-base">{t("title")}</CardTitle>
+                  <div>
+                    <CardTitle className="text-base">{t("title")}</CardTitle>
+                    <p className="text-xs text-primary-foreground/70">Powered by AI</p>
+                  </div>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-primary-foreground hover:bg-primary-foreground/20"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <X className="w-4 h-4" />
-                </Button>
+                <div className="flex items-center gap-1">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-primary-foreground hover:bg-white/20"
+                    onClick={clearChat}
+                    title="Clear chat"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-primary-foreground hover:bg-white/20"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                </div>
               </CardHeader>
-              <CardContent className="p-0 h-[400px] flex flex-col bg-background">
+              <CardContent className="p-0 h-[450px] flex flex-col bg-background">
                 <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                  {messages.map((msg) => (
-                    <div
+                  {messages.map((msg, index) => (
+                    <motion.div
                       key={msg.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index === messages.length - 1 ? 0.1 : 0 }}
                       className={cn(
-                        "flex w-full gap-2 max-w-[80%]",
-                        msg.role === "user" ? "ml-auto flex-row-reverse" : ""
+                        "flex w-full gap-2",
+                        msg.role === "user" ? "justify-end" : "justify-start"
                       )}
                     >
-                      <div
-                        className={cn(
-                          "w-8 h-8 rounded-full flex items-center justify-center shrink-0",
-                          msg.role === "user"
-                            ? "bg-primary text-primary-foreground"
-                            : "bg-muted text-muted-foreground"
-                        )}
-                      >
-                        {msg.role === "user" ? (
-                          <User className="w-4 h-4" />
-                        ) : (
+                      {msg.role === "assistant" && (
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-blue-600 text-white flex items-center justify-center shrink-0 shadow-md">
                           <Bot className="w-4 h-4" />
-                        )}
-                      </div>
+                        </div>
+                      )}
                       <div
                         className={cn(
-                          "p-3 rounded-2xl text-sm",
+                          "p-3 rounded-2xl text-sm max-w-[80%] shadow-sm",
                           msg.role === "user"
-                            ? "bg-primary text-primary-foreground rounded-tr-none"
-                            : "bg-muted text-muted-foreground rounded-tl-none"
+                            ? "bg-primary text-primary-foreground rounded-br-md"
+                            : "bg-muted text-foreground rounded-bl-md"
                         )}
                       >
-                        {msg.content}
+                        <p className="whitespace-pre-wrap">{msg.content}</p>
+                        <p className={cn(
+                          "text-[10px] mt-1 opacity-60",
+                          msg.role === "user" ? "text-right" : "text-left"
+                        )}>
+                          {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </p>
                       </div>
-                    </div>
+                      {msg.role === "user" && (
+                        <div className="w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center shrink-0 shadow-md">
+                          <User className="w-4 h-4" />
+                        </div>
+                      )}
+                    </motion.div>
                   ))}
+
                   {isTyping && (
-                    <div className="flex w-full gap-2 max-w-[80%]">
-                      <div className="w-8 h-8 rounded-full bg-muted text-muted-foreground flex items-center justify-center shrink-0">
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="flex w-full gap-2"
+                    >
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-blue-600 text-white flex items-center justify-center shrink-0">
                         <Bot className="w-4 h-4" />
                       </div>
-                      <div className="bg-muted p-3 rounded-2xl rounded-tl-none flex items-center gap-1">
-                        <span className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                        <span className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                        <span className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce"></span>
+                      <div className="bg-muted p-4 rounded-2xl rounded-bl-md flex items-center gap-1.5">
+                        <RefreshCw className="w-4 h-4 animate-spin text-primary" />
+                        <span className="text-sm text-muted-foreground">Thinking...</span>
                       </div>
-                    </div>
+                    </motion.div>
                   )}
-                  {error && (
-                    <div className="text-xs text-destructive text-center">
-                      {error}
-                    </div>
-                  )}
+
                   <div ref={messagesEndRef} />
                 </div>
-                <div className="p-4 border-t bg-background">
+
+                {/* Quick Actions */}
+                {messages.length <= 2 && !isTyping && (
+                  <div className="px-4 pb-2">
+                    <p className="text-xs text-muted-foreground mb-2">Quick questions:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {QUICK_ACTIONS.map((action) => (
+                        <button
+                          key={action}
+                          onClick={() => handleSend(action)}
+                          className="text-xs px-3 py-1.5 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground transition-colors"
+                        >
+                          {action}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="p-4 border-t bg-background/50">
                   <form
                     onSubmit={(e) => {
                       e.preventDefault()
@@ -217,13 +283,21 @@ export function AIChatbot() {
                     }}
                     className="flex gap-2"
                   >
-                    <Input
+                    <textarea
+                      ref={inputRef}
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
+                      onKeyDown={handleKeyDown}
                       placeholder={t("placeholder")}
-                      className="flex-1"
+                      rows={1}
+                      className="flex-1 resize-none rounded-xl border border-input bg-background px-4 py-2.5 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     />
-                    <Button type="submit" size="icon" disabled={!input.trim() || isTyping}>
+                    <Button
+                      type="submit"
+                      size="icon"
+                      disabled={!input.trim() || isTyping}
+                      className="rounded-xl h-10 w-10 bg-primary hover:bg-primary/90"
+                    >
                       <Send className="w-4 h-4" />
                     </Button>
                   </form>
@@ -234,13 +308,15 @@ export function AIChatbot() {
         )}
       </AnimatePresence>
 
+      {/* Floating Action Button with pulse effect */}
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 right-4 z-50 h-14 w-14 rounded-full bg-primary text-primary-foreground shadow-lg flex items-center justify-center hover:bg-primary/90 transition-colors"
+        className="fixed bottom-4 right-4 z-50 h-14 w-14 rounded-full bg-gradient-to-r from-primary to-blue-600 text-white shadow-lg flex items-center justify-center hover:shadow-xl transition-shadow"
         aria-label="Toggle chat"
       >
+        <span className="absolute w-full h-full rounded-full bg-primary animate-ping opacity-20" />
         {isOpen ? (
           <X className="w-6 h-6" />
         ) : (
