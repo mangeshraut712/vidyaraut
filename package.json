@@ -20,7 +20,7 @@
     "axios": "^1.13.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "eslint": "^8",
+    "eslint": "^9",
     "eslint-config-next": "^16.0.7",
     "framer-motion": "^11.11.17",
     "lucide-react": "^0.453.0",
@@ -42,6 +42,7 @@
     "zustand": "^5.0.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
     "@fontsource/geist": "^5.2.8",
     "@fontsource/geist-mono": "^5.2.7",
     "autoprefixer": "^10.0.1",
