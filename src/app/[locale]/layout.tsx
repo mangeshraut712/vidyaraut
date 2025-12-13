@@ -18,7 +18,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
 
   return (
     <AppProviders locale={locale} messages={messages}>
-      <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)]">
+      <div className="min-h-screen bg-background text-foreground">
         {children}
       </div>
     </AppProviders>
