@@ -2,9 +2,8 @@
 
 import React, { useState, useRef, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { MessageSquare, X, Send, Sparkles, Bot, User, RefreshCw, Trash2 } from "lucide-react"
+import { MessageSquare, X, Send, Sparkles, Bot, User, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
 
@@ -22,6 +21,29 @@ const QUICK_ACTIONS = [
   "Education background",
   "Contact information"
 ]
+
+// Typing dots animation component - GPU optimized
+function TypingDots() {
+  return (
+    <div className="flex items-center gap-1 px-3 py-2">
+      {[0, 1, 2].map((i) => (
+        <motion.span
+          key={i}
+          className="w-2 h-2 bg-primary rounded-full gpu-accelerated"
+          animate={{ y: [0, -6, 0] }}
+          transition={{
+            duration: 0.5,
+            repeat: Infinity,
+            delay: i * 0.12,
+            ease: [0.4, 0, 0.2, 1], // Custom cubic-bezier for smoother animation
+          }}
+          style={{ willChange: 'transform' }}
+        />
+      ))}
+    </div>
+  )
+}
+
 
 export function AIChatbot() {
   const t = useTranslations("chatbot")
@@ -163,24 +185,32 @@ export function AIChatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed bottom-20 right-4 left-4 sm:left-auto z-50 w-auto sm:w-[380px] md:w-[420px]"
+            className="fixed bottom-20 right-4 left-4 sm:left-auto z-50 w-auto sm:w-[400px] md:w-[440px]"
           >
-            <Card className="border-primary/20 shadow-2xl overflow-hidden backdrop-blur-sm">
-              <CardHeader className="bg-gradient-to-r from-primary to-blue-600 text-primary-foreground p-4 flex flex-row items-center justify-between space-y-0">
-                <div className="flex items-center gap-2">
-                  <div className="p-1.5 bg-white/20 rounded-full animate-pulse">
-                    <Sparkles className="w-4 h-4" />
-                  </div>
+            <div className="rounded-2xl border border-border/50 shadow-2xl overflow-hidden bg-card/95 backdrop-blur-xl">
+              {/* Header */}
+              <div className="bg-gradient-to-r from-primary via-blue-600 to-indigo-600 p-4 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <motion.div
+                    animate={{ rotate: [0, 10, -10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    className="p-2 bg-white/20 rounded-xl backdrop-blur-sm"
+                  >
+                    <Sparkles className="w-5 h-5 text-white" />
+                  </motion.div>
                   <div>
-                    <CardTitle className="text-base">{t("title")}</CardTitle>
-                    <p className="text-xs text-primary-foreground/70">Powered by AI</p>
+                    <h3 className="font-semibold text-white text-base">{t("title")}</h3>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                      <span className="text-xs text-white/80">Online • Powered by AI</span>
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8 text-primary-foreground hover:bg-white/20"
+                    className="h-9 w-9 text-white hover:bg-white/20 rounded-xl"
                     onClick={clearChat}
                     title="Clear chat"
                   >
@@ -189,50 +219,57 @@ export function AIChatbot() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8 text-primary-foreground hover:bg-white/20"
+                    className="h-9 w-9 text-white hover:bg-white/20 rounded-xl"
                     onClick={() => setIsOpen(false)}
                   >
-                    <X className="w-4 h-4" />
+                    <X className="w-5 h-5" />
                   </Button>
                 </div>
-              </CardHeader>
-              <CardContent className="p-0 h-[450px] flex flex-col bg-background">
+              </div>
+
+              {/* Messages Area */}
+              <div className="h-[420px] flex flex-col">
                 <div className="flex-1 overflow-y-auto p-4 space-y-4">
                   {messages.map((msg, index) => (
                     <motion.div
                       key={msg.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index === messages.length - 1 ? 0.1 : 0 }}
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{
+                        delay: index === messages.length - 1 ? 0.1 : 0,
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 25
+                      }}
                       className={cn(
-                        "flex w-full gap-2",
+                        "flex w-full gap-3",
                         msg.role === "user" ? "justify-end" : "justify-start"
                       )}
                     >
                       {msg.role === "assistant" && (
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-blue-600 text-white flex items-center justify-center shrink-0 shadow-md">
-                          <Bot className="w-4 h-4" />
+                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-indigo-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-primary/20">
+                          <Bot className="w-5 h-5" />
                         </div>
                       )}
                       <div
                         className={cn(
-                          "p-3 rounded-2xl text-sm max-w-[80%] shadow-sm",
+                          "p-3.5 rounded-2xl text-sm max-w-[85%] shadow-sm",
                           msg.role === "user"
-                            ? "bg-primary text-primary-foreground rounded-br-md"
-                            : "bg-muted text-foreground rounded-bl-md"
+                            ? "bg-gradient-to-br from-primary to-blue-600 text-white rounded-br-sm"
+                            : "bg-secondary/80 text-foreground rounded-bl-sm border border-border/50"
                         )}
                       >
-                        <p className="whitespace-pre-wrap">{msg.content}</p>
+                        <p className="whitespace-pre-wrap leading-relaxed">{msg.content}</p>
                         <p className={cn(
-                          "text-[10px] mt-1 opacity-60",
+                          "text-[10px] mt-2 opacity-60",
                           msg.role === "user" ? "text-right" : "text-left"
                         )}>
                           {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </p>
                       </div>
                       {msg.role === "user" && (
-                        <div className="w-8 h-8 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center shrink-0 shadow-md">
-                          <User className="w-4 h-4" />
+                        <div className="w-9 h-9 rounded-xl bg-secondary text-foreground flex items-center justify-center shrink-0 shadow-sm border border-border/50">
+                          <User className="w-5 h-5" />
                         </div>
                       )}
                     </motion.div>
@@ -240,16 +277,15 @@ export function AIChatbot() {
 
                   {isTyping && (
                     <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="flex w-full gap-2"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex w-full gap-3"
                     >
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-blue-600 text-white flex items-center justify-center shrink-0">
-                        <Bot className="w-4 h-4" />
+                      <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-indigo-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-primary/20">
+                        <Bot className="w-5 h-5" />
                       </div>
-                      <div className="bg-muted p-4 rounded-2xl rounded-bl-md flex items-center gap-1.5">
-                        <RefreshCw className="w-4 h-4 animate-spin text-primary" />
-                        <span className="text-sm text-muted-foreground">Thinking...</span>
+                      <div className="bg-secondary/80 rounded-2xl rounded-bl-sm border border-border/50">
+                        <TypingDots />
                       </div>
                     </motion.div>
                   )}
@@ -258,30 +294,41 @@ export function AIChatbot() {
                 </div>
 
                 {/* Quick Actions */}
-                {messages.length <= 2 && !isTyping && (
-                  <div className="px-4 pb-2">
-                    <p className="text-xs text-muted-foreground mb-2">Quick questions:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {QUICK_ACTIONS.map((action) => (
-                        <button
-                          key={action}
-                          onClick={() => handleSend(action)}
-                          className="text-xs px-3 py-1.5 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground transition-colors"
-                        >
-                          {action}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                <AnimatePresence>
+                  {messages.length <= 2 && !isTyping && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="px-4 pb-3 overflow-hidden"
+                    >
+                      <p className="text-xs text-muted-foreground mb-2 font-medium">Quick questions:</p>
+                      <div className="flex flex-wrap gap-2">
+                        {QUICK_ACTIONS.map((action, idx) => (
+                          <motion.button
+                            key={action}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: idx * 0.05 }}
+                            onClick={() => handleSend(action)}
+                            className="text-xs px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 transition-all duration-200 hover:scale-105"
+                          >
+                            {action}
+                          </motion.button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-                <div className="p-4 border-t bg-background/50">
+                {/* Input Area */}
+                <div className="p-4 border-t border-border/50 bg-background/50 backdrop-blur-sm">
                   <form
                     onSubmit={(e) => {
                       e.preventDefault()
                       handleSend()
                     }}
-                    className="flex gap-2"
+                    className="flex gap-3"
                   >
                     <textarea
                       ref={inputRef}
@@ -290,39 +337,61 @@ export function AIChatbot() {
                       onKeyDown={handleKeyDown}
                       placeholder={t("placeholder")}
                       rows={1}
-                      className="flex-1 resize-none rounded-xl border border-input bg-background px-4 py-2.5 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      className="flex-1 resize-none rounded-xl border border-border bg-secondary/50 px-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
                     />
                     <Button
                       type="submit"
                       size="icon"
                       disabled={!input.trim() || isTyping}
-                      className="rounded-xl h-10 w-10 bg-primary hover:bg-primary/90"
+                      className="rounded-xl h-11 w-11 bg-gradient-to-br from-primary to-indigo-600 hover:opacity-90 shadow-lg shadow-primary/25 transition-all disabled:opacity-50 disabled:shadow-none"
                     >
-                      <Send className="w-4 h-4" />
+                      <Send className="w-5 h-5" />
                     </Button>
                   </form>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Floating Action Button with pulse effect */}
+      {/* Floating Action Button */}
       <motion.button
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 right-4 z-50 h-14 w-14 rounded-full bg-gradient-to-r from-primary to-blue-600 text-white shadow-lg flex items-center justify-center hover:shadow-xl transition-shadow"
+        className="fixed bottom-4 right-4 z-50 h-14 w-14 rounded-full bg-gradient-to-br from-primary via-blue-600 to-indigo-600 text-white shadow-xl flex items-center justify-center hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300"
         aria-label="Toggle chat"
       >
-        <span className="absolute w-full h-full rounded-full bg-primary animate-ping opacity-20" />
-        {isOpen ? (
-          <X className="w-6 h-6" />
-        ) : (
-          <MessageSquare className="w-6 h-6" />
+        {/* Glow effect */}
+        <span className="absolute inset-0 rounded-full bg-gradient-to-br from-primary to-indigo-600 blur-lg opacity-40 animate-pulse" />
+
+        {/* Icon */}
+        <motion.span
+          initial={false}
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+          className="relative z-10"
+        >
+          {isOpen ? (
+            <X className="w-6 h-6" />
+          ) : (
+            <MessageSquare className="w-6 h-6" />
+          )}
+        </motion.span>
+
+        {/* Notification badge when closed */}
+        {!isOpen && (
+          <motion.span
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-[10px] font-bold border-2 border-background shadow-md"
+          >
+            1
+          </motion.span>
         )}
       </motion.button>
     </>
   )
 }
+

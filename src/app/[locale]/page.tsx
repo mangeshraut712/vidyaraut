@@ -25,6 +25,7 @@ import { ScrollToTop } from "@/components/ScrollToTop"
 import { Testimonials } from "@/components/Testimonials"
 import { GitHubStats } from "@/components/GitHubStats"
 import { BookingSection } from "@/components/BookingSection"
+import { Footer } from "@/components/Footer"
 import { contactInfo } from "@/lib/data"
 import { useTranslations } from "next-intl"
 import dynamic from "next/dynamic"
@@ -300,13 +301,7 @@ export default function PortfolioPage() {
 
       <Game />
 
-      {/* Footer */}
-      <footer className="py-8 border-t">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-muted-foreground">{t("footer.rights", { year: new Date().getFullYear() })}</p>
-          <p className="text-sm mt-2 text-muted-foreground">{t("footer.builtWith")}</p>
-        </div>
-      </footer>
+      <Footer />
 
       <AIChatbot />
       <ScrollToTop />
