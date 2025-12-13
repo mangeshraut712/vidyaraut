@@ -121,9 +121,6 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-    /* Enable GPU compositing */
-    transform: translateZ(0);
-    backface-visibility: hidden;
   }
 
   /* Force GPU acceleration on animated elements */
