@@ -1,13 +1,20 @@
 "use client"
 
 import { useState, useEffect, useCallback, useRef } from "react"
+import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowUp } from "lucide-react"
 
 export function ScrollToTop() {
     const [isVisible, setIsVisible] = useState(false)
     const [scrollProgress, setScrollProgress] = useState(0)
+    const [mounted, setMounted] = useState(false)
     const rafRef = useRef<number | null>(null)
+
+    // Ensure component is mounted before using portal
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     // Throttled scroll handler for 90 FPS performance
     const handleScroll = useCallback(() => {
@@ -42,7 +49,10 @@ export function ScrollToTop() {
         })
     }
 
-    return (
+    // Don't render until mounted (for SSR compatibility)
+    if (!mounted) return null
+
+    const content = (
         <AnimatePresence>
             {isVisible && (
                 <motion.div
@@ -51,7 +61,6 @@ export function ScrollToTop() {
                     exit={{ opacity: 0, scale: 0.8, y: 20 }}
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
                     className="fixed bottom-6 left-6 z-[9999]"
-                    style={{ position: 'fixed' }}
                 >
                     <motion.button
                         whileHover={{ scale: 1.1, y: -2 }}
@@ -81,14 +90,14 @@ export function ScrollToTop() {
                                 cy="22"
                                 r="18"
                                 fill="none"
-                                stroke="url(#gradient)"
+                                stroke="url(#gradient-scroll)"
                                 strokeWidth="3"
                                 strokeLinecap="round"
                                 strokeDasharray={`${scrollProgress * 1.13} 113`}
                                 className="transition-all duration-150"
                             />
                             <defs>
-                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <linearGradient id="gradient-scroll" x1="0%" y1="0%" x2="100%" y2="0%">
                                     <stop offset="0%" stopColor="hsl(var(--primary))" />
                                     <stop offset="100%" stopColor="hsl(221 83% 60%)" />
                                 </linearGradient>
@@ -106,5 +115,7 @@ export function ScrollToTop() {
             )}
         </AnimatePresence>
     )
-}
 
+    // Use portal to render directly to body, bypassing any parent CSS issues
+    return createPortal(content, document.body)
+}

@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useRef, useEffect, useCallback } from "react"
+import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { MessageSquare, X, Send, Sparkles, Bot, User, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -51,6 +52,7 @@ export function AIChatbot() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const initialized = useRef(false)
@@ -62,6 +64,11 @@ export function AIChatbot() {
       return fallback
     }
   }, [t])
+
+  // Ensure component is mounted before using portal
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     if (!initialized.current) {
@@ -176,7 +183,10 @@ export function AIChatbot() {
     }
   }
 
-  return (
+  // Don't render until mounted (for SSR compatibility)
+  if (!mounted) return null
+
+  const content = (
     <>
       <AnimatePresence>
         {isOpen && (
@@ -186,7 +196,6 @@ export function AIChatbot() {
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className="fixed bottom-24 right-6 left-4 sm:left-auto z-[9998] w-auto sm:w-[400px] md:w-[440px]"
-            style={{ position: 'fixed' }}
           >
             <div className="rounded-2xl border border-border/50 shadow-2xl overflow-hidden bg-card/95 backdrop-blur-xl">
               {/* Header */}
@@ -395,5 +404,7 @@ export function AIChatbot() {
       </motion.button>
     </>
   )
-}
 
+  // Use portal to render directly to body, bypassing any parent CSS issues
+  return createPortal(content, document.body)
+}
