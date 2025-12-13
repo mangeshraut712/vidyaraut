@@ -4,15 +4,24 @@ import React from "react"
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { 
-  Zap, 
-  TrendingUp, 
-  Database, 
-  BarChart3, 
-  Battery, 
+import {
+  Zap,
+  TrendingUp,
+  Database,
+  BarChart3,
+  Battery,
   Sun,
   Lightbulb
 } from "lucide-react"
+import { Navigation } from "@/components/Navigation"
+import { ScrollToTop } from "@/components/ScrollToTop"
+import dynamic from "next/dynamic"
+
+// Lazy load the chatbot
+const AIChatbot = dynamic(() => import("@/components/AIChatbot").then(mod => mod.AIChatbot), {
+  ssr: false,
+  loading: () => null
+})
 
 const skills = [
   {
@@ -94,137 +103,143 @@ const certifications = [
 
 export default function SkillsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      <div className="container mx-auto px-4 py-16">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <Badge variant="outline" className="mb-4 px-4 py-1 text-base border-purple-500/50">
-            <Lightbulb className="w-4 h-4 mr-2 inline" />
-            Skills & Expertise
-          </Badge>
-          <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600">
-            Technical Expertise
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Comprehensive skill set in energy technology, data analysis, and market research
-          </p>
-        </motion.div>
+    <>
+      <Navigation />
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+        <div className="container mx-auto px-4 py-16 pt-24">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-16"
+          >
+            <Badge variant="outline" className="mb-4 px-4 py-1 text-base border-purple-500/50">
+              <Lightbulb className="w-4 h-4 mr-2 inline" />
+              Skills & Expertise
+            </Badge>
+            <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600">
+              Technical Expertise
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Comprehensive skill set in energy technology, data analysis, and market research
+            </p>
+          </motion.div>
 
-        {/* Skills Grid */}
-        <div className="grid gap-8 mb-16">
-          {skills.map((category, idx) => {
-            const Icon = category.icon
-            return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-              >
-                <Card className="overflow-hidden border-2 hover:border-primary/50 transition-all duration-300">
-                  <CardHeader className={`bg-gradient-to-r ${category.color} text-white`}>
-                    <CardTitle className="flex items-center gap-3">
-                      <div className="p-2 bg-white/20 rounded-lg">
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      {category.category}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      {category.items.map((skill, skillIdx) => (
-                        <div key={skillIdx} className="space-y-2">
-                          <div className="flex justify-between items-center">
-                            <span className="font-semibold text-foreground">{skill.name}</span>
-                            <span className="text-sm font-bold text-primary">{skill.level}%</span>
-                          </div>
-                          <div className="h-2 bg-muted rounded-full overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              whileInView={{ width: `${skill.level}%` }}
-                              viewport={{ once: true }}
-                              transition={{ duration: 1, delay: skillIdx * 0.1 }}
-                              className={`h-full bg-gradient-to-r ${category.color} rounded-full`}
-                            />
-                          </div>
-                          <p className="text-sm text-muted-foreground">{skill.description}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            )
-          })}
-        </div>
-
-        {/* Certifications */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16"
-        >
-          <h2 className="text-3xl font-bold mb-8 text-center">Certifications & Training</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {certifications.map((cert, idx) => {
-              const Icon = cert.icon
+          {/* Skills Grid */}
+          <div className="grid gap-8 mb-16">
+            {skills.map((category, idx) => {
+              const Icon = category.icon
               return (
                 <motion.div
                   key={idx}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
                 >
-                  <Card className="text-center hover:shadow-lg transition-shadow duration-300 h-full">
+                  <Card className="overflow-hidden border-2 hover:border-primary/50 transition-all duration-300">
+                    <CardHeader className={`bg-gradient-to-r ${category.color} text-white`}>
+                      <CardTitle className="flex items-center gap-3">
+                        <div className="p-2 bg-white/20 rounded-lg">
+                          <Icon className="w-6 h-6" />
+                        </div>
+                        {category.category}
+                      </CardTitle>
+                    </CardHeader>
                     <CardContent className="p-6">
-                      <div className={`w-16 h-16 ${cert.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
-                        <Icon className="w-8 h-8 text-white" />
+                      <div className="grid md:grid-cols-2 gap-6">
+                        {category.items.map((skill, skillIdx) => (
+                          <div key={skillIdx} className="space-y-2">
+                            <div className="flex justify-between items-center">
+                              <span className="font-semibold text-foreground">{skill.name}</span>
+                              <span className="text-sm font-bold text-primary">{skill.level}%</span>
+                            </div>
+                            <div className="h-2 bg-muted rounded-full overflow-hidden">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${skill.level}%` }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1, delay: skillIdx * 0.1 }}
+                                className={`h-full bg-gradient-to-r ${category.color} rounded-full`}
+                              />
+                            </div>
+                            <p className="text-sm text-muted-foreground">{skill.description}</p>
+                          </div>
+                        ))}
                       </div>
-                      <h3 className="font-bold mb-2">{cert.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-1">{cert.issuer}</p>
-                      <Badge variant="secondary">{cert.year}</Badge>
                     </CardContent>
                   </Card>
                 </motion.div>
               )
             })}
           </div>
-        </motion.div>
 
-        {/* Key Strengths */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <Card className="bg-gradient-to-br from-purple-500/10 via-pink-500/10 to-blue-500/10 border-2">
-            <CardContent className="p-8">
-              <h2 className="text-2xl font-bold mb-6 text-center">Key Strengths</h2>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-purple-600 mb-2">500+</div>
-                  <p className="text-muted-foreground">Reports Analyzed</p>
+          {/* Certifications */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-16"
+          >
+            <h2 className="text-3xl font-bold mb-8 text-center">Certifications & Training</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {certifications.map((cert, idx) => {
+                const Icon = cert.icon
+                return (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                  >
+                    <Card className="text-center hover:shadow-lg transition-shadow duration-300 h-full">
+                      <CardContent className="p-6">
+                        <div className={`w-16 h-16 ${cert.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                          <Icon className="w-8 h-8 text-white" />
+                        </div>
+                        <h3 className="font-bold mb-2">{cert.title}</h3>
+                        <p className="text-sm text-muted-foreground mb-1">{cert.issuer}</p>
+                        <Badge variant="secondary">{cert.year}</Badge>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                )
+              })}
+            </div>
+          </motion.div>
+
+          {/* Key Strengths */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Card className="bg-gradient-to-br from-purple-500/10 via-pink-500/10 to-blue-500/10 border-2">
+              <CardContent className="p-8">
+                <h2 className="text-2xl font-bold mb-6 text-center">Key Strengths</h2>
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-purple-600 mb-2">500+</div>
+                    <p className="text-muted-foreground">Reports Analyzed</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-pink-600 mb-2">40%</div>
+                    <p className="text-muted-foreground">Efficiency Improvement</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-blue-600 mb-2">$10M+</div>
+                    <p className="text-muted-foreground">Decision Support Value</p>
+                  </div>
                 </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-pink-600 mb-2">40%</div>
-                  <p className="text-muted-foreground">Efficiency Improvement</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-blue-600 mb-2">$10M+</div>
-                  <p className="text-muted-foreground">Decision Support Value</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
       </div>
-    </div>
+
+      <ScrollToTop />
+      <AIChatbot />
+    </>
   )
 }

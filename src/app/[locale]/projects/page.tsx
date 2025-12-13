@@ -4,14 +4,22 @@ import React from "react"
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { 
-  Code, 
+import {
+  Code,
   Battery,
   BarChart3,
   FileText,
   Zap,
   TrendingUp
 } from "lucide-react"
+import { Navigation } from "@/components/Navigation"
+import { ScrollToTop } from "@/components/ScrollToTop"
+import dynamic from "next/dynamic"
+
+const AIChatbot = dynamic(() => import("@/components/AIChatbot").then(mod => mod.AIChatbot), {
+  ssr: false,
+  loading: () => null
+})
 
 const projects = [
   {
@@ -132,154 +140,160 @@ const projects = [
 
 export default function ProjectsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/10 to-background">
-      <div className="container mx-auto px-4 py-16">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <Badge variant="outline" className="mb-4 px-4 py-1 text-base border-blue-500/50">
-            <Code className="w-4 h-4 mr-2 inline" />
-            Portfolio
-          </Badge>
-          <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
-            Projects & Work
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Key projects demonstrating expertise in energy technology, market research, and data analysis
-          </p>
-        </motion.div>
+    <>
+      <Navigation />
+      <div className="min-h-screen bg-gradient-to-br from-background via-muted/10 to-background">
+        <div className="container mx-auto px-4 py-16 pt-24">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-16"
+          >
+            <Badge variant="outline" className="mb-4 px-4 py-1 text-base border-blue-500/50">
+              <Code className="w-4 h-4 mr-2 inline" />
+              Portfolio
+            </Badge>
+            <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+              Projects & Work
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Key projects demonstrating expertise in energy technology, market research, and data analysis
+            </p>
+          </motion.div>
 
-        {/* Projects Grid */}
-        <div className="grid gap-8">
-          {projects.map((project, idx) => {
-            const Icon = project.icon
-            return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-              >
-                <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 hover:border-primary/50">
-                  <div className={`h-2 bg-gradient-to-r ${project.color}`} />
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-4 flex-1">
-                        <div className={`p-3 rounded-xl bg-gradient-to-br ${project.color} text-white`}>
-                          <Icon className="w-6 h-6" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <CardTitle className="text-2xl">{project.title}</CardTitle>
+          {/* Projects Grid */}
+          <div className="grid gap-8">
+            {projects.map((project, idx) => {
+              const Icon = project.icon
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                >
+                  <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 hover:border-primary/50">
+                    <div className={`h-2 bg-gradient-to-r ${project.color}`} />
+                    <CardHeader>
+                      <div className="flex items-start justify-between">
+                        <div className="flex items-start gap-4 flex-1">
+                          <div className={`p-3 rounded-xl bg-gradient-to-br ${project.color} text-white`}>
+                            <Icon className="w-6 h-6" />
                           </div>
-                          <Badge variant="secondary" className="mb-3">
-                            {project.category}
-                          </Badge>
-                          <p className="text-muted-foreground leading-relaxed">
-                            {project.description}
-                          </p>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <CardTitle className="text-2xl">{project.title}</CardTitle>
+                            </div>
+                            <Badge variant="secondary" className="mb-3">
+                              {project.category}
+                            </Badge>
+                            <p className="text-muted-foreground leading-relaxed">
+                              {project.description}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    {/* Highlights */}
-                    <div className="mb-6">
-                      <h4 className="font-semibold mb-3 flex items-center gap-2">
-                        <span className="w-1 h-4 bg-gradient-to-b from-primary to-primary/50 rounded" />
-                        Key Highlights
-                      </h4>
-                      <ul className="grid md:grid-cols-2 gap-2">
-                        {project.highlights.map((highlight, hIdx) => (
-                          <li key={hIdx} className="flex items-start gap-2 text-sm">
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
-                            <span className="text-foreground/80">{highlight}</span>
-                          </li>
+                    </CardHeader>
+                    <CardContent>
+                      {/* Highlights */}
+                      <div className="mb-6">
+                        <h4 className="font-semibold mb-3 flex items-center gap-2">
+                          <span className="w-1 h-4 bg-gradient-to-b from-primary to-primary/50 rounded" />
+                          Key Highlights
+                        </h4>
+                        <ul className="grid md:grid-cols-2 gap-2">
+                          {project.highlights.map((highlight, hIdx) => (
+                            <li key={hIdx} className="flex items-start gap-2 text-sm">
+                              <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                              <span className="text-foreground/80">{highlight}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.tags.map((tag, tIdx) => (
+                          <Badge key={tIdx} variant="outline" className="bg-background/50">
+                            {tag}
+                          </Badge>
                         ))}
-                      </ul>
-                    </div>
+                      </div>
 
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tags.map((tag, tIdx) => (
-                        <Badge key={tIdx} variant="outline" className="bg-background/50">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
+                      {/* Metrics */}
+                      <div className="flex gap-6 pt-4 border-t">
+                        <div>
+                          <div className="text-xs text-muted-foreground mb-1">Impact</div>
+                          <Badge className={
+                            project.metrics.impact === "High"
+                              ? "bg-green-500"
+                              : "bg-yellow-500"
+                          }>
+                            {project.metrics.impact}
+                          </Badge>
+                        </div>
+                        <div>
+                          <div className="text-xs text-muted-foreground mb-1">Duration</div>
+                          <div className="text-sm font-medium">{project.metrics.duration}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-muted-foreground mb-1">Team</div>
+                          <div className="text-sm font-medium">{project.metrics.team}</div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )
+            })}
+          </div>
 
-                    {/* Metrics */}
-                    <div className="flex gap-6 pt-4 border-t">
-                      <div>
-                        <div className="text-xs text-muted-foreground mb-1">Impact</div>
-                        <Badge className={
-                          project.metrics.impact === "High" 
-                            ? "bg-green-500" 
-                            : "bg-yellow-500"
-                        }>
-                          {project.metrics.impact}
-                        </Badge>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground mb-1">Duration</div>
-                        <div className="text-sm font-medium">{project.metrics.duration}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground mb-1">Team</div>
-                        <div className="text-sm font-medium">{project.metrics.team}</div>
-                      </div>
+          {/* Stats Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-16"
+          >
+            <Card className="bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 border-2">
+              <CardContent className="p-8">
+                <h2 className="text-2xl font-bold mb-8 text-center">Project Impact</h2>
+                <div className="grid md:grid-cols-4 gap-6">
+                  <div className="text-center">
+                    <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600 mb-2">
+                      6+
                     </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            )
-          })}
+                    <p className="text-muted-foreground">Major Projects</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-600 mb-2">
+                      500+
+                    </div>
+                    <p className="text-muted-foreground">Reports Analyzed</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
+                      40%
+                    </div>
+                    <p className="text-muted-foreground">Efficiency Gain</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-red-600 mb-2">
+                      $10M+
+                    </div>
+                    <p className="text-muted-foreground">Value Generated</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
-
-        {/* Stats Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16"
-        >
-          <Card className="bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 border-2">
-            <CardContent className="p-8">
-              <h2 className="text-2xl font-bold mb-8 text-center">Project Impact</h2>
-              <div className="grid md:grid-cols-4 gap-6">
-                <div className="text-center">
-                  <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-600 mb-2">
-                    6+
-                  </div>
-                  <p className="text-muted-foreground">Major Projects</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-600 mb-2">
-                    500+
-                  </div>
-                  <p className="text-muted-foreground">Reports Analyzed</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
-                    40%
-                  </div>
-                  <p className="text-muted-foreground">Efficiency Gain</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-red-600 mb-2">
-                    $10M+
-                  </div>
-                  <p className="text-muted-foreground">Value Generated</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
       </div>
-    </div>
+
+      <ScrollToTop />
+      <AIChatbot />
+    </>
   )
 }
