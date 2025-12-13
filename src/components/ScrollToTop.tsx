@@ -50,7 +50,8 @@ export function ScrollToTop() {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.8, y: 20 }}
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                    className="fixed bottom-20 left-4 z-40 md:bottom-24 md:left-6"
+                    className="fixed bottom-6 left-6 z-[9999]"
+                    style={{ position: 'fixed' }}
                 >
                     <motion.button
                         whileHover={{ scale: 1.1, y: -2 }}
