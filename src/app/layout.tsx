@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import "@fontsource/geist/400.css";
 import "@fontsource/geist/500.css";
 import "@fontsource/geist/600.css";
@@ -117,16 +118,81 @@ export default function RootLayout({
 
         {/* DNS Prefetch for external resources */}
         <link rel="dns-prefetch" href="https://vercel.live" />
+
+        {/* Structured Data for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Vidya Raut",
+              "jobTitle": "Energy Technology Analyst",
+              "description": "Energy Technology Analyst specializing in market research, data analysis, and energy storage systems with 4+ years of experience.",
+              "url": "https://vidyaraut.vercel.app",
+              "image": "https://vidyaraut.vercel.app/home picture.jpeg",
+              "sameAs": [
+                "https://www.linkedin.com/in/vidyaraut17/"
+              ],
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Pune",
+                "addressRegion": "Maharashtra",
+                "addressCountry": "India"
+              },
+              "alumniOf": [
+                {
+                  "@type": "EducationalOrganization",
+                  "name": "Savitribai Phule Pune University",
+                  "description": "M.Tech in Energy Technology (Currently pursuing)"
+                },
+                {
+                  "@type": "EducationalOrganization",
+                  "name": "H.V.Desai Senior College",
+                  "description": "M.Sc in Physics"
+                }
+              ],
+              "hasOccupation": {
+                "@type": "Occupation",
+                "name": "Energy Technology Analyst",
+                "occupationLocation": {
+                  "@type": "City",
+                  "name": "Pune",
+                  "addressCountry": "India"
+                },
+                "skills": [
+                  "Market Research",
+                  "Data Analysis",
+                  "Excel (Advanced)",
+                  "Power BI",
+                  "Energy Storage Systems",
+                  "Battery Testing",
+                  "Report Writing"
+                ]
+              },
+              "knowsAbout": [
+                "Energy Storage Systems",
+                "Market Research",
+                "Data Analysis",
+                "Battery Technology",
+                "Renewable Energy",
+                "Power BI",
+                "Excel Analytics"
+              ]
+            })
+          }}
+        />
       </head>
       <body
         className="font-geist antialiased bg-background text-foreground"
         suppressHydrationWarning
       >
-        {children}
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
         <Analytics />
         <SpeedInsights />
       </body>
     </html>
   );
 }
-

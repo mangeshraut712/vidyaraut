@@ -22,6 +22,8 @@ export function Navigation() {
   const currentLocale = useLocale()
   const t = useTranslations("nav")
 
+  const isHomePage = pathname === `/${currentLocale}` || pathname === '/' || pathname === `/${currentLocale}/`
+
   const navigation = [
     { name: t("home"), href: "#home", icon: Home },
     { name: t("skills"), href: "#skills", icon: Sparkles },
@@ -53,6 +55,12 @@ export function Navigation() {
     e.preventDefault()
     setIsOpen(false)
 
+    // Handle cross-page navigation
+    if (!isHomePage && href.startsWith('#')) {
+      router.push(`/${currentLocale}${href}`)
+      return
+    }
+
     // Tiny timeout to ensure menu close animation starts/doesn't block visibility
     setTimeout(() => {
       const element = document.querySelector(href)
@@ -75,7 +83,7 @@ export function Navigation() {
       animate={{ y: 0 }}
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled
+        scrolled || !isHomePage
           ? "bg-background/80 backdrop-blur-lg border-b shadow-sm"
           : "bg-transparent"
       )}

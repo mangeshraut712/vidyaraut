@@ -1,7 +1,42 @@
 import { NextRequest, NextResponse } from "next/server"
 import { sendChatMessage, PORTFOLIO_CONTEXT, getFallbackResponse } from "@/lib/openrouter"
 
+// Simple in-memory rate limiting (for production, use Redis or similar)
+const rateLimit = new Map<string, { count: number; resetTime: number }>()
+const RATE_LIMIT_WINDOW = 60 * 1000 // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 10 // 10 requests per minute per IP
+
+function checkRateLimit(ip: string): boolean {
+    const now = Date.now()
+    const userLimit = rateLimit.get(ip)
+
+    if (!userLimit || now > userLimit.resetTime) {
+        rateLimit.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW })
+        return true
+    }
+
+    if (userLimit.count >= RATE_LIMIT_MAX_REQUESTS) {
+        return false
+    }
+
+    userLimit.count++
+    return true
+}
+
 export async function POST(request: NextRequest) {
+    // Rate limiting
+    const clientIP = request.headers.get('x-forwarded-for') ||
+        request.headers.get('x-real-ip') ||
+        'unknown'
+    const ip = Array.isArray(clientIP) ? clientIP[0] : clientIP
+
+    if (!checkRateLimit(ip)) {
+        return NextResponse.json(
+            { error: "Rate limit exceeded. Please try again later." },
+            { status: 429 }
+        )
+    }
+
     let lastUserMessage = ""
 
     try {
