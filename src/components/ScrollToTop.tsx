@@ -1,20 +1,13 @@
 "use client"
 
 import { useState, useEffect, useCallback, useRef } from "react"
-import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { ArrowUp } from "lucide-react"
 
 export function ScrollToTop() {
     const [isVisible, setIsVisible] = useState(false)
     const [scrollProgress, setScrollProgress] = useState(0)
-    const [mounted, setMounted] = useState(false)
     const rafRef = useRef<number | null>(null)
-
-    // Ensure component is mounted before using portal
-    useEffect(() => {
-        setMounted(true)
-    }, [])
 
     // Throttled scroll handler for 90 FPS performance
     const handleScroll = useCallback(() => {
@@ -49,10 +42,7 @@ export function ScrollToTop() {
         })
     }
 
-    // Don't render until mounted (for SSR compatibility)
-    if (!mounted) return null
-
-    const content = (
+    return (
         <AnimatePresence>
             {isVisible && (
                 <motion.div
@@ -60,7 +50,12 @@ export function ScrollToTop() {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.8, y: 20 }}
                     transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                    className="fixed bottom-6 left-6 z-[9999]"
+                    className="fixed bottom-6 left-6"
+                    style={{
+                        position: 'fixed',
+                        zIndex: 99999,
+                        isolation: 'isolate'
+                    }}
                 >
                     <motion.button
                         whileHover={{ scale: 1.1, y: -2 }}
@@ -115,7 +110,4 @@ export function ScrollToTop() {
             )}
         </AnimatePresence>
     )
-
-    // Use portal to render directly to body, bypassing any parent CSS issues
-    return createPortal(content, document.body)
 }

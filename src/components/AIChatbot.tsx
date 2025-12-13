@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useState, useRef, useEffect, useCallback } from "react"
-import { createPortal } from "react-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { MessageSquare, X, Send, Sparkles, Bot, User, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -52,7 +51,6 @@ export function AIChatbot() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
-  const [mounted, setMounted] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const initialized = useRef(false)
@@ -64,11 +62,6 @@ export function AIChatbot() {
       return fallback
     }
   }, [t])
-
-  // Ensure component is mounted before using portal
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   useEffect(() => {
     if (!initialized.current) {
@@ -183,10 +176,7 @@ export function AIChatbot() {
     }
   }
 
-  // Don't render until mounted (for SSR compatibility)
-  if (!mounted) return null
-
-  const content = (
+  return (
     <>
       <AnimatePresence>
         {isOpen && (
@@ -195,7 +185,8 @@ export function AIChatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed bottom-24 right-6 left-4 sm:left-auto z-[9998] w-auto sm:w-[400px] md:w-[440px]"
+            className="fixed bottom-24 right-6 left-4 sm:left-auto w-auto sm:w-[400px] md:w-[440px]"
+            style={{ position: 'fixed', zIndex: 99998, isolation: 'isolate' }}
           >
             <div className="rounded-2xl border border-border/50 shadow-2xl overflow-hidden bg-card/95 backdrop-blur-xl">
               {/* Header */}
@@ -370,8 +361,8 @@ export function AIChatbot() {
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-[9999] h-14 w-14 rounded-full bg-gradient-to-br from-primary via-blue-600 to-indigo-600 text-white shadow-xl flex items-center justify-center hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300"
-        style={{ position: 'fixed' }}
+        className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-gradient-to-br from-primary via-blue-600 to-indigo-600 text-white shadow-xl flex items-center justify-center hover:shadow-2xl hover:shadow-primary/30 transition-all duration-300"
+        style={{ position: 'fixed', zIndex: 99999, isolation: 'isolate' }}
         aria-label="Toggle chat"
       >
         {/* Glow effect */}
@@ -404,7 +395,5 @@ export function AIChatbot() {
       </motion.button>
     </>
   )
-
-  // Use portal to render directly to body, bypassing any parent CSS issues
-  return createPortal(content, document.body)
 }
+
