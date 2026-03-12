@@ -345,26 +345,6 @@ Checks included:
 
 ---
 
-## 🤖 Codex + GitHub
-
-According to the OpenAI Codex documentation:
-
-- connect your GitHub account in Codex so Codex can work with repositories and create pull requests
-- use `AGENTS.md` to provide repo-specific review guidance for Codex in GitHub
-- Codex can also be used through GitHub pull request workflows and the Codex GitHub Action
-
-Useful docs:
-
-- [Codex web setup](https://developers.openai.com/codex/cloud/#codex-web-setup)
-- [Use Codex in GitHub](https://developers.openai.com/codex/integrations/github/)
-- [Codex GitHub Action](https://developers.openai.com/codex/github-action/)
-
-Reusable prompt/template for future README work:
-
-- [docs/prompts/readme-style-prompt.md](docs/prompts/readme-style-prompt.md)
-
----
-
 ## 🌐 Deployment
 
 ### Vercel (Recommended)
