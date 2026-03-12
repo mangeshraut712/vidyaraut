@@ -1,63 +1,64 @@
 "use client"
 
-import React from "react"
 import { motion } from "framer-motion"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Award, BookOpen } from "lucide-react"
+import { useLocale } from "next-intl"
+import { Footer } from "@/components/Footer"
+import { PageBackButton } from "@/components/PageBackButton"
+import { SectionIntro } from "@/components/SectionIntro"
 import { Badge } from "@/components/ui/badge"
-import { Award, Calendar, Building } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
 import { certificationsData } from "@/lib/legacy-data"
 
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+  transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
+}
+
 export default function CertificationsPage() {
+  const locale = useLocale()
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 pt-24 pb-16">
-      <div className="container mx-auto px-4">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <Badge variant="outline" className="mb-4 px-4 py-1 text-base border-orange-500/50 bg-orange-500/10">
-            <Award className="w-4 h-4 mr-2 inline" />
-            Achievements
-          </Badge>
-          <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-orange-600 via-red-600 to-pink-600">
-            Certifications & Awards
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Professional certifications and academic achievements
-          </p>
+    <div className="min-h-screen bg-background pt-24">
+      <div className="container mx-auto max-w-7xl px-6 pb-16 md:px-8 sm:pb-20">
+        <motion.div {...fadeInUp}>
+          <PageBackButton fallbackHref={`/${locale}`} label="Back to portfolio home" />
+          <div className="mt-8">
+            <SectionIntro
+              eyebrow="Certifications & Awards"
+              title="Credential archive"
+              description="Supporting credentials, conference participation, and academic signals from the portfolio record."
+              align="left"
+            />
+          </div>
         </motion.div>
 
-        {/* Certifications Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {certificationsData.map((cert, idx) => (
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {certificationsData.map((cert, index) => (
             <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
+              key={`${cert.title}-${cert.date}`}
+              {...fadeInUp}
+              transition={{ ...fadeInUp.transition, delay: 0.06 * index }}
             >
-              <Card className="h-full hover:shadow-2xl transition-all duration-300 border-2 hover:border-orange-500/50 group">
-                <div className="h-2 bg-gradient-to-r from-orange-500 to-red-500" />
-                <CardHeader className="text-center pb-4">
-                  <div className="text-6xl mb-4 group-hover:scale-110 transition-transform">
-                    {cert.icon}
+              <Card className="surface-premium h-full rounded-[2rem]">
+                <CardContent className="p-6">
+                  <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                    <Award className="h-5 w-5" />
                   </div>
-                  <CardTitle className="text-xl mb-2">{cert.title}</CardTitle>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <h2 className="text-2xl font-semibold tracking-[-0.04em] text-foreground">
+                    {cert.title}
+                  </h2>
+                  <p className="mt-4 text-sm leading-7 text-muted-foreground">
                     {cert.description}
                   </p>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Building className="w-4 h-4 text-orange-600" />
-                    <span>{cert.issuer}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-orange-600" />
-                    <Badge variant="secondary">{cert.date}</Badge>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    <Badge variant="outline" className="rounded-full">
+                      {cert.issuer}
+                    </Badge>
+                    <Badge variant="outline" className="rounded-full">
+                      {cert.date}
+                    </Badge>
                   </div>
                 </CardContent>
               </Card>
@@ -65,25 +66,25 @@ export default function CertificationsPage() {
           ))}
         </div>
 
-        {/* Additional Info */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16 max-w-4xl mx-auto"
-        >
-          <Card className="bg-gradient-to-br from-orange-500/10 via-red-500/10 to-pink-500/10 border-2 border-orange-500/20">
-            <CardContent className="p-8 text-center">
-              <h2 className="text-2xl font-bold mb-4">Continuous Learning</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                Committed to staying updated with the latest developments in energy technology, 
-                market analysis, and data science through continuous professional development and 
-                participation in industry conferences and workshops.
+        <motion.div {...fadeInUp} className="mt-16">
+          <Card className="surface-soft rounded-[2rem]">
+            <CardContent className="p-6 sm:p-7">
+              <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <BookOpen className="h-5 w-5" />
+              </div>
+              <h2 className="font-display text-4xl leading-none text-foreground">
+                Continuous learning
+              </h2>
+              <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground">
+                These entries reinforce the broader story of sustained learning across physics,
+                energy, research, and technical literacy. They are presented here as supporting
+                context rather than as inflated credential marketing.
               </p>
             </CardContent>
           </Card>
         </motion.div>
       </div>
+      <Footer />
     </div>
   )
 }

@@ -1,265 +1,250 @@
-# Vidya Raut - Portfolio Website
+# Vidya Raut Portfolio
 
-<div align="center">
+Portfolio website for Vidya Raut built with Next.js 16, React 19, TypeScript, Tailwind CSS, `next-intl`, and an optional FastAPI-backed multi-agent chatbot.
 
-![Next.js](https://img.shields.io/badge/Next.js-16.0-black?logo=next.js)
-![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?logo=tailwindcss)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-11-FF0050?logo=framer)
+## Overview
 
-**A stunning, modern portfolio website built with cutting-edge 2025 web technologies.**
+This project is a multilingual portfolio with:
 
-[🌐 Live Demo](https://vidyaraut.vercel.app) | [📧 Contact](mailto:vidyaraut17297@gmail.com) | [💼 LinkedIn](https://www.linkedin.com/in/vidyaraut17/)
+- a homepage-driven navigation flow
+- dedicated subpages for `skills`, `projects`, and `certifications`
+- an inline game section on the homepage below contact
+- a multi-agent chatbot for portfolio, market, opportunity, and puzzle-help flows
+- optional FastAPI support for chat proxying and backend deployment
 
-</div>
+## Stack
 
----
+- Next.js 16 App Router
+- React 19
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- `next-intl`
+- FastAPI + `httpx` (optional backend)
 
-## ✨ Key Features
+## Routes
 
-### 🎨 Premium Design
-- **Glassmorphism Effects** - Modern frosted glass UI with backdrop blur
-- **Animated Gradients** - Dynamic color transitions and mesh backgrounds
-- **Typewriter Animation** - Engaging hero section text effects
-- **3D Card Hover Effects** - Interactive perspective transformations
-- **OLED-friendly Dark Mode** - True black background for maximum contrast
+- `/[locale]`
+- `/[locale]/skills`
+- `/[locale]/projects`
+- `/[locale]/certifications`
+- `/[locale]/game`
+  This redirects to `/{locale}#game`
+- `/api/chat`
 
-### 🚀 2025 Technologies
-- **React 19 Compiler** - Automatic memoization (no manual useMemo/useCallback)
-- **Next.js 16 + Turbopack** - 10x faster dev refresh, instant builds
-- **Optimized Package Imports** - Faster bundling for heavy dependencies
-- **React Server Components** - Optimal performance and reduced bundle size
+Supported locales:
 
-### 🌐 Internationalization
-- **3 Languages** - English, Hindi (हिंदी), Marathi (मराठी)
-- **next-intl 4.x** - Modern i18n with type-safe translations
-- **Locale-aware Routing** - Clean URLs with `/en`, `/hi`, `/mr` prefixes
+- `en`
+- `hi`
+- `mr`
 
-### 💬 AI-Powered Features
-- **AI Chatbot** - OpenRouter-powered assistant for portfolio Q&A
-- **Animated Typing Indicator** - Bouncing dots for natural feel
-- **Quick Actions** - One-click common questions
-- **Context-aware Responses** - Remembers conversation history
+## Active Project Structure
 
-### 📱 PWA Support
-- **Installable App** - Add to home screen on any device
-- **Offline Ready** - Service worker for offline access
-- **App-like Experience** - Standalone display mode
-
-### 🔍 SEO Optimized
-- **Dynamic Sitemap** - Auto-generated for all locales
-- **OpenGraph & Twitter Cards** - Rich social media previews
-- **Structured Metadata** - Enhanced search engine visibility
-- **robots.txt** - Proper crawler configuration
-
----
-
-## 🛠️ Tech Stack
-
-| Category | Technology | Version |
-|----------|------------|---------|
-| **Framework** | Next.js (App Router + Turbopack) | 16.0.10 |
-| **UI Library** | React with React Compiler | 19.2.1 |
-| **Language** | TypeScript | 5.7.2 |
-| **Styling** | Tailwind CSS + Custom Utilities | 3.4.17 |
-| **Animations** | Framer Motion | 11.x |
-| **State** | Zustand | 5.0.1 |
-| **Forms** | React Hook Form + Zod | 7.54 / 3.24 |
-| **i18n** | next-intl | 4.5.8 |
-| **Icons** | Lucide React | 0.468 |
-| **UI Components** | Radix UI Primitives | Latest |
-| **Analytics** | Vercel Analytics & Speed Insights | Latest |
-
----
-
-## 📁 Project Structure
-
-```
-vidyaraut/
-├── public/                    # Static assets
-│   ├── logo.png              # Site logo & favicon
-│   ├── home picture.jpeg     # Profile photo
-│   ├── manifest.json         # PWA manifest
-│   ├── robots.txt            # SEO crawler rules
-│   └── Vidya_Raut_Resume.md  # Downloadable resume
-│
-├── src/
-│   ├── app/                  # Next.js App Router
-│   │   ├── [locale]/         # Internationalized routes
-│   │   │   ├── page.tsx      # Main portfolio page
-│   │   │   ├── layout.tsx    # Locale layout
-│   │   │   ├── skills/       # Skills detail page
-│   │   │   ├── projects/     # Projects showcase
-│   │   │   ├── certifications/# Certifications page
-│   │   │   └── game/         # Interactive game
-│   │   ├── api/chat/         # AI chatbot API
-│   │   ├── globals.css       # Global styles & utilities
-│   │   ├── layout.tsx        # Root layout with SEO
-│   │   ├── sitemap.ts        # Dynamic sitemap
-│   │   └── providers.tsx     # Theme & i18n providers
-│   │
-│   ├── components/           # React components
-│   │   ├── ui/               # Shadcn/Radix primitives
-│   │   ├── Hero.tsx          # Animated hero section
-│   │   ├── Skills.tsx        # Skills with gradients
-│   │   ├── Projects.tsx      # 3D project cards
-│   │   ├── Testimonials.tsx  # Carousel testimonials
-│   │   ├── Timeline.tsx      # Experience timeline
-│   │   ├── AIChatbot.tsx     # AI assistant
-│   │   ├── Footer.tsx        # Premium footer
-│   │   └── Navigation.tsx    # Responsive nav
-│   │
-│   ├── i18n/                 # Internationalization
-│   │   ├── messages/         # Translation files
-│   │   │   ├── en.json       # English
-│   │   │   ├── hi.json       # Hindi
-│   │   │   └── mr.json       # Marathi
-│   │   ├── config.ts         # Locale config
-│   │   └── request.ts        # Server request config
-│   │
-│   ├── lib/                  # Utilities
-│   │   ├── data.ts           # Portfolio data
-│   │   ├── openrouter.ts     # AI integration
-│   │   └── utils.ts          # Helper functions
-│   │
-│   └── types/                # TypeScript definitions
-│
-├── eslint.config.js          # ESLint flat config
-├── next.config.ts            # Next.js configuration
-├── tailwind.config.ts        # Tailwind with animations
-├── tsconfig.json             # TypeScript config
-└── middleware.ts             # i18n middleware
+```text
+src/
+  app/
+    [locale]/
+      page.tsx
+      skills/page.tsx
+      projects/page.tsx
+      certifications/page.tsx
+      game/page.tsx
+    api/chat/route.ts
+    globals.css
+    layout.tsx
+    page.tsx
+    providers.tsx
+  components/
+    AIChatbot.tsx
+    Footer.tsx
+    Game.tsx
+    GlobalLayout.tsx
+    Navigation.tsx
+    PageBackButton.tsx
+    ScrollToTop.tsx
+    SectionIntro.tsx
+    Timeline.tsx
+    ui/
+  i18n/
+  lib/
+    assistant-agents.ts
+    collection-utils.ts
+    data.ts
+    legacy-data.ts
+    openrouter.ts
 ```
 
----
-
-## 🚀 Getting Started
+## Installation
 
 ### Prerequisites
 
-- **Node.js** 20.9.0 or higher
-- **npm** or **yarn** or **pnpm**
+- Node.js 20+
+- npm
+- Python 3.11+ if you want the FastAPI backend
 
-### Installation
+### Frontend setup
 
 ```bash
-# Clone the repository
-git clone https://github.com/vidyaraut17297/vidyaraut.git
-cd vidyaraut
-
-# Install dependencies
 npm install
-
-# Set up environment variables
 cp .env.example .env.local
-# Edit .env.local with your API keys
-
-# Start development server
 npm run dev
 ```
 
-### Environment Variables
+Open:
 
-Create a `.env.local` file:
+- `http://localhost:3000/en`
+
+### Optional FastAPI backend
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn fastapi_backend.main:app --reload --port 8000
+```
+
+Open:
+
+- `http://127.0.0.1:8000/health`
+
+## Environment Variables
+
+Copy `.env.example` to `.env.local` and set only what you need.
 
 ```env
-# OpenRouter API (for AI Chatbot)
-OPENROUTER_API_KEY=your_api_key_here
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_SITE_NAME=Vidya Raut Portfolio
+
+OPENAI_API_KEY=
+OPENAI_MODEL=gpt-5.4
+
+OPENROUTER_API_KEY=
 OPENROUTER_MODEL=openai/gpt-3.5-turbo
 
-# Site URL (for production)
-NEXT_PUBLIC_SITE_URL=https://vidyaraut.vercel.app
+FASTAPI_URL=
+FASTAPI_INTERNAL_TOKEN=
+
+CHAT_UPSTREAM_URL=
+FASTAPI_DEV_REWRITE=
 ```
 
----
+### Configuration Notes
 
-## 📝 Available Scripts
+- `OPENAI_API_KEY` and `OPENROUTER_API_KEY` are optional.
+- `FASTAPI_URL` is optional. If set, the Next.js route proxies to FastAPI first.
+- `CHAT_UPSTREAM_URL` is optional. In non-production, both the Next.js route and the FastAPI backend can proxy to an upstream chat API when no local AI keys are configured.
+- `FASTAPI_DEV_REWRITE=true` is only for direct local rewrite testing. It is off by default so dev and production behave consistently.
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start dev server with Turbopack |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
-| `npm run lint:fix` | Auto-fix lint issues |
-| `npm run type-check` | TypeScript type checking |
+## Chatbot Architecture
 
----
+Supported agents:
 
-## 🎨 Design System
+- `portfolio`
+- `market`
+- `opportunity`
+- `puzzle`
 
-### Color Palette
+### Next.js `/api/chat` resolution order
 
-**Light Mode**
-- Background: Pure White (#FFFFFF)
-- Primary: Vibrant Blue (#3B82F6)
-- Accents: Purple, Pink, Cyan, Amber
+1. Proxy to `FASTAPI_URL` if configured
+2. Use local OpenAI / OpenRouter keys if present
+3. In non-production, proxy to `CHAT_UPSTREAM_URL` or the default dev upstream
+4. Fall back to deterministic local responses
 
-**Dark Mode**
-- Background: Solid Black (#000000)  
-- Cards: Near-black (#0D0D0D)
-- Primary: Bright Blue (#4B8BF5)
+### FastAPI backend behavior
 
-### Custom CSS Utilities
+The optional FastAPI backend:
 
-```css
-.glass          /* Glassmorphism effect */
-.gradient-text  /* Gradient text fill */
-.hover-lift     /* Lift on hover */
-.hover-glow     /* Glow on hover */
-.animate-float  /* Floating animation */
+- mirrors the same four-agent model
+- supports OpenAI Responses API
+- supports OpenRouter fallback
+- supports remote upstream proxying when no local AI keys are configured
+
+## Usage Examples
+
+### Health checks
+
+```bash
+curl http://localhost:3000/api/chat
+curl http://127.0.0.1:8000/health
 ```
 
----
+### Chat request
 
-## 🌐 Deployment
+```bash
+curl -X POST http://localhost:3000/api/chat \
+  -H "content-type: application/json" \
+  --data '{
+    "agent": "portfolio",
+    "messages": [
+      { "role": "user", "content": "Give me a concise summary of Vidya Raut''s profile." }
+    ]
+  }'
+```
 
-### Vercel (Recommended)
+### Puzzle helper request
 
-1. Push your code to GitHub
-2. Import project in [Vercel](https://vercel.com)
-3. Add environment variables
-4. Deploy!
+```bash
+curl -X POST http://localhost:3000/api/chat \
+  -H "content-type: application/json" \
+  --data '{
+    "agent": "puzzle",
+    "messages": [
+      { "role": "user", "content": "Give me a hint for this crossword clue: storage market" }
+    ]
+  }'
+```
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vidyaraut17297/vidyaraut)
+## Quality Checks
 
-### Environment Variables on Vercel
+```bash
+npm run lint
+npm run type-check
+npm run build
+npm audit --audit-level=moderate
+./.venv/bin/python -m py_compile api/index.py fastapi_backend/main.py
+```
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `OPENROUTER_API_KEY` | Yes | API key for AI chatbot |
-| `OPENROUTER_MODEL` | No | Model ID (default: gpt-3.5-turbo) |
+## Recent Changes
 
----
+- consolidated the homepage as the primary product surface
+- moved the game into the homepage flow below contact
+- redirected `/[locale]/game` to `#game`
+- improved chatbot shell stability across agent switches
+- aligned heading behavior across homepage and subpages
+- cleaned the footer layout and removed the footer `Game` link
+- added `puzzle` support to the FastAPI backend
+- added remote-upstream fallback support to FastAPI health/chat
+- removed unused legacy components and generated cache artifacts
+- refreshed README to match the current architecture
 
-## 👩‍💼 About Vidya Raut
+## Known Limitations
 
-**Energy Technology Analyst** with 4+ years of experience specializing in:
+- the crossword iframe depends on a third-party source:
+  `https://marathigames.in/Crossword/crossword.html`
+- local chat remains fallback-only unless provider keys or a remote upstream are configured
+- chat rate limiting is in-memory in both the Next.js route and the FastAPI backend
 
-- 📊 Market Research & Data Analysis
-- 🔋 Energy Storage Systems (ESS)
-- 📈 Power BI & Excel Analytics
-- 🔬 Battery Testing & R&D
+## Contribution Guidelines
 
-### Contact
+1. Create a feature branch from `main`.
+2. Keep changes small and consistent with the existing design system.
+3. Run:
+   - `npm run lint`
+   - `npm run type-check`
+   - `npm run build`
+4. If you touch the backend, also run:
+   - `./.venv/bin/python -m py_compile api/index.py fastapi_backend/main.py`
+5. Update docs when behavior, routes, or configuration change.
+6. Open a pull request with a concise summary and verification notes.
 
-- 📧 **Email**: [vidyaraut17297@gmail.com](mailto:vidyaraut17297@gmail.com)
-- 💼 **LinkedIn**: [linkedin.com/in/vidyaraut17](https://www.linkedin.com/in/vidyaraut17/)
-- 🌐 **Portfolio**: [vidyaraut.vercel.app](https://vidyaraut.vercel.app)
+## Release Checklist
 
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
-<div align="center">
-
-**Built with ❤️ using Next.js 16 & React 19**
-
-*Powered by Turbopack • React Compiler • Framer Motion*
-
-</div>
+- homepage loads at `/en`
+- solid white/light and solid black/dark theme backgrounds remain intact
+- chatbot opens, switches agents, and sends messages
+- `GET /api/chat` works
+- `POST /api/chat` works
+- `/[locale]/game` redirects to `#game`
+- footer links and CTA are correct
+- lint, type-check, build, and audit pass

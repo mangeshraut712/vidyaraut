@@ -1,168 +1,148 @@
 "use client"
 
-import { motion } from "framer-motion"
-import Link from "next/link"
 import Image from "next/image"
-import { Github, Linkedin, Mail, Heart, MapPin, ArrowUpRight } from "lucide-react"
+import Link from "next/link"
+import { Github, Linkedin, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useLocale, useTranslations } from "next-intl"
+
+const CURRENT_YEAR = new Date().getFullYear()
 
 const socialLinks = [
-    {
-        name: "LinkedIn",
-        href: "https://www.linkedin.com/in/vidyaraut17/",
-        icon: Linkedin,
-        color: "hover:text-blue-500"
-    },
-    {
-        name: "GitHub",
-        href: "https://github.com/vidyaraut17297",
-        icon: Github,
-        color: "hover:text-foreground"
-    },
-    {
-        name: "Email",
-        href: "mailto:vidyaraut17297@gmail.com",
-        icon: Mail,
-        color: "hover:text-red-500"
-    }
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/vidyaraut17/",
+    icon: Linkedin,
+    iconClassName: "text-[#0A66C2]",
+    hoverClassName: "hover:border-[#0A66C2]/40 hover:bg-[#0A66C2]/8",
+  },
+  {
+    name: "GitHub",
+    href: "https://github.com/vidyaraut17297",
+    icon: Github,
+    iconClassName: "text-[#181717] dark:text-white",
+    hoverClassName: "hover:border-foreground/30 hover:bg-foreground/5",
+  },
+  {
+    name: "Email",
+    href: "mailto:vidyaraut17297@gmail.com",
+    icon: Mail,
+    iconClassName: "text-[#EA4335]",
+    hoverClassName: "hover:border-[#EA4335]/35 hover:bg-[#EA4335]/8",
+  },
 ]
 
 const quickLinks = [
-    { name: "Home", href: "#home" },
-    { name: "Skills", href: "#skills" },
-    { name: "Projects", href: "#projects" },
-    { name: "Experience", href: "#experience" },
-    { name: "Contact", href: "#contact" },
+  { label: "Portfolio", href: "", isAnchor: false },
+  { label: "Skills", href: "skills", isAnchor: false },
+  { label: "Projects", href: "projects", isAnchor: false },
+  { label: "Certifications", href: "certifications", isAnchor: false },
 ]
 
 export function Footer() {
-    const currentYear = new Date().getFullYear()
+  const t = useTranslations("footer")
+  const locale = useLocale()
 
-    return (
-        <footer className="relative overflow-hidden border-t border-border/50">
-            {/* Background decoration */}
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent -z-10" />
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-radial from-primary/10 to-transparent rounded-full blur-3xl -z-10" />
-
-            <div className="container mx-auto px-4 py-16">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-                    {/* Brand Section */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="lg:col-span-2"
-                    >
-                        <Link href="#home" className="inline-flex items-center gap-3 mb-4 group">
-                            <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20 group-hover:border-primary/50 transition-colors">
-                                <Image
-                                    src="/logo.png"
-                                    alt="Vidya Raut"
-                                    fill
-                                    className="object-cover"
-                                />
-                            </div>
-                            <span className="text-2xl font-bold gradient-text">Vidya Raut</span>
-                        </Link>
-                        <p className="text-muted-foreground max-w-md mb-6 leading-relaxed">
-                            Energy Technology Analyst with expertise in market research, data analysis, and energy storage systems. Passionate about driving insights that power the future.
-                        </p>
-
-                        {/* Contact Info */}
-                        <div className="space-y-2">
-                            <a
-                                href="mailto:vidyaraut17297@gmail.com"
-                                className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-                            >
-                                <Mail className="w-4 h-4" />
-                                vidyaraut17297@gmail.com
-                            </a>
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <MapPin className="w-4 h-4" />
-                                Pune, Maharashtra, India
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    {/* Quick Links */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 }}
-                    >
-                        <h3 className="font-semibold text-lg mb-4">Quick Links</h3>
-                        <ul className="space-y-3">
-                            {quickLinks.map((link) => (
-                                <li key={link.name}>
-                                    <a
-                                        href={link.href}
-                                        className="text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1 group"
-                                    >
-                                        {link.name}
-                                        <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.div>
-
-                    {/* Connect Section */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                    >
-                        <h3 className="font-semibold text-lg mb-4">Connect</h3>
-                        <div className="flex gap-3 mb-6">
-                            {socialLinks.map((social) => {
-                                const Icon = social.icon
-                                return (
-                                    <a
-                                        key={social.name}
-                                        href={social.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className={`p-3 rounded-full bg-secondary/50 border border-border/50 hover:border-primary/50 hover:bg-primary/10 transition-all duration-300 ${social.color}`}
-                                        aria-label={social.name}
-                                    >
-                                        <Icon className="w-5 h-5" />
-                                    </a>
-                                )
-                            })}
-                        </div>
-
-                        <Button
-                            asChild
-                            className="rounded-full bg-gradient-to-r from-primary to-blue-600 hover:shadow-lg hover:shadow-primary/25 transition-all"
-                        >
-                            <a href="#contact">
-                                Let&apos;s Connect
-                                <ArrowUpRight className="w-4 h-4 ml-2" />
-                            </a>
-                        </Button>
-                    </motion.div>
-                </div>
-
-                {/* Bottom Bar */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    className="pt-8 border-t border-border/50"
-                >
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <p className="text-sm text-muted-foreground text-center md:text-left">
-                            © {currentYear} Vidya Raut. All rights reserved.
-                        </p>
-
-                        <p className="text-sm text-muted-foreground flex items-center gap-1">
-                            Built with <Heart className="w-4 h-4 text-red-500 fill-red-500 animate-pulse" /> using Next.js 16 &amp; React 19
-                        </p>
-                    </div>
-                </motion.div>
+  return (
+    <footer className="relative border-t border-border/40 bg-background pt-8 pb-6">
+      <div className="container relative mx-auto max-w-6xl grid gap-10 px-6 md:px-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-start">
+        <div className="max-w-xl">
+          <div className="mb-6 flex items-center gap-4">
+            <div className="relative h-12 w-12 overflow-hidden rounded-2xl border border-foreground/10 bg-background shadow-sm transition-colors hover:border-foreground/30">
+              <Image
+                src="/logo.png"
+                alt="Vidya Raut logo"
+                fill
+                sizes="48px"
+                className="object-cover"
+              />
             </div>
-        </footer>
-    )
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-muted-foreground">
+              Vidya Raut Portfolio
+            </p>
+          </div>
+          <Link
+            href={`/${locale}`}
+            className="font-display inline-block text-4xl sm:text-5xl font-medium tracking-tight text-foreground transition-colors hover:text-foreground/70"
+          >
+            Vidya Raut
+          </Link>
+          <p className="mt-5 max-w-lg text-[15px] leading-relaxed text-muted-foreground font-light">
+            {t("summary")}
+          </p>
+        </div>
+
+        <div className="grid gap-8 lg:grid-cols-[190px_minmax(0,1fr)] lg:items-start lg:pt-5">
+          <div className="grid content-start gap-4">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/80">
+              Explore
+            </p>
+            <div className="grid gap-3">
+              {quickLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={
+                    link.isAnchor
+                      ? `/${locale}${link.href}`
+                      : link.href
+                        ? `/${locale}/${link.href}`
+                        : `/${locale}`
+                  }
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid gap-5 lg:max-w-[420px]">
+            <div className="surface-soft rounded-[1.75rem] p-7">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground/80">
+                Connect & Collaborate
+              </p>
+              <div className="mt-5 flex gap-4">
+                {socialLinks.map((social) => {
+                  const Icon = social.icon
+                  return (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex h-12 w-12 items-center justify-center border border-border/70 bg-background transition-all duration-300 ${social.hoverClassName}`}
+                      aria-label={social.name}
+                    >
+                      <Icon className={`h-4 w-4 ${social.iconClassName}`} />
+                    </a>
+                  )
+                })}
+              </div>
+            </div>
+
+            <Button asChild className="btn-premium rounded-full h-12 px-8">
+              <a href="mailto:vidyaraut17297@gmail.com">
+                <Mail className="mr-2 h-4 w-4" />
+                {t("cta")}
+              </a>
+            </Button>
+            <p className="text-xs leading-6 text-muted-foreground">
+              Prefer email? Start a conversation directly with Vidya and get a reply without filling
+              out a separate form.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="container relative mx-auto mt-10 max-w-6xl px-6 md:px-8">
+        <div className="flex flex-col gap-4 border-t border-border/50 py-6 text-sm text-muted-foreground font-medium md:flex-row md:items-center md:justify-between">
+          <p>{t("rights", { year: CURRENT_YEAR })}</p>
+          <p className="flex items-center gap-1.5 opacity-80">
+            {t("builtWith")}
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
+          </p>
+        </div>
+      </div>
+    </footer>
+  )
 }

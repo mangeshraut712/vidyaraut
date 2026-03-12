@@ -1,5 +1,7 @@
+import { dedupeBy } from "@/lib/collection-utils"
+
 export const allSkillsData = {
-  technical: [
+  technical: dedupeBy([
     { name: "Laboratory Safety", level: 90 },
     { name: "Battery Management Systems", level: 85 },
     { name: "Quantitative Research", level: 88 },
@@ -11,32 +13,32 @@ export const allSkillsData = {
     { name: "Excel Dashboards", level: 95 },
     { name: "Power BI Automation", level: 85 },
     { name: "Solar PV Modelling", level: 75 }
-  ],
-  domain: [
+  ], (skill) => skill.name),
+  domain: dedupeBy([
     { name: "Energy Storage Markets", level: 90 },
     { name: "Solar PV Operations", level: 85 },
     { name: "Tariff Benchmarking", level: 88 },
     { name: "Hydrogen Technology", level: 75 },
     { name: "Policy Tracking", level: 85 },
     { name: "Competitive Benchmarking", level: 90 }
-  ],
-  soft: [
+  ], (skill) => skill.name),
+  soft: dedupeBy([
     { name: "Analytical Storytelling", level: 92 },
     { name: "Stakeholder Coaching", level: 85 },
     { name: "Cross-functional Collaboration", level: 90 },
     { name: "Mentorship & Training", level: 88 },
     { name: "Workshop Facilitation", level: 82 },
     { name: "Executive Communication", level: 90 }
-  ],
-  research: [
+  ], (skill) => skill.name),
+  research: dedupeBy([
     { name: "Market Research", level: 95 },
     { name: "Project Management", level: 85 },
     { name: "Report Writing", level: 95 },
     { name: "Competitive Intelligence", level: 90 },
     { name: "Market Forecasting", level: 85 },
     { name: "Pricing Intelligence", level: 88 }
-  ],
-  professional: [
+  ], (skill) => skill.name),
+  professional: dedupeBy([
     { name: "Critical Thinking", level: 92 },
     { name: "Communication", level: 95 },
     { name: "Teamwork", level: 90 },
@@ -45,10 +47,10 @@ export const allSkillsData = {
     { name: "Presentation Skills", level: 93 },
     { name: "Client Engagement", level: 88 },
     { name: "Continuous Learning", level: 95 }
-  ]
+  ], (skill) => skill.name)
 }
 
-export const certificationsData = [
+export const certificationsData = dedupeBy([
   {
     title: "International Conference",
     description: "Multifunctional & Hybrid Materials for Energy & Environment (MHMEE-2020)",
@@ -70,9 +72,9 @@ export const certificationsData = [
     date: "Aug 2012",
     icon: "🏆"
   }
-]
+], (cert) => `${cert.title}-${cert.date}`)
 
-export const projectsData = [
+export const projectsData = dedupeBy([
   {
     title: "Synthesis & Characterization of Fe3O4 Thin Films",
     description: "Used Chemical Bath Deposition Method to synthesize and characterize Fe3O4 thin films.",
@@ -87,4 +89,4 @@ export const projectsData = [
     tags: ["Physics", "Electrical"],
     type: "research"
   }
-]
+], (project) => `${project.title}-${project.duration}`)

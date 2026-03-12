@@ -5,18 +5,19 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex transform-gpu items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-[transform,box-shadow,background-color,border-color,color] duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:transform-none",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default:
+          "btn-premium shadow-[0_12px_28px_rgba(37,99,235,0.18)]",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+          "bg-destructive text-destructive-foreground shadow-sm hover:-translate-y-0.5 hover:bg-destructive/90 hover:shadow-[0_14px_28px_rgba(220,38,38,0.22)]",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-border bg-background text-foreground hover:-translate-y-0.5 hover:border-primary/35 hover:bg-background hover:text-foreground hover:shadow-[0_14px_30px_rgba(15,23,42,0.08)] dark:hover:shadow-[0_18px_36px_rgba(0,0,0,0.45)]",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+          "border border-border/80 bg-background text-secondary-foreground hover:-translate-y-0.5 hover:border-primary/25 hover:bg-background hover:shadow-[0_12px_24px_rgba(15,23,42,0.06)] dark:hover:shadow-[0_16px_30px_rgba(0,0,0,0.35)]",
+        ghost: "text-foreground/80 hover:-translate-y-0.5 hover:bg-accent hover:text-accent-foreground hover:shadow-[0_10px_22px_rgba(15,23,42,0.05)] dark:hover:shadow-[0_14px_28px_rgba(0,0,0,0.3)]",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

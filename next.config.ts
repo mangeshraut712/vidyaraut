@@ -64,6 +64,22 @@ const nextConfig: NextConfig = {
     ];
   },
 
+  // Optional rewrite for direct local FastAPI testing.
+  // The app route already supports FASTAPI_URL proxying, so keep this off by default
+  // to preserve the same /api/chat behavior in dev and production.
+  async rewrites() {
+    if (process.env.FASTAPI_DEV_REWRITE === 'true') {
+      return [
+        {
+          source: '/api/:path*',
+          destination: 'http://127.0.0.1:8000/:path*',
+        },
+      ];
+    }
+
+    return [];
+  },
+
   // Logging for debugging
   logging: {
     fetches: {
@@ -73,4 +89,3 @@ const nextConfig: NextConfig = {
 };
 
 export default withNextIntl(nextConfig);
-

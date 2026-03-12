@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AppProviders } from "@/app/providers";
 import { GlobalLayout } from "@/components/GlobalLayout";
@@ -72,12 +73,12 @@ const LocaleLayoutError = ({ error, resetError }: { error?: Error; resetError: (
         >
           Try Again
         </button>
-        <a
+        <Link
           href="/"
           className="px-4 py-2 border border-border rounded-lg hover:bg-secondary transition-colors"
         >
-          Back to Language Selection
-        </a>
+          Back to Portfolio
+        </Link>
       </div>
     </div>
   </div>
@@ -108,12 +109,12 @@ export default async function LocaleLayout({ children, params }: { children: Rea
               <p className="text-muted-foreground mb-4">
                 Unable to load content for the selected language. Please try again or select a different language.
               </p>
-              <a
+              <Link
                 href="/"
                 className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
               >
-                Choose Language
-              </a>
+                Return to portfolio
+              </Link>
             </div>
           </div>
         </ErrorBoundary>

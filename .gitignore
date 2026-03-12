@@ -21,6 +21,12 @@
 .DS_Store
 *.pem
 Thumbs.db
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+output/
 
 # Debug logs
 npm-debug.log*
@@ -52,4 +58,3 @@ next-env.d.ts
 
 # Turbopack
 .turbo
-

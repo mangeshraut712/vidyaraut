@@ -8,6 +8,9 @@ import "@fontsource/geist/600.css";
 import "@fontsource/geist/700.css";
 import "@fontsource/geist-mono/400.css";
 import "@fontsource/geist-mono/500.css";
+import "@fontsource/cormorant-garamond/500.css";
+import "@fontsource/cormorant-garamond/600.css";
+import "@fontsource/cormorant-garamond/700.css";
 import "./globals.css";
 
 // Viewport configuration - separated in Next.js 14+
@@ -109,8 +112,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const enableVercelTelemetry = Boolean(process.env.VERCEL);
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className="scroll-smooth scroll-pt-24">
       <head>
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -190,8 +195,8 @@ export default function RootLayout({
         <ErrorBoundary>
           {children}
         </ErrorBoundary>
-        <Analytics />
-        <SpeedInsights />
+        {enableVercelTelemetry ? <Analytics /> : null}
+        {enableVercelTelemetry ? <SpeedInsights /> : null}
       </body>
     </html>
   );

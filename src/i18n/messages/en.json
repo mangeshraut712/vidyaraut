@@ -216,8 +216,38 @@
     "placeholder": "Type your question...",
     "error": "Connection issue. Please try again."
   },
+  "home": {
+    "status": "Available for analyst roles",
+    "locationLabel": "Based in",
+    "focusLabel": "Focused on energy markets, storage systems, and reporting quality",
+    "snapshotTitle": "Snapshot",
+    "snapshotBody": "Vidya combines market research, dashboard building, and technical energy understanding to turn raw sector data into clear decisions.",
+    "strengthsTitle": "Where I add value",
+    "strengthsDescription": "A practical mix of analytical depth, sector context, and communication discipline.",
+    "strengths": [
+      "Market and policy research framed for decision-makers",
+      "Dashboards and reporting workflows that reduce turnaround time",
+      "Hands-on understanding of battery testing and energy storage",
+      "Strong written communication shaped by teaching and research work"
+    ],
+    "expertiseTitle": "A sharper view of the work behind the title.",
+    "projectsHeading": "Selected work themes and project narratives.",
+    "secondaryCta": "Explore project page",
+    "experienceNote": "Roles across market intelligence, laboratory support, analytics, and STEM teaching built a broader operating range than a single-title resume suggests.",
+    "educationNote": "The academic path combines physics, education, and current graduate work in energy technology.",
+    "contactHeading": "Open to thoughtful analyst work and research-driven teams.",
+    "contactNote": "Best suited for market analysis, energy research, dashboard reporting, and cross-functional insight roles.",
+    "primaryCta": "Email Vidya",
+    "metrics": {
+      "experience": "Years across analytics and energy work",
+      "reports": "Sector reports reviewed",
+      "tests": "Battery tests and lab studies"
+    }
+  },
   "footer": {
     "rights": "© {year} Vidya Raut. All rights reserved.",
-    "builtWith": "Crafted with Next.js 16 & React 19"
+    "builtWith": "Built with Next.js 16 and React 19",
+    "summary": "Energy Technology and Market Analyst focused on turning dense research into useful decisions.",
+    "cta": "Start a conversation"
   }
 }

@@ -1,28 +1,42 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
-import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Home, Sparkles, Code, Briefcase, GraduationCap, Mail, Moon, Sun, Puzzle, Globe } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import React, { useEffect, useState } from "react"
 import Image from "next/image"
-import { useTheme } from "next-themes"
+import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { useLocale, useTranslations } from "next-intl"
+import { useTheme } from "next-themes"
+import { motion, AnimatePresence } from "framer-motion"
+import {
+  Briefcase,
+  Code,
+  Globe,
+  GraduationCap,
+  Home,
+  Mail,
+  Menu,
+  Moon,
+  Puzzle,
+  Sparkles,
+  Sun,
+  X,
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [mounted, setMounted] = useState(false)
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false)
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
   const pathname = usePathname()
   const router = useRouter()
   const currentLocale = useLocale()
   const t = useTranslations("nav")
+  const heroTitle = useTranslations("hero")("title")
 
-  const isHomePage = pathname === `/${currentLocale}` || pathname === '/' || pathname === `/${currentLocale}/`
+  const isHomePage =
+    pathname === `/${currentLocale}` || pathname === "/" || pathname === `/${currentLocale}/`
 
   const navigation = [
     { name: t("home"), href: "#home", icon: Home },
@@ -34,19 +48,19 @@ export function Navigation() {
     { name: t("game"), href: "#game", icon: Puzzle },
   ]
 
+  const getSectionHref = (href: string) =>
+    isHomePage || !href.startsWith("#") ? href : `/${currentLocale}${href}`
+
   const switchLanguage = (newLocale: string) => {
-    const segments = pathname.split('/')
+    const segments = pathname.split("/")
     segments[1] = newLocale
-    const newPath = segments.join('/')
-    router.push(newPath)
+    router.push(segments.join("/"))
     setIsLangMenuOpen(false)
+    setIsOpen(false)
   }
 
   useEffect(() => {
-    setMounted(true)
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
-    }
+    const handleScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -55,26 +69,29 @@ export function Navigation() {
     e.preventDefault()
     setIsOpen(false)
 
-    // Handle cross-page navigation
-    if (!isHomePage && href.startsWith('#')) {
+    if (!href.startsWith("#")) {
+      router.push(href)
+      return
+    }
+
+    if (!isHomePage && href.startsWith("#")) {
       router.push(`/${currentLocale}${href}`)
       return
     }
 
-    // Tiny timeout to ensure menu close animation starts/doesn't block visibility
     setTimeout(() => {
       const element = document.querySelector(href)
-      if (element) {
-        const headerOffset = 80 // Slightly more than typical 64px to add breathing room
-        const elementPosition = element.getBoundingClientRect().top
-        const offsetPosition = elementPosition + window.scrollY - headerOffset
+      if (!element) return
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        })
-      }
-    }, 300)
+      const headerOffset = 88
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.scrollY - headerOffset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      })
+    }, 200)
   }
 
   return (
@@ -82,69 +99,72 @@ export function Navigation() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed left-0 right-0 top-0 z-50 transition-all duration-300 border-b",
         scrolled || !isHomePage
-          ? "bg-background/80 backdrop-blur-lg border-b shadow-sm"
-          : "bg-transparent"
+          ? "border-border bg-background shadow-sm"
+          : "border-transparent bg-transparent"
       )}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="#home" onClick={(e) => handleScrollTo(e, "#home")} className="flex items-center justify-center group">
-            <div className="relative w-10 h-10 rounded-full overflow-hidden border border-primary/10 group-hover:border-primary/30 transition-colors">
+      <div className="container mx-auto px-6 md:px-8">
+        <div className="flex h-16 md:h-20 items-center justify-between">
+          <Link
+            href={isHomePage ? "#home" : `/${currentLocale}`}
+            onClick={isHomePage ? (e) => handleScrollTo(e, "#home") : undefined}
+            className="group flex items-center gap-4"
+          >
+            <div className="relative h-10 w-10 overflow-hidden border border-foreground/10 bg-background">
               <Image
                 src="/logo.png"
                 alt="VR"
                 width={40}
                 height={40}
-                className="transition-transform group-hover:scale-110 object-cover"
+                className="object-cover transition-transform group-hover:scale-110"
               />
+            </div>
+            <div className="block min-w-0 max-w-[15rem] md:max-w-[19rem] lg:max-w-[24rem]">
+              <p className="truncate text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+                Vidya Raut
+              </p>
+              <p className="line-clamp-1 text-sm font-medium leading-5 text-foreground/80 max-sm:hidden">
+                {heroTitle}
+              </p>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1">
-            {navigation.map((item) => {
-              return (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => handleScrollTo(e, item.href)}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors px-4 py-2 rounded-full hover:bg-secondary/50"
-                >
-                  {item.name}
-                </a>
-              )
-            })}
-
-            {/* Theme Toggle */}
-            {mounted && (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="ml-2 rounded-full"
-                aria-label="Toggle theme"
+          <div className="hidden items-center gap-1 min-[900px]:flex">
+            {navigation.map((item) => (
+              <a
+                key={item.name}
+                href={getSectionHref(item.href)}
+                onClick={(e) => handleScrollTo(e, item.href)}
+                className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-primary/8 hover:text-foreground"
               >
-                {theme === "dark" ? (
-                  <Sun className="w-4 h-4" />
-                ) : (
-                  <Moon className="w-4 h-4" />
-                )}
-              </Button>
-            )}
+                {item.name}
+              </a>
+            ))}
 
-            {/* Language Toggle */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+              className="ml-2 rounded-full text-muted-foreground hover:bg-primary/5 hover:text-foreground"
+              aria-label="Toggle theme"
+            >
+              <>
+                <Sun className="hidden h-4 w-4 dark:block" />
+                <Moon className="h-4 w-4 dark:hidden" />
+              </>
+            </Button>
+
             <div className="relative ml-2">
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                className="rounded-full"
+                onClick={() => setIsLangMenuOpen((prev) => !prev)}
+                className="rounded-full text-muted-foreground hover:bg-primary/5 hover:text-foreground"
                 aria-label="Change language"
               >
-                <Globe className="w-4 h-4" />
+                <Globe className="h-4 w-4" />
               </Button>
 
               <AnimatePresence>
@@ -153,18 +173,20 @@ export function Navigation() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    className="absolute right-0 top-full mt-2 w-32 bg-card border border-border rounded-xl shadow-lg overflow-hidden py-1"
+                    className="absolute right-0 top-full mt-3 w-36 overflow-hidden rounded-2xl border border-border/70 bg-card shadow-xl"
                   >
-                    {['en', 'hi', 'mr'].map((lang) => (
+                    {["en", "hi", "mr"].map((lang) => (
                       <button
                         key={lang}
                         onClick={() => switchLanguage(lang)}
                         className={cn(
-                          "w-full text-left px-4 py-2 text-sm transition-colors hover:bg-primary/5 hover:text-primary",
-                          currentLocale === lang ? "font-bold text-primary bg-primary/5" : "text-muted-foreground"
+                          "w-full px-4 py-2 text-left text-sm transition-colors hover:bg-primary/5 hover:text-primary",
+                          currentLocale === lang
+                            ? "bg-primary/5 font-bold text-primary"
+                            : "text-muted-foreground"
                         )}
                       >
-                        {lang === 'en' ? 'English' : lang === 'hi' ? 'Hindi' : 'Marathi'}
+                        {lang === "en" ? "English" : lang === "hi" ? "Hindi" : "Marathi"}
                       </button>
                     ))}
                   </motion.div>
@@ -173,75 +195,73 @@ export function Navigation() {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex items-center gap-2 lg:hidden">
-            {mounted && (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="rounded-full"
-              >
-                {theme === "dark" ? (
-                  <Sun className="w-4 h-4" />
-                ) : (
-                  <Moon className="w-4 h-4" />
-                )}
-              </Button>
-            )}
+          <div className="flex items-center gap-2 min-[900px]:hidden">
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setIsOpen(!isOpen)}
-              className="rounded-full"
+              onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+              className="rounded-full text-muted-foreground hover:bg-primary/5 hover:text-foreground"
+              aria-label="Toggle theme"
+            >
+              <>
+                <Sun className="hidden h-4 w-4 dark:block" />
+                <Moon className="h-4 w-4 dark:hidden" />
+              </>
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsOpen((prev) => !prev)}
+              className="rounded-full text-muted-foreground hover:bg-primary/5 hover:text-foreground"
               aria-label="Toggle menu"
             >
-              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden border-t bg-background border-b shadow-2xl"
+            className="mt-3 overflow-hidden rounded-[1.75rem] border border-border bg-background shadow-2xl min-[900px]:hidden"
           >
-            <div className="container mx-auto px-4 py-4 space-y-2">
+            <div className="container mx-auto max-h-[calc(100vh-4rem)] space-y-2 overflow-y-auto px-4 py-4">
               {navigation.map((item) => {
                 const Icon = item.icon
                 return (
                   <a
                     key={item.name}
-                    href={item.href}
+                    href={getSectionHref(item.href)}
                     onClick={(e) => handleScrollTo(e, item.href)}
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors hover:bg-primary/5 hover:text-primary"
+                    className="flex items-center gap-3 rounded-2xl px-4 py-3 transition-colors hover:bg-primary/5 hover:text-primary"
                   >
-                    <Icon className="w-5 h-5" />
+                    <Icon className="h-5 w-5" />
                     <span className="font-medium">{item.name}</span>
                   </a>
                 )
               })}
 
-              <div className="border-t border-border my-2 pt-2">
-                <div className="px-4 py-2 text-sm font-semibold text-muted-foreground">Language</div>
+              <div className="my-2 border-t border-border pt-3">
+                <div className="px-4 py-2 text-sm font-semibold text-muted-foreground">
+                  Language
+                </div>
                 <div className="grid grid-cols-3 gap-2 px-4">
-                  {['en', 'hi', 'mr'].map((lang) => (
+                  {["en", "hi", "mr"].map((lang) => (
                     <button
                       key={lang}
                       onClick={() => switchLanguage(lang)}
                       className={cn(
-                        "py-2 rounded-lg text-sm font-medium transition-colors border border-border/50",
+                        "rounded-lg border border-border/50 py-2 text-sm font-medium transition-colors",
                         currentLocale === lang
-                          ? "bg-primary text-primary-foreground border-primary"
-                          : "bg-card hover:bg-primary/5 hover:text-primary text-foreground"
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "bg-card text-foreground hover:bg-primary/5 hover:text-primary"
                       )}
                     >
-                      {lang === 'en' ? 'EN' : lang === 'hi' ? 'HI' : 'MR'}
+                      {lang === "en" ? "EN" : lang === "hi" ? "HI" : "MR"}
                     </button>
                   ))}
                 </div>

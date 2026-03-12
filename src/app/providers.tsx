@@ -28,7 +28,6 @@ export function AppProviders({ children, locale, messages }: AppProvidersProps) 
       locale={locale}
       messages={messages}
       timeZone={TIME_ZONE}
-      now={new Date()}
     >
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
@@ -36,4 +35,3 @@ export function AppProviders({ children, locale, messages }: AppProvidersProps) 
     </NextIntlClientProvider>
   );
 }
-
