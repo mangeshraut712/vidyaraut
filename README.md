@@ -11,7 +11,7 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-Optional-009688?logo=fastapi)
 ![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)
 
-**A polished multilingual portfolio with an AI agent desk, inline puzzle experience, and optional FastAPI-backed chat architecture.**
+**A 2026-ready multilingual portfolio built on Next.js 16, React 19, App Router i18n, and a multi-agent chat architecture with optional FastAPI support.**
 
 [🌐 Live Demo](https://vidyaraut.vercel.app) | [📧 Contact](mailto:vidyaraut17297@gmail.com) | [💼 LinkedIn](https://www.linkedin.com/in/vidyaraut17/) | [🤖 GitHub](https://github.com/mangeshraut712/vidyaraut)
 
@@ -49,6 +49,13 @@
 - **Remote Upstream Fallback** - FastAPI and Next.js can proxy chat when local provider keys are not set
 - **GitHub Actions CI** - Lint, type-check, build, and Python compile validation
 
+### 🧱 2026 Platform Foundation
+- **Next.js 16 Generation** - App Router, route handlers, metadata, and modern production output
+- **React 19 Runtime** - Current React stack with modern hook and compiler-era support
+- **React Compiler Support** - Enabled through the Next.js toolchain for a cleaner component model
+- **next-intl 4.x App Router i18n** - Locale-aware routing aligned to the current Next.js i18n ecosystem
+- **OpenAI Responses API Alignment** - Chat architecture is built around the newer Responses path, with layered fallback behavior
+
 ---
 
 ## 🛠️ Tech Stack
@@ -57,15 +64,18 @@
 |----------|------------|-----------------|
 | **Framework** | Next.js App Router | 16.1.x |
 | **UI Library** | React | 19.2.x |
+| **React Compiler** | Next.js integrated support | enabled |
 | **Language** | TypeScript | 5.7.x |
 | **Styling** | Tailwind CSS | 3.4.x |
 | **Animations** | Framer Motion | 11.x |
 | **i18n** | next-intl | 4.5.x |
 | **Theme** | next-themes | 0.4.x |
+| **Routing / Locale Flow** | App Router + next-intl middleware flow | locale-aware |
 | **Forms / Validation** | react-hook-form + Zod | 7.x / 3.x |
 | **UI Primitives** | Radix UI | multiple packages |
 | **State / Helpers** | Zustand, CVA, clsx | lightweight usage |
 | **Backend (optional)** | FastAPI + httpx + uvicorn | Python service |
+| **AI Layer** | OpenAI Responses API + OpenRouter fallback | multi-provider support |
 | **CI** | GitHub Actions | `.github/workflows/ci.yml` |
 | **Deployment** | Vercel | `vercel.json` + `npm run build` |
 
@@ -204,6 +214,11 @@ Open:
 
 - `http://localhost:3000/en`
 
+Notes:
+
+- `npm run dev` uses the safer default local dev path
+- `npm run dev:turbo` is available when you explicitly want Turbopack in development
+
 ### Optional FastAPI Backend
 
 ```bash
@@ -247,6 +262,7 @@ FASTAPI_DEV_REWRITE=
 - `FASTAPI_URL` is optional
 - `CHAT_UPSTREAM_URL` is optional
 - `FASTAPI_DEV_REWRITE=true` is only for direct local rewrite testing
+- without local provider keys, the app can still operate through the configured upstream fallback path
 
 ---
 
@@ -372,6 +388,12 @@ Set one of:
 3. Set `FASTAPI_URL` on the Next.js project
 4. Optionally set matching `FASTAPI_INTERNAL_TOKEN` values on both services
 
+Deployment notes:
+
+- designed for GitHub -> Vercel deployment
+- static locale pages are generated at build time
+- public chat route stays stable even when FastAPI is introduced behind it
+
 ---
 
 ## 🤝 Contributing
@@ -397,6 +419,12 @@ Set one of:
 - 🔋 Energy storage systems and battery testing
 - 📈 Excel and Power BI analysis
 - 🧠 Domain translation for customers and decision-makers
+
+This portfolio is optimized to help:
+
+- recruiters understand role fit faster
+- collaborators see project value clearly
+- non-technical visitors understand energy-market work in plain language
 
 ### Contact
 
