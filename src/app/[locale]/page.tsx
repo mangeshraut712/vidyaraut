@@ -244,7 +244,11 @@ export default function PortfolioPage() {
                     src="/home picture.jpeg"
                     alt="Vidya Raut"
                     fill
-                    className="object-cover object-[center_top] scale-100 transition-transform duration-[1500ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-105"
+                    className="object-cover object-[center_top] scale-100 transition-transform group-hover:scale-105"
+                    style={{
+                      transitionDuration: "1500ms",
+                      transitionTimingFunction: "cubic-bezier(0.2, 0.8, 0.2, 1)",
+                    }}
                     sizes="(max-width: 900px) 100vw, 50vw"
                     priority
                   />

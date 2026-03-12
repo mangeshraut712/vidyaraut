@@ -1,3 +1,5 @@
+<div align="center">
+
 # Vidya Raut Portfolio
 
 [![CI](https://github.com/mangeshraut712/vidyaraut/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/mangeshraut712/vidyaraut/actions/workflows/ci.yml)
@@ -5,25 +7,99 @@
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?logo=tailwindcss)
-![FastAPI](https://img.shields.io/badge/FastAPI-optional-009688?logo=fastapi)
+![FastAPI](https://img.shields.io/badge/FastAPI-Optional-009688?logo=fastapi)
+![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)
 
-Multilingual portfolio website for Vidya Raut built with Next.js 16, React 19, TypeScript, Tailwind CSS, and a multi-agent chatbot with optional FastAPI support.
+Multilingual portfolio website for Vidya Raut with an AI-powered agent desk, interactive puzzle section, and optional FastAPI backend support.
 
-## Highlights
+[Live Site](https://vidyaraut.vercel.app) • [LinkedIn](https://www.linkedin.com/in/vidyaraut17/) • [Email](mailto:vidyaraut17297@gmail.com)
 
-- Solid light and dark themes with a consistent editorial layout system
-- Homepage-first navigation with dedicated `skills`, `projects`, and `certifications` subpages
-- AI Agent Desk with four agents:
-  - `Portfolio Guide`
-  - `Energy Market Agent`
-  - `Opportunity Advisor`
-  - `Puzzle Helper`
-- Inline Marathi crossword section below contact, with chatbot puzzle help
-- English, Hindi, and Marathi routing with `next-intl`
-- Optional FastAPI backend for chat proxying and backend deployment
-- GitHub Actions CI for lint, type-check, build, and Python compile validation
+</div>
 
-## Technology Stack
+---
+
+## 📌 Table Of Contents
+
+- [✨ Overview](#-overview)
+- [🧩 Problem It Solves](#-problem-it-solves)
+- [🚀 Key Features](#-key-features)
+- [🛠️ Technology Stack](#️-technology-stack)
+- [🖼️ Visual Preview](#️-visual-preview)
+- [📁 Project Structure](#-project-structure)
+- [⚙️ Installation](#️-installation)
+- [🔐 Configuration](#-configuration)
+- [💬 Usage Examples](#-usage-examples)
+- [🧪 Quality Checks](#-quality-checks)
+- [🔄 GitHub Actions](#-github-actions)
+- [▲ Vercel Deployment](#-vercel-deployment)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [📬 Contact](#-contact)
+
+## ✨ Overview
+
+`vidyaraut` is a polished personal portfolio application for Vidya Raut, designed to do more than present a static resume. It combines:
+
+- a multilingual portfolio experience
+- a structured homepage-first narrative
+- an AI chatbot with domain-specific agents
+- an inline Marathi crossword section
+- optional FastAPI backend support for chat features
+
+The project is built for recruiters, collaborators, customers, and visitors who want to understand Vidya's background, strengths, project fit, and domain knowledge quickly.
+
+## 🧩 Problem It Solves
+
+Traditional portfolio sites are often passive, repetitive, and difficult to navigate for different audiences. This project solves that by:
+
+- making the portfolio easier to scan through strong section structure
+- helping recruiters get role-fit answers directly through the chatbot
+- helping non-technical visitors understand energy-market topics in plain language
+- keeping engagement on the page with an inline game instead of sending users away
+- supporting both frontend-only and frontend-plus-backend deployment patterns
+
+## 🚀 Key Features
+
+### 🏠 Portfolio Experience
+
+- Homepage-driven navigation with clear section anchors
+- Dedicated subpages for `skills`, `projects`, and `certifications`
+- Consistent editorial heading system across active pages
+- Solid white light mode and solid black dark mode
+- Refined footer, navigation, and section spacing
+
+### 🤖 AI Agent Desk
+
+Four chatbot agents are available:
+
+- `Portfolio Guide`
+- `Energy Market Agent`
+- `Opportunity Advisor`
+- `Puzzle Helper`
+
+Chatbot capabilities include:
+
+- stable fixed-position chat shell
+- agent-specific welcome states
+- quick actions
+- markdown-friendly assistant responses
+- copy response action
+- browser-native mic dictation support
+
+### 🧠 Puzzle + Game Flow
+
+- Inline Marathi crossword section below contact
+- `/[locale]/game` redirects to the homepage `#game` section
+- Puzzle Helper supports pasted clues and answer-checking
+- Built to remain usable even when the third-party crossword iframe loads slowly
+
+### 🌍 Internationalization
+
+- English
+- Hindi
+- Marathi
+
+## 🛠️ Technology Stack
 
 ### Frontend
 
@@ -32,117 +108,91 @@ Multilingual portfolio website for Vidya Raut built with Next.js 16, React 19, T
 - TypeScript
 - Tailwind CSS
 - Framer Motion
-- Radix UI primitives
 - `next-intl`
 - `next-themes`
+- Radix UI primitives
 - Lucide icons
 
 ### Backend / AI
 
-- Next.js route handler at `/api/chat`
-- Optional FastAPI service
+- Next.js API route at `/api/chat`
+- Optional FastAPI backend
 - OpenAI Responses API support
 - OpenRouter fallback support
 - Remote upstream chat fallback for local and proxy scenarios
 
-### Quality / Tooling
+### Tooling
 
 - ESLint
-- TypeScript route-aware type checks
+- TypeScript route-aware checks
 - GitHub Actions CI
-- Vercel-ready Next.js build
+- Vercel-ready build configuration
 
-## Main Features
+## 🖼️ Visual Preview
 
-### Portfolio Experience
-
-- Clean homepage narrative with role, strengths, credentials, experience, education, contact, and game sections
-- Shared heading alignment system:
-  - centered for `skills`, `contact`, `game`
-  - left-aligned for `projects`, `experience`, `education`
-- Refined footer with brand, explore links, and direct contact CTA
-
-### AI Chatbot
-
-- Stable fixed chat shell that stays below the navbar
-- Agent switching without header drift
-- Welcome states per agent
-- Quick actions
-- Browser-native dictation support
-- Puzzle-helper flow that works with pasted crossword clues
-
-### Game Flow
-
-- `Game` lives on the homepage below `Contact`
-- `/[locale]/game` redirects to `/{locale}#game`
-- Inline iframe load instead of separate page navigation
-- Copy/paste helper workflow into chatbot
-
-## Routes
-
-- `/[locale]`
-- `/[locale]/skills`
-- `/[locale]/projects`
-- `/[locale]/certifications`
-- `/[locale]/game` -> redirects to `/{locale}#game`
-- `/api/chat`
-
-Supported locales:
-
-- `en`
-- `hi`
-- `mr`
-
-## Project Structure
+Add screenshots and GIFs under:
 
 ```text
-src/
-  app/
-    [locale]/
-      page.tsx
-      skills/page.tsx
-      projects/page.tsx
-      certifications/page.tsx
-      game/page.tsx
-    api/chat/route.ts
-    globals.css
-    layout.tsx
-    page.tsx
-    providers.tsx
-    sitemap.ts
-  components/
-    AIChatbot.tsx
-    Footer.tsx
-    Game.tsx
-    GlobalLayout.tsx
-    Navigation.tsx
-    PageBackButton.tsx
-    ScrollToTop.tsx
-    SectionIntro.tsx
-    Timeline.tsx
-    ui/
-  i18n/
-    config.ts
-    request.ts
-    routing.ts
-    messages/
-  lib/
-    assistant-agents.ts
-    collection-utils.ts
-    data.ts
-    legacy-data.ts
-    openrouter.ts
+docs/images/
 ```
 
-## Installation
+Recommended asset names:
+
+- `docs/images/homepage-light.png`
+- `docs/images/homepage-dark.png`
+- `docs/images/chatbot-demo.gif`
+- `docs/images/game-section.png`
+- `docs/images/projects-page.png`
+
+Example Markdown to paste once the assets exist:
+
+```md
+![Homepage Light](docs/images/homepage-light.png)
+![Chatbot Demo](docs/images/chatbot-demo.gif)
+![Game Section](docs/images/game-section.png)
+```
+
+## 📁 Project Structure
+
+```text
+.
+├── .github/workflows/ci.yml     # GitHub Actions pipeline
+├── api/index.py                 # Python entrypoint wrapper
+├── fastapi_backend/             # Optional FastAPI backend
+├── public/                      # Static assets
+├── scripts/                     # Local helper scripts
+├── src/
+│   ├── app/                     # Next.js routes, layout, API
+│   ├── components/              # Shared UI + app components
+│   ├── i18n/                    # Locale config and translations
+│   ├── lib/                     # Data, chatbot, helpers
+│   └── types/                   # Shared TypeScript types
+├── .env.example                 # Environment variable template
+├── next.config.ts               # Next.js config
+├── vercel.json                  # Vercel config
+├── package.json                 # Frontend scripts and dependencies
+└── README.md                    # Project documentation
+```
+
+### Where To Find Things
+
+- Main homepage flow: `src/app/[locale]/page.tsx`
+- Chatbot UI: `src/components/AIChatbot.tsx`
+- Game section: `src/components/Game.tsx`
+- Footer and navigation: `src/components/Footer.tsx`, `src/components/Navigation.tsx`
+- Chat route: `src/app/api/chat/route.ts`
+- FastAPI backend: `fastapi_backend/main.py`
+- Agent definitions: `src/lib/assistant-agents.ts`
+
+## ⚙️ Installation
 
 ### Prerequisites
 
 - Node.js 20+
 - npm
-- Python 3.11+ for the optional backend
+- Python 3.11+ for the optional FastAPI backend
 
-### Frontend
+### Frontend Setup
 
 ```bash
 npm install
@@ -154,7 +204,7 @@ Open:
 
 - `http://localhost:3000/en`
 
-### Optional FastAPI backend
+### Optional FastAPI Backend
 
 ```bash
 python3 -m venv .venv
@@ -167,9 +217,9 @@ Open:
 
 - `http://127.0.0.1:8000/health`
 
-## Environment Variables
+## 🔐 Configuration
 
-Copy `.env.example` to `.env.local` and set only what you need.
+Copy `.env.example` to `.env.local` and configure only what you need.
 
 ```env
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
@@ -188,43 +238,24 @@ CHAT_UPSTREAM_URL=
 FASTAPI_DEV_REWRITE=
 ```
 
-### Config Notes
+### Configuration Notes
 
 - `OPENAI_API_KEY` is optional
 - `OPENROUTER_API_KEY` is optional
 - `FASTAPI_URL` is optional
 - `CHAT_UPSTREAM_URL` is optional
-- `FASTAPI_DEV_REWRITE=true` enables direct Next.js rewrite to local FastAPI, but it is off by default to keep dev and production behavior aligned
+- `FASTAPI_DEV_REWRITE=true` enables a direct dev rewrite to local FastAPI, but it is intentionally off by default to keep dev and production behavior aligned
 
-## Chat Architecture
+## 💬 Usage Examples
 
-### Next.js `/api/chat` resolution order
-
-1. Proxy to `FASTAPI_URL` if configured
-2. Use local OpenAI or OpenRouter keys if available
-3. In non-production, proxy to `CHAT_UPSTREAM_URL` or the default dev upstream
-4. Fall back to deterministic local responses
-
-### FastAPI backend behavior
-
-The optional FastAPI backend:
-
-- mirrors the same four-agent model as the frontend
-- supports OpenAI Responses API
-- supports OpenRouter fallback
-- supports remote upstream chat fallback when local AI keys are absent
-- exposes `/health` and `/chat`
-
-## Usage Examples
-
-### Health checks
+### Health Checks
 
 ```bash
 curl http://localhost:3000/api/chat
 curl http://127.0.0.1:8000/health
 ```
 
-### Portfolio chatbot request
+### Portfolio Agent Request
 
 ```bash
 curl -X POST http://localhost:3000/api/chat \
@@ -237,7 +268,7 @@ curl -X POST http://localhost:3000/api/chat \
   }'
 ```
 
-### Puzzle helper request
+### Puzzle Helper Request
 
 ```bash
 curl -X POST http://localhost:3000/api/chat \
@@ -250,13 +281,30 @@ curl -X POST http://localhost:3000/api/chat \
   }'
 ```
 
-## GitHub Actions
+## 🧪 Quality Checks
 
-CI lives at:
+Run before merging or deploying:
+
+```bash
+npm run lint
+npm run type-check
+npm run build
+npm audit --audit-level=moderate
+./.venv/bin/python -m py_compile api/index.py fastapi_backend/main.py
+```
+
+## 🔄 GitHub Actions
+
+CI is configured at:
 
 - `.github/workflows/ci.yml`
 
-The workflow runs on pushes and pull requests to `main` and checks:
+It runs on:
+
+- push to `main`
+- pull request to `main`
+
+Checks included:
 
 - `npm ci`
 - `pip install -r requirements.txt`
@@ -267,17 +315,11 @@ The workflow runs on pushes and pull requests to `main` and checks:
   - `api/index.py`
   - `fastapi_backend/main.py`
 
-## Vercel Deployment
+## ▲ Vercel Deployment
 
-### Recommended setup
+### Current Setup
 
-Use Git integration with the repository:
-
-- Framework preset: `Next.js`
-- Build command: `npm run build`
-- Node version: 20+
-
-Current [vercel.json](./vercel.json):
+[vercel.json](./vercel.json):
 
 ```json
 {
@@ -286,71 +328,45 @@ Current [vercel.json](./vercel.json):
 }
 ```
 
-### Next.js-only deployment
+### Recommended Deployment Paths
 
-Set one of:
+#### Next.js Only
+
+Use Vercel Git integration and set one of:
 
 - `OPENAI_API_KEY`
 - `OPENROUTER_API_KEY`
 
-### Next.js + FastAPI deployment
+#### Next.js + FastAPI
 
-1. Deploy the FastAPI backend separately
+1. Deploy FastAPI separately
 2. Set provider keys on the FastAPI service
 3. Set `FASTAPI_URL` on the Next.js project
 4. Optionally set matching `FASTAPI_INTERNAL_TOKEN` values on both services
 
-## Quality Commands
-
-```bash
-npm run lint
-npm run type-check
-npm run build
-npm audit --audit-level=moderate
-./.venv/bin/python -m py_compile api/index.py fastapi_backend/main.py
-```
-
-## Recent Improvements
-
-- consolidated the homepage as the main product surface
-- moved the game section below contact
-- stabilized chatbot layout and agent switching
-- aligned heading behavior across active pages
-- cleaned footer structure and CTA behavior
-- added `puzzle` support to FastAPI
-- added remote-upstream fallback to FastAPI health/chat
-- removed unused legacy components
-- cleaned generated cache artifacts and stray tracked files
-- refreshed docs and deployment guidance
-
-## Known Limitations
-
-- The crossword iframe depends on:
-  `https://marathigames.in/Crossword/crossword.html`
-- Local chat is still fallback-only unless keys or an upstream are configured
-- Chat rate limiting is currently in-memory
-
-## Contributing
+## 🤝 Contributing
 
 1. Branch from `main`
 2. Keep changes small and consistent with the existing design system
-3. Run:
-   - `npm run lint`
-   - `npm run type-check`
-   - `npm run build`
-4. If backend code changes, also run:
-   - `./.venv/bin/python -m py_compile api/index.py fastapi_backend/main.py`
-5. Update docs when routes, env vars, or behavior change
-6. Open a PR with a concise summary and verification notes
+3. Run all quality checks
+4. Update docs if routes, config, or behavior change
+5. Open a pull request with:
+   - a concise summary
+   - screenshots or GIFs when UI changes
+   - validation notes
 
-## Release Checklist
+## 📄 License
 
-- homepage loads at `/en`
-- solid white/light and solid black/dark themes remain intact
-- chatbot opens, switches agents, and sends messages
-- `GET /api/chat` works
-- `POST /api/chat` works
-- FastAPI `/health` and `/chat` work if backend is enabled
-- `/[locale]/game` redirects to `#game`
-- footer links and CTA are correct
-- CI, lint, type-check, build, and audit remain green
+This repository does not currently include a standalone `LICENSE` file.
+
+Until a license file is added, treat the codebase as not licensed for general redistribution or reuse.
+
+## 📬 Contact
+
+- GitHub: [mangeshraut712/vidyaraut](https://github.com/mangeshraut712/vidyaraut)
+- LinkedIn: [linkedin.com/in/vidyaraut17](https://www.linkedin.com/in/vidyaraut17/)
+- Email: [vidyaraut17297@gmail.com](mailto:vidyaraut17297@gmail.com)
+
+---
+
+If you add preview assets later, place them in `docs/images/` so the README stays clean and the root folder remains easy to navigate.

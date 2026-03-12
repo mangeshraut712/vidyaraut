@@ -1,17 +1,37 @@
 import { spawn } from "node:child_process"
+import { rm } from "node:fs/promises"
 
-const command = process.argv.slice(2).join(" ").trim()
-
-if (!command) {
-  console.error("Usage: node scripts/run-clean.mjs \"<command>\"")
-  process.exit(1)
-}
+const args = process.argv.slice(2)
+const command = args.join(" ").trim()
 
 const suppressedPatterns = [
   "[baseline-browser-mapping] The data in this module is over two months old.",
 ]
 
-const forwardStream = (stream, writer) => {
+const cleanTargets = [
+  ".next",
+  "output",
+  "tsconfig.tsbuildinfo",
+  "api/__pycache__",
+  "fastapi_backend/__pycache__",
+]
+
+function shouldPreclean(input) {
+  return /\bnext\s+(dev|build)\b/.test(input)
+}
+
+async function removeBuildArtifacts() {
+  await Promise.all(
+    cleanTargets.map((target) =>
+      rm(target, {
+        force: true,
+        recursive: true,
+      })
+    )
+  )
+}
+
+function forwardStream(stream, writer) {
   let buffer = ""
 
   stream.on("data", (chunk) => {
@@ -35,6 +55,20 @@ const forwardStream = (stream, writer) => {
       writer.write(buffer)
     }
   })
+}
+
+if (args.includes("--clean-only")) {
+  await removeBuildArtifacts()
+  process.exit(0)
+}
+
+if (!command) {
+  console.error('Usage: node scripts/run-clean.mjs "<command>"')
+  process.exit(1)
+}
+
+if (shouldPreclean(command)) {
+  await removeBuildArtifacts()
 }
 
 const child = spawn(command, {
