@@ -447,3 +447,20 @@ Until one is added, treat the codebase as not licensed for general redistributio
 **Built with Next.js 16, React 19, Tailwind CSS, and a multi-agent chat experience**
 
 </div>
+
+---
+
+<!-- codex:project-diagram:start -->
+
+## Project Diagram
+
+```mermaid
+flowchart LR
+    A["Browser"] --> B["Frontend App"]
+    B --> C["API / Serverless"]
+    C --> D["Deploy"]
+```
+
+_High-level flow of the deployed web experience and supporting services._
+
+<!-- codex:project-diagram:end -->
