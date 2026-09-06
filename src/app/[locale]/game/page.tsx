@@ -1,12 +1,21 @@
-import { redirect } from "next/navigation"
-import { isLocale } from "@/i18n/config"
+"use client";
 
-export default async function GameRedirectPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}) {
-  const { locale } = await params
+import { useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { isLocale } from "@/i18n/config";
 
-  redirect(`/${isLocale(locale) ? locale : "en"}#game`)
+export default function GameRedirectPage() {
+  const params = useParams();
+  const router = useRouter();
+  const locale =
+    typeof params.locale === "string" && isLocale(params.locale)
+      ? params.locale
+      : "en";
+  const href = `/${locale}/#game`;
+
+  useEffect(() => {
+    router.replace(href);
+  }, [href, router]);
+
+  return null;
 }

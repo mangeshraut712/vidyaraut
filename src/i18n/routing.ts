@@ -9,7 +9,8 @@ export const routing = defineRouting({
     defaultLocale: 'en',
 
     // Always show locale in URL
-    localePrefix: 'always'
+    localePrefix: 'always',
+    localeDetection: false
 });
 
 // Lightweight wrappers around Next.js' navigation APIs

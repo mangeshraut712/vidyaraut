@@ -3,6 +3,7 @@
   "version": "2.1.0",
   "private": true,
   "type": "module",
+  "homepage": "https://mangeshraut712.github.io/vidyaraut/",
   "scripts": {
     "clean": "node scripts/run-clean.mjs --clean-only",
     "dev": "node scripts/run-clean.mjs \"next dev\"",

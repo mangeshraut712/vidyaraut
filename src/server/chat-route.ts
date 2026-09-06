@@ -1,3 +1,7 @@
+/**
+ * Optional Node.js chat handlers kept for self-hosted Next.js server deployments.
+ * GitHub Pages uses `output: "export"`, so these handlers are not part of the public static site.
+ */
 import { NextRequest, NextResponse } from "next/server"
 import { isAssistantAgentId, type AssistantAgentId } from "@/lib/assistant-agents"
 import { getFallbackResponse, sendChatMessage, type ChatMessage } from "@/lib/openrouter"

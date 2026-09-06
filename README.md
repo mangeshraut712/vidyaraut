@@ -9,11 +9,11 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?logo=tailwindcss)
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-11-FF0050?logo=framer)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Optional-009688?logo=fastapi)
-![Vercel](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)
+![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub_Pages-222?logo=github)
 
 **A 2026-ready multilingual portfolio built on Next.js 16, React 19, App Router i18n, and a multi-agent chat architecture with optional FastAPI support.**
 
-[🌐 Live Demo](https://vidyaraut.vercel.app) | [📧 Contact](mailto:vidyaraut17297@gmail.com) | [💼 LinkedIn](https://www.linkedin.com/in/vidyaraut17/) | [🤖 GitHub](https://github.com/mangeshraut712/vidyaraut)
+[🌐 Live Demo](https://mangeshraut712.github.io/vidyaraut/) | [📧 Contact](mailto:vidyaraut17297@gmail.com) | [💼 LinkedIn](https://www.linkedin.com/in/vidyaraut17/) | [🤖 GitHub](https://github.com/mangeshraut712/vidyaraut)
 
 </div>
 
@@ -47,7 +47,7 @@
 - **Next.js 16 App Router** - Modern routing and rendering model
 - **Optional FastAPI Backend** - Supports chat proxying and separate Python deployment
 - **Remote Upstream Fallback** - FastAPI and Next.js can proxy chat when local provider keys are not set
-- **GitHub Actions CI** - Lint, type-check, build, and Python compile validation
+- **GitHub Pages** - Static export (`output: 'export'`) at `/vidyaraut/`
 
 ### 🧱 2026 Platform Foundation
 - **Next.js 16 Generation** - App Router, route handlers, metadata, and modern production output
@@ -70,14 +70,14 @@
 | **Animations** | Framer Motion | 11.x |
 | **i18n** | next-intl | 4.5.x |
 | **Theme** | next-themes | 0.4.x |
-| **Routing / Locale Flow** | App Router + next-intl middleware flow | locale-aware |
+| **Routing / Locale Flow** | App Router + next-intl (no middleware; static export) | locale-aware |
 | **Forms / Validation** | react-hook-form + Zod | 7.x / 3.x |
 | **UI Primitives** | Radix UI | multiple packages |
 | **State / Helpers** | Zustand, CVA, clsx | lightweight usage |
 | **Backend (optional)** | FastAPI + httpx + uvicorn | Python service |
 | **AI Layer** | OpenAI Responses API + OpenRouter fallback | multi-provider support |
 | **CI** | GitHub Actions | `.github/workflows/ci.yml` |
-| **Deployment** | Vercel | `vercel.json` + `npm run build` |
+| **Deployment** | GitHub Pages | `output: 'export'` + `.github/workflows/pages.yml` |
 
 ---
 
@@ -87,7 +87,8 @@
 vidyaraut/
 ├── .github/
 │   └── workflows/
-│       └── ci.yml                 # GitHub Actions checks
+│       ├── ci.yml                 # GitHub Actions checks
+│       └── pages.yml              # GitHub Pages static deploy
 ├── api/
 │   └── index.py                   # Python entrypoint wrapper
 ├── fastapi_backend/
@@ -111,10 +112,9 @@ vidyaraut/
 │   │   │   ├── projects/
 │   │   │   ├── certifications/
 │   │   │   └── game/              # Redirects to #game
-│   │   ├── api/chat/route.ts      # Next.js chat API
 │   │   ├── globals.css            # Theme tokens + shared surfaces
 │   │   ├── layout.tsx             # Root metadata + app shell
-│   │   ├── page.tsx               # Root redirect
+│   │   ├── page.tsx               # Root locale redirect
 │   │   ├── providers.tsx
 │   │   └── sitemap.ts
 │   ├── components/
@@ -139,7 +139,10 @@ vidyaraut/
 │   │   ├── data.ts
 │   │   ├── legacy-data.ts
 │   │   ├── openrouter.ts
+│   │   ├── site.ts
 │   │   └── utils.ts
+│   ├── server/
+│   │   └── chat-route.ts          # Optional Node chat handlers (not used on Pages)
 │   └── types/
 ├── .env.example
 ├── next.config.ts
@@ -154,7 +157,7 @@ vidyaraut/
 - **Chatbot UI:** `src/components/AIChatbot.tsx`
 - **Game section:** `src/components/Game.tsx`
 - **Agent definitions:** `src/lib/assistant-agents.ts`
-- **Next.js chat route:** `src/app/api/chat/route.ts`
+- **Optional Node chat handlers:** `src/server/chat-route.ts`
 - **FastAPI backend:** `fastapi_backend/main.py`
 
 ---
@@ -212,10 +215,11 @@ npm run dev
 
 Open:
 
-- `http://localhost:3000/en`
+- `http://localhost:3000/vidyaraut/en/`
 
 Notes:
 
+- `basePath` is `/vidyaraut`, matching GitHub Pages
 - `npm run dev` uses the safer default local dev path
 - `npm run dev:turbo` is available when you explicitly want Turbopack in development
 
@@ -239,8 +243,9 @@ Open:
 Create `.env.local` from `.env.example`:
 
 ```env
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_SITE_URL=http://localhost:3000/vidyaraut
 NEXT_PUBLIC_SITE_NAME=Vidya Raut Portfolio
+NEXT_PUBLIC_CHAT_API_URL=
 
 OPENAI_API_KEY=
 OPENAI_MODEL=gpt-5.4
@@ -252,53 +257,26 @@ FASTAPI_URL=
 FASTAPI_INTERNAL_TOKEN=
 
 CHAT_UPSTREAM_URL=
-FASTAPI_DEV_REWRITE=
 ```
 
 ### Notes
 
-- `OPENAI_API_KEY` is optional
-- `OPENROUTER_API_KEY` is optional
-- `FASTAPI_URL` is optional
-- `CHAT_UPSTREAM_URL` is optional
-- `FASTAPI_DEV_REWRITE=true` is only for direct local rewrite testing
-- without local provider keys, the app can still operate through the configured upstream fallback path
+- `OPENAI_API_KEY` is optional and is not used on the GitHub Pages static site
+- `OPENROUTER_API_KEY` is optional and is not used on the GitHub Pages static site
+- `NEXT_PUBLIC_CHAT_API_URL` is optional; when unset, the chatbot uses on-page fallback replies
+- `FASTAPI_URL` is optional for a separately hosted Python backend
+- `CHAT_UPSTREAM_URL` is optional for the unused Node chat handlers in `src/server/chat-route.ts`
 
 ---
 
 ## 💬 Usage Examples
 
-### Health Checks
+The public GitHub Pages site has no `/api/chat` route. Chat on that site uses local fallback replies unless `NEXT_PUBLIC_CHAT_API_URL` points at a hosted backend.
+
+Optional FastAPI health check:
 
 ```bash
-curl http://localhost:3000/api/chat
 curl http://127.0.0.1:8000/health
-```
-
-### Portfolio Chat Request
-
-```bash
-curl -X POST http://localhost:3000/api/chat \
-  -H "content-type: application/json" \
-  --data '{
-    "agent": "portfolio",
-    "messages": [
-      { "role": "user", "content": "Give me a concise summary of Vidya Raut'\''s profile." }
-    ]
-  }'
-```
-
-### Puzzle Helper Request
-
-```bash
-curl -X POST http://localhost:3000/api/chat \
-  -H "content-type: application/json" \
-  --data '{
-    "agent": "puzzle",
-    "messages": [
-      { "role": "user", "content": "Give me a hint for this crossword clue: storage market" }
-    ]
-  }'
 ```
 
 ---
@@ -310,8 +288,8 @@ curl -X POST http://localhost:3000/api/chat \
 | `npm run clean` | Remove build and cache artifacts |
 | `npm run dev` | Start the safer default dev server |
 | `npm run dev:turbo` | Start Turbopack dev mode explicitly |
-| `npm run build` | Build for production |
-| `npm run start` | Start the production server |
+| `npm run build` | Static export to `out/` |
+| `npm run start` | Not used for GitHub Pages (`output: 'export'` has no Node server) |
 | `npm run lint` | Run ESLint |
 | `npm run lint:fix` | Auto-fix lint issues |
 | `npm run type-check` | Run TypeScript route-aware checks |
@@ -363,36 +341,34 @@ Checks included:
 
 ## 🌐 Deployment
 
-### Vercel (Recommended)
+### GitHub Pages (public site)
 
-Current `vercel.json`:
+The public site is a Next.js static export on GitHub Pages:
 
-```json
-{
-  "framework": "nextjs",
-  "buildCommand": "npm run build"
-}
-```
+- Live URL: https://mangeshraut712.github.io/vidyaraut/
+- `output: 'export'`, `basePath: '/vidyaraut'`, `trailingSlash: true`
+- Images use `images.unoptimized` (Pages has no Next image optimizer)
+- Workflow: `.github/workflows/pages.yml` (`build_type=workflow`)
 
-### Next.js Only
+### Static-export blockers (intentionally not on Pages)
 
-Set one of:
+These server-only features cannot ship on GitHub Pages, so the public site uses the lightest static fallback instead:
 
-- `OPENAI_API_KEY`
-- `OPENROUTER_API_KEY`
+| Blocker | Why it cannot export | Public-site fallback |
+| --- | --- | --- |
+| `src/app/api/chat/route.ts` (moved to `src/server/chat-route.ts`) | Route handlers need a Node server | Chatbot uses `getFallbackResponse()` unless `NEXT_PUBLIC_CHAT_API_URL` is set |
+| `middleware.ts` / next-intl middleware | Middleware is not supported with `output: 'export'` | Root page client-redirects to `/en/` |
+| `headers()` / `rewrites()` in `next.config.ts` | Not supported with static export | Dropped; GitHub Pages default headers only |
+| Next.js Image Optimization | Requires the Next server | `images.unoptimized: true` |
+| Live OpenAI / OpenRouter keys | Secrets cannot run in static JS | Optional self-hosted FastAPI + `NEXT_PUBLIC_CHAT_API_URL` |
 
-### Next.js + FastAPI
+`vercel.json` remains in the repo but the paused Vercel project is no longer the homepage.
+
+### Optional FastAPI
 
 1. Deploy FastAPI separately
-2. Set provider keys on the FastAPI service
-3. Set `FASTAPI_URL` on the Next.js project
-4. Optionally set matching `FASTAPI_INTERNAL_TOKEN` values on both services
-
-Deployment notes:
-
-- designed for GitHub -> Vercel deployment
-- static locale pages are generated at build time
-- public chat route stays stable even when FastAPI is introduced behind it
+2. Set provider keys on that service
+3. Point the static site at it with `NEXT_PUBLIC_CHAT_API_URL`
 
 ---
 
@@ -430,7 +406,7 @@ This portfolio is optimized to help:
 
 - 📧 **Email:** [vidyaraut17297@gmail.com](mailto:vidyaraut17297@gmail.com)
 - 💼 **LinkedIn:** [linkedin.com/in/vidyaraut17](https://www.linkedin.com/in/vidyaraut17/)
-- 🌐 **Portfolio:** [vidyaraut.vercel.app](https://vidyaraut.vercel.app)
+- 🌐 **Portfolio:** [mangeshraut712.github.io/vidyaraut](https://mangeshraut712.github.io/vidyaraut/)
 
 ---
 
