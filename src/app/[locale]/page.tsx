@@ -18,6 +18,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { assistantAgents } from "@/lib/assistant-agents"
 import { dedupeBy } from "@/lib/collection-utils"
 import { certificationsData } from "@/lib/legacy-data"
+import { withBasePath } from "@/lib/site"
 import { contactInfo } from "@/lib/data"
 import { Footer } from "@/components/Footer"
 import { Game } from "@/components/Game"
@@ -205,7 +206,7 @@ export default function PortfolioPage() {
                   variant="outline"
                   className="rounded-none border-border bg-background px-10 hover:bg-secondary hover:border-foreground/20 transition-all h-14 text-sm tracking-wide font-medium"
                 >
-                  <a href="/Vidya_Raut_Resume.pdf" target="_blank" rel="noopener noreferrer">
+                  <a href={withBasePath("/Vidya_Raut_Resume.pdf")} target="_blank" rel="noopener noreferrer">
                     <Download className="mr-2.5 h-4 w-4" />
                     {t("hero.downloadResume")}
                   </a>

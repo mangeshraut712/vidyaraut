@@ -11,6 +11,7 @@ import "@fontsource/geist-mono/500.css";
 import "@fontsource/cormorant-garamond/500.css";
 import "@fontsource/cormorant-garamond/600.css";
 import "@fontsource/cormorant-garamond/700.css";
+import { BASE_PATH, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 // Viewport configuration - separated in Next.js 14+
@@ -48,10 +49,10 @@ export const metadata: Metadata = {
     "ESS",
     "Energy Sector",
   ],
-  authors: [{ name: "Vidya Raut", url: "https://vidyaraut.vercel.app" }],
+  authors: [{ name: "Vidya Raut", url: SITE_URL }],
   creator: "Vidya Raut",
   publisher: "Vidya Raut",
-  metadataBase: new URL("https://vidyaraut.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: "/",
     languages: {
@@ -64,7 +65,7 @@ export const metadata: Metadata = {
     title: "Vidya Raut | Energy Technology & Market Analyst",
     description:
       "Professional portfolio of Vidya Raut - Energy Technology Analyst specializing in market research, data analysis, and energy storage systems.",
-    url: "https://vidyaraut.vercel.app",
+    url: SITE_URL,
     siteName: "Vidya Raut Portfolio",
     locale: "en_US",
     type: "website",
@@ -98,12 +99,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/logo.png", sizes: "32x32", type: "image/png" },
-      { url: "/logo.png", sizes: "16x16", type: "image/png" },
+      { url: `${BASE_PATH}/logo.png`, sizes: "32x32", type: "image/png" },
+      { url: `${BASE_PATH}/logo.png`, sizes: "16x16", type: "image/png" },
     ],
-    apple: [{ url: "/logo.png", sizes: "180x180", type: "image/png" }],
+    apple: [{ url: `${BASE_PATH}/logo.png`, sizes: "180x180", type: "image/png" }],
   },
-  manifest: "/manifest.json",
+  manifest: `${BASE_PATH}/manifest.json`,
   category: "portfolio",
 };
 
@@ -122,7 +123,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
         {/* DNS Prefetch for external resources */}
-        <link rel="dns-prefetch" href="https://vercel.live" />
+        <link rel="dns-prefetch" href="https://github.com" />
 
         {/* Structured Data for SEO */}
         <script
@@ -134,8 +135,8 @@ export default function RootLayout({
               "name": "Vidya Raut",
               "jobTitle": "Energy Technology Analyst",
               "description": "Energy Technology Analyst specializing in market research, data analysis, and energy storage systems with 4+ years of experience.",
-              "url": "https://vidyaraut.vercel.app",
-              "image": "https://vidyaraut.vercel.app/home picture.jpeg",
+              "url": SITE_URL,
+              "image": `${SITE_URL}/home picture.jpeg`,
               "sameAs": [
                 "https://www.linkedin.com/in/vidyaraut17/"
               ],

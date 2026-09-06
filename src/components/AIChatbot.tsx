@@ -22,6 +22,7 @@ import {
   isAssistantAgentId,
   type AssistantAgentId,
 } from "@/lib/assistant-agents"
+import { getFallbackResponse } from "@/lib/openrouter"
 
 interface Message {
   id: string
@@ -295,39 +296,49 @@ export function AIChatbot() {
     setIsTyping(true)
 
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          agent,
-          previousResponseId:
-            forcedAgent && forcedAgent !== selectedAgent
-              ? undefined
-              : [...latestMessages].reverse().find((message) => message.role === "assistant")?.responseId,
-          messages: [
-            ...latestMessages.slice(-6).map((message) => ({
-              role: message.role,
-              content: message.content,
-            })),
-            { role: "user", content: text },
-          ],
-        }),
-      })
+      const chatApiUrl = process.env.NEXT_PUBLIC_CHAT_API_URL?.trim()
+      let assistantContent = ""
+      let responseId: string | undefined
 
-      if (!response.ok) {
-        throw new Error("API request failed")
+      if (chatApiUrl) {
+        const response = await fetch(chatApiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            agent,
+            previousResponseId:
+              forcedAgent && forcedAgent !== selectedAgent
+                ? undefined
+                : [...latestMessages].reverse().find((message) => message.role === "assistant")?.responseId,
+            messages: [
+              ...latestMessages.slice(-6).map((message) => ({
+                role: message.role,
+                content: message.content,
+              })),
+              { role: "user", content: text },
+            ],
+          }),
+        })
+
+        if (!response.ok) {
+          throw new Error("API request failed")
+        }
+
+        const data = await response.json()
+        assistantContent = data.response || ""
+        responseId = typeof data.responseId === "string" ? data.responseId : undefined
       }
-
-      const data = await response.json()
 
       const aiMessage: Message = {
         id: `${Date.now()}-assistant`,
         role: "assistant",
-        content: data.response || "I’m having trouble connecting right now. Please try again.",
+        content:
+          assistantContent ||
+          getFallbackResponse(text, agent),
         timestamp: new Date(),
-        responseId: typeof data.responseId === "string" ? data.responseId : undefined,
+        responseId,
       }
 
       setSelectedAgent(agent)
@@ -342,8 +353,7 @@ export function AIChatbot() {
       const aiMessage: Message = {
         id: `${Date.now()}-assistant`,
         role: "assistant",
-        content:
-          "I’m currently having trouble connecting. Please try again later, or contact Vidya directly at vidyaraut17297@gmail.com.",
+        content: getFallbackResponse(text, agent),
         timestamp: new Date(),
       }
 

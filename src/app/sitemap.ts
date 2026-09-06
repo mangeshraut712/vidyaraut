@@ -1,7 +1,10 @@
 import type { MetadataRoute } from 'next'
+import { SITE_URL } from '@/lib/site'
+
+export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://vidyaraut.vercel.app'
+    const baseUrl = SITE_URL
     const locales = ['en', 'hi', 'mr']
     const lastModified = new Date()
 

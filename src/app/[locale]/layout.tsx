@@ -5,7 +5,7 @@ import { AppProviders } from "@/app/providers";
 import { GlobalLayout } from "@/components/GlobalLayout";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { isLocale, locales } from "@/i18n/config";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { Metadata } from "next";
 
 // Generate static params for all supported locales
@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     return {};
   }
 
+  setRequestLocale(locale);
   const messages = await getMessages({ locale });
 
   // Get translations for metadata
@@ -87,10 +88,11 @@ const LocaleLayoutError = ({ error, resetError }: { error?: Error; resetError: (
 export default async function LocaleLayout({ children, params }: { children: ReactNode; params: Promise<{ locale: string }> }) {
   const { locale } = await params;
 
-  // Validate locale
   if (!isLocale(locale)) {
     notFound();
   }
+
+  setRequestLocale(locale);
 
   // Load messages for the locale
   let messages;
