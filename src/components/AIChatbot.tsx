@@ -1,3 +1,15 @@
+
+function safeHttpUrl(value: string): string | null {
+  if (value.startsWith("/") && !value.startsWith("//")) return value;
+  try {
+    const url = new URL(value);
+    if (url.protocol === "https:" || url.protocol === "http:") return url.toString();
+  } catch {
+    return null;
+  }
+  return null;
+}
+
 "use client"
 
 import React, { useCallback, useEffect, useRef, useState } from "react"
@@ -138,11 +150,12 @@ function renderMarkdown(text: string) {
     }
     
     const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/)
-    if (linkMatch) {
+    const href = linkMatch ? safeHttpUrl(linkMatch[2]) : null;
+    if (linkMatch && href) {
       return (
         <a 
           key={index} 
-          href={linkMatch[2]} 
+          href={href} 
           target="_blank" 
           rel="noopener noreferrer" 
           className="text-primary hover:underline font-medium underline-offset-2"
