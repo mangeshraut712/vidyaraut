@@ -1,15 +1,3 @@
-
-function safeHttpUrl(value: string): string | null {
-  if (value.startsWith("/") && !value.startsWith("//")) return value;
-  try {
-    const url = new URL(value);
-    if (url.protocol === "https:" || url.protocol === "http:") return url.toString();
-  } catch {
-    return null;
-  }
-  return null;
-}
-
 "use client"
 
 import React, { useCallback, useEffect, useRef, useState } from "react"
@@ -150,7 +138,15 @@ function renderMarkdown(text: string) {
     }
     
     const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/)
-    const href = linkMatch ? safeHttpUrl(linkMatch[2]) : null;
+    let href: string | null = null
+    if (linkMatch) {
+      try {
+        const url = new URL(linkMatch[2], "https://example.invalid")
+        if (url.protocol === "http:" || url.protocol === "https:") href = url.href
+      } catch {
+        href = null
+      }
+    }
     if (linkMatch && href) {
       return (
         <a 
