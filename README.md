@@ -162,29 +162,21 @@ vidyaraut/
 
 ---
 
-## 🖼️ Visual Preview
+## Screenshots
 
-Add project visuals here:
+Framed captures of the live app (current UI).
 
-```text
-docs/images/
-```
+<div align="center">
 
-Recommended files:
+<img src="docs/screenshots/01-home.webp" alt="Homepage hero: the full portfolio story on one page" width="720" />
 
-- `docs/images/homepage-light.png`
-- `docs/images/homepage-dark.png`
-- `docs/images/chatbot-demo.gif`
-- `docs/images/game-section.png`
-- `docs/images/projects-page.png`
+<img src="docs/screenshots/02-skills.webp" alt="Skills section with market, energy, analytics, and technical columns" width="720" />
 
-Example usage:
+<img src="docs/screenshots/03-agents.webp" alt="AI Agent Desk with the Portfolio Guide chat open" width="720" />
 
-```md
-![Homepage Light](docs/images/homepage-light.png)
-![Chatbot Demo](docs/images/chatbot-demo.gif)
-![Game Section](docs/images/game-section.png)
-```
+<img src="docs/screenshots/04-projects.webp" alt="Projects page with case studies and research work" width="720" />
+
+</div>
 
 ---
 
