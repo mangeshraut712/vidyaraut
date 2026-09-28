@@ -12,6 +12,7 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "dist/**",
+      ".agents/**",
     ],
   },
   ...nextVitals,
