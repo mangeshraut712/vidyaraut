@@ -2,3 +2,5 @@ fastapi>=0.115,<1
 httpx>=0.28,<1
 python-dotenv>=1.0,<2
 uvicorn>=0.34,<1
+# emSign CA advisory: require patched CA bundle
+certifi>=2026.10.19
