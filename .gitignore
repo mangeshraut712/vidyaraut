@@ -61,3 +61,6 @@ next-env.d.ts
 
 # Turbopack
 .turbo
+# Local agent tooling
+.agents/
+skills-lock.json
