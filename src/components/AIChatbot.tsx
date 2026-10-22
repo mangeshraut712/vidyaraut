@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import {
   Bot,
@@ -165,6 +165,11 @@ function renderMarkdown(text: string) {
     return <span key={index}>{part}</span>
   })
 }
+
+function subscribeToNothing() {
+  return () => {}
+}
+
 export function AIChatbot() {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedAgent, setSelectedAgent] = useState<AssistantAgentId>("portfolio")
@@ -172,7 +177,11 @@ export function AIChatbot() {
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   const [isListening, setIsListening] = useState(false)
-  const [isDictationSupported, setIsDictationSupported] = useState(false)
+  const isDictationSupported = useSyncExternalStore(
+    subscribeToNothing,
+    () => Boolean(window.SpeechRecognition ?? window.webkitSpeechRecognition),
+    () => false
+  )
   const [dictationError, setDictationError] = useState<string | null>(null)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -253,7 +262,6 @@ export function AIChatbot() {
     }
 
     recognitionRef.current = recognition
-    setIsDictationSupported(true)
 
     return () => {
       recognition.onstart = null
