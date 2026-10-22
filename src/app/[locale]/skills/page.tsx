@@ -69,7 +69,7 @@ export default function SkillsPage() {
                 {...fadeInUp}
                 transition={{ ...fadeInUp.transition, delay: 0.06 * index }}
               >
-                <Card className="surface-premium rounded-[2rem]">
+                <Card className="surface-premium rounded-4xl">
                   <CardContent className="p-6 sm:p-7">
                     <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr]">
                       <div>
