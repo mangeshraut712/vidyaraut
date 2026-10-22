@@ -66,7 +66,7 @@ export default function ProjectsPage() {
                 {...fadeInUp}
                 transition={{ ...fadeInUp.transition, delay: 0.06 * index }}
               >
-                <Card className="surface-premium h-full rounded-[2rem]">
+                <Card className="surface-premium h-full rounded-4xl">
                   <CardContent className="p-6">
                     <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                       <Icon className="h-5 w-5" />
@@ -92,7 +92,7 @@ export default function ProjectsPage() {
         </div>
 
         <motion.div {...fadeInUp} className="mt-16">
-          <Card className="surface-soft rounded-[2rem]">
+          <Card className="surface-soft rounded-4xl">
             <CardContent className="p-6 sm:p-7">
               <div className="mb-8 max-w-2xl">
                 <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">

@@ -45,7 +45,7 @@ export function Timeline({ items, title, icon: Icon }: TimelineProps) {
             transition={{ delay: index * 0.1 }}
             className="relative flex flex-col group max-w-4xl"
           >
-            <div className="absolute -left-[30px] md:-left-[43px] flex items-center justify-center w-[18px] h-[18px] rounded-full border border-foreground/30 bg-background shadow-xs shrink-0 z-10 transition-colors duration-300 group-hover:border-foreground" />
+            <div className="absolute left-[-30px] md:left-[-43px] flex items-center justify-center w-[18px] h-[18px] rounded-full border border-foreground/30 bg-background shadow-2xs shrink-0 z-10 transition-colors duration-300 group-hover:border-foreground" />
             
             <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6 mb-4">
               <h3 className="font-display text-2xl font-medium text-foreground group-hover:text-foreground/80 transition-colors">

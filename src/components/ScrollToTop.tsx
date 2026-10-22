@@ -101,7 +101,7 @@ export function ScrollToTop() {
 
                         {/* Center button */}
                         <span className="absolute inset-0 flex items-center justify-center">
-                            <span className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white shadow-lg group-hover:shadow-primary/30 transition-shadow">
+                            <span className="w-9 h-9 rounded-full bg-linear-to-br from-primary to-blue-600 flex items-center justify-center text-white shadow-lg group-hover:shadow-primary/30 transition-shadow">
                                 <ArrowUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
                             </span>
                         </span>

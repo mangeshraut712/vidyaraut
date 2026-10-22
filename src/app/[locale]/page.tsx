@@ -237,7 +237,7 @@ export default function PortfolioPage() {
                 <div className="absolute -inset-4 md:-inset-6 bg-border/5 scale-95 opacity-0 transition-opacity duration-700 group-hover:opacity-100 group-hover:scale-100" />
                 
                 {/* Sophisticated editorial frame */}
-                <div className="relative aspect-[3/4] md:aspect-[4/5] overflow-hidden bg-secondary w-full object-cover">
+                <div className="relative aspect-3/4 md:aspect-4/5 overflow-hidden bg-secondary w-full object-cover">
                   {/* The inner frame border */}
                   <div className="absolute inset-x-2 md:inset-x-4 inset-y-2 md:inset-y-4 border border-foreground/10 z-20 pointer-events-none" />
                   
@@ -557,7 +557,7 @@ export default function PortfolioPage() {
                 description={t("contact.description")}
                 align="center"
               />
-              <Card className="rounded-[2rem] border-border bg-card shadow-sm">
+              <Card className="rounded-4xl border-border bg-card shadow-xs">
                 <CardContent className="grid gap-6 p-6 sm:grid-cols-[1fr_auto] sm:items-end">
                   <div className="space-y-4">
                     <div className="space-y-2">

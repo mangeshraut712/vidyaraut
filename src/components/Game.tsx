@@ -92,7 +92,7 @@ export function Game() {
           transition={{ ...fadeInUp.transition, delay: 0.08 }}
           className="grid gap-6 xl:grid-cols-[1.08fr_0.92fr] xl:items-start"
         >
-          <Card className="surface-premium overflow-hidden rounded-[2rem]">
+          <Card className="surface-premium overflow-hidden rounded-4xl">
             <CardContent className="p-6 sm:p-8">
               <div className="flex flex-wrap items-start justify-between gap-5">
                 <div className="max-w-2xl">
@@ -178,7 +178,7 @@ export function Game() {
             </CardContent>
           </Card>
 
-          <Card className="surface-soft rounded-[2rem]">
+          <Card className="surface-soft rounded-4xl">
             <CardContent className="p-6 sm:p-7">
               <p className="text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
                 Puzzle Helper

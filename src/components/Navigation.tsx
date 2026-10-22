@@ -101,7 +101,7 @@ export function Navigation() {
       className={cn(
         "fixed left-0 right-0 top-0 z-50 transition-all duration-300 border-b",
         scrolled || !isHomePage
-          ? "border-border bg-background shadow-sm"
+          ? "border-border bg-background shadow-xs"
           : "border-transparent bg-transparent"
       )}
     >
@@ -121,7 +121,7 @@ export function Navigation() {
                 className="object-cover transition-transform group-hover:scale-110"
               />
             </div>
-            <div className="block min-w-0 max-w-[15rem] md:max-w-[19rem] lg:max-w-[24rem]">
+            <div className="block min-w-0 max-w-60 md:max-w-76 lg:max-w-[24rem]">
               <p className="truncate text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
                 Vidya Raut
               </p>

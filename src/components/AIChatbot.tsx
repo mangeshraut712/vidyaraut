@@ -472,7 +472,7 @@ export function AIChatbot() {
             className="fixed bottom-4 left-3 right-3 top-20 w-auto sm:bottom-6 sm:left-auto sm:right-6 sm:top-24 sm:w-[420px] md:w-[460px]"
             style={{ position: "fixed", zIndex: 99998, isolation: "isolate" }}
           >
-            <div className="surface-premium flex h-full min-h-0 flex-col overflow-hidden rounded-[2rem] shadow-sm border border-border/60 bg-background">
+            <div className="surface-premium flex h-full min-h-0 flex-col overflow-hidden rounded-4xl shadow-xs border border-border/60 bg-background">
               <div className="border-b border-border/60 bg-foreground px-3 py-3 text-background sm:px-4 sm:py-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex min-w-0 flex-1 items-start gap-3">
@@ -536,10 +536,10 @@ export function AIChatbot() {
                     <motion.div
                       initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="rounded-[1.75rem] border border-border/70 bg-background px-4 py-4 shadow-sm sm:px-5 sm:py-5"
+                      className="rounded-[1.75rem] border border-border/70 bg-background px-4 py-4 shadow-xs sm:px-5 sm:py-5"
                     >
                       <div className="flex items-start gap-3">
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary text-white shadow-sm sm:h-11 sm:w-11">
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary text-white shadow-xs sm:h-11 sm:w-11">
                           <Bot className="h-4 w-4 sm:h-5 sm:w-5" />
                         </div>
                         <div className="min-w-0 flex-1">
@@ -584,14 +584,14 @@ export function AIChatbot() {
                       )}
                     >
                       {message.role === "assistant" && (
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-sm">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-xs">
                           <Bot className="h-5 w-5" />
                         </div>
                       )}
 
                       <div
                         className={cn(
-                          "max-w-[85%] rounded-2xl p-3.5 text-sm shadow-sm",
+                          "max-w-[85%] rounded-2xl p-3.5 text-sm shadow-xs",
                           message.role === "user"
                             ? "rounded-br-sm bg-foreground text-background"
                             : "rounded-bl-sm border border-border/60 bg-background text-foreground"
@@ -622,7 +622,7 @@ export function AIChatbot() {
                       </div>
 
                       {message.role === "user" && (
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border/50 bg-secondary text-foreground shadow-sm">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-border/50 bg-secondary text-foreground shadow-xs">
                           <User className="h-5 w-5" />
                         </div>
                       )}
@@ -635,7 +635,7 @@ export function AIChatbot() {
                       animate={{ opacity: 1, y: 0 }}
                       className="flex w-full gap-3"
                     >
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-foreground text-background shadow-sm">
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-foreground text-background shadow-xs">
                         <Bot className="h-5 w-5" />
                       </div>
                       <div className="rounded-2xl rounded-bl-sm border border-border/60 bg-background">
@@ -704,7 +704,7 @@ export function AIChatbot() {
                       onKeyDown={handleKeyDown}
                       placeholder={activeAgent.placeholder}
                       rows={1}
-                      className="flex-1 resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus:border-foreground/50 focus:outline-none focus:ring-1 focus:ring-foreground/50 transition-all"
+                      className="flex-1 resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus:border-foreground/50 focus:outline-hidden focus:ring-1 focus:ring-foreground/50 transition-all"
                     />
                     {isDictationSupported && (
                       <Button
@@ -727,7 +727,7 @@ export function AIChatbot() {
                       type="submit"
                       size="default"
                       disabled={!input.trim() || isTyping}
-                      className="h-11 min-w-[96px] rounded-xl bg-foreground px-4 text-background shadow-sm transition-all hover:opacity-90 disabled:opacity-50"
+                      className="h-11 min-w-[96px] rounded-xl bg-foreground px-4 text-background shadow-xs transition-all hover:opacity-90 disabled:opacity-50"
                       aria-label="Send message"
                     >
                       <Send className="mr-2 h-4 w-4" />

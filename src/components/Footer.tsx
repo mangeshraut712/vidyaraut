@@ -48,7 +48,7 @@ export function Footer() {
       <div className="container relative mx-auto max-w-6xl grid gap-10 px-6 md:px-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-start">
         <div className="max-w-xl">
           <div className="mb-6 flex items-center gap-4">
-            <div className="relative h-12 w-12 overflow-hidden rounded-2xl border border-foreground/10 bg-background shadow-sm transition-colors hover:border-foreground/30">
+            <div className="relative h-12 w-12 overflow-hidden rounded-2xl border border-foreground/10 bg-background shadow-xs transition-colors hover:border-foreground/30">
               <Image
                 src="/logo.png"
                 alt="Vidya Raut logo"
