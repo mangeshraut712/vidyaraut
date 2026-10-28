@@ -206,7 +206,7 @@ export default function PortfolioPage() {
                   variant="outline"
                   className="rounded-none border-border bg-background px-10 hover:bg-secondary hover:border-foreground/20 transition-all h-14 text-sm tracking-wide font-medium"
                 >
-                  <a href={withBasePath("/Vidya_Raut_Resume.pdf")} target="_blank" rel="noopener noreferrer">
+                  <a href={withBasePath("/Vidya_Raut_Resume.md")} target="_blank" rel="noopener noreferrer">
                     <Download className="mr-2.5 h-4 w-4" />
                     {t("hero.downloadResume")}
                   </a>
@@ -242,7 +242,7 @@ export default function PortfolioPage() {
                   <div className="absolute inset-x-2 md:inset-x-4 inset-y-2 md:inset-y-4 border border-foreground/10 z-20 pointer-events-none" />
                   
                   <Image
-                    src="/home picture.jpeg"
+                    src={withBasePath("/home picture.jpeg")}
                     alt="Vidya Raut"
                     fill
                     className="object-cover object-[center_top] scale-100 transition-transform group-hover:scale-105"

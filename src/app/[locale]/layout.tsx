@@ -7,6 +7,9 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { isLocale, locales } from "@/i18n/config";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
+
+const socialImageUrl = `${SITE_URL}/home%20picture.jpeg`;
 
 // Generate static params for all supported locales
 export function generateStaticParams() {
@@ -45,11 +48,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description,
       locale: locale === 'en' ? 'en_US' : locale === 'hi' ? 'hi_IN' : 'mr_IN',
       type: 'website',
+      images: [
+        {
+          url: socialImageUrl,
+          width: 1200,
+          height: 630,
+          alt: "Vidya Raut - Energy Technology Analyst",
+        },
+      ],
     },
     twitter: {
       title,
       description,
       card: 'summary_large_image',
+      images: [socialImageUrl],
     },
   };
 }

@@ -14,6 +14,8 @@ import "@fontsource/cormorant-garamond/700.css";
 import { BASE_PATH, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
+const socialImageUrl = `${SITE_URL}/home%20picture.jpeg`;
+
 // Viewport configuration - separated in Next.js 14+
 export const viewport: Viewport = {
   width: "device-width",
@@ -71,7 +73,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og-image.png",
+        url: socialImageUrl,
         width: 1200,
         height: 630,
         alt: "Vidya Raut - Energy Technology Analyst",
@@ -83,7 +85,7 @@ export const metadata: Metadata = {
     title: "Vidya Raut | Energy Technology & Market Analyst",
     description:
       "Energy Technology Analyst specializing in market research, data analysis, and energy storage systems.",
-    images: ["/og-image.png"],
+    images: [socialImageUrl],
     creator: "@vidyaraut",
   },
   robots: {
