@@ -22,6 +22,7 @@ import {
   X,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { withBasePath } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 export function Navigation() {
@@ -49,7 +50,9 @@ export function Navigation() {
   ]
 
   const getSectionHref = (href: string) =>
-    isHomePage || !href.startsWith("#") ? href : `/${currentLocale}${href}`
+    isHomePage || !href.startsWith("#")
+      ? href
+      : withBasePath(`/${currentLocale}${href}`)
 
   const switchLanguage = (newLocale: string) => {
     const segments = pathname.split("/")
@@ -114,7 +117,7 @@ export function Navigation() {
           >
             <div className="relative h-10 w-10 overflow-hidden border border-foreground/10 bg-background">
               <Image
-                src="/logo.png"
+                src={withBasePath("/logo.png")}
                 alt="VR"
                 width={40}
                 height={40}
