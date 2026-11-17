@@ -4,6 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Github, Linkedin, Mail } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { withBasePath } from "@/lib/site"
 import { useLocale, useTranslations } from "next-intl"
 
 const CURRENT_YEAR = new Date().getFullYear()
@@ -50,7 +51,7 @@ export function Footer() {
           <div className="mb-6 flex items-center gap-4">
             <div className="relative h-12 w-12 overflow-hidden rounded-2xl border border-foreground/10 bg-background shadow-xs transition-colors hover:border-foreground/30">
               <Image
-                src="/logo.png"
+                src={withBasePath("/logo.png")}
                 alt="Vidya Raut logo"
                 fill
                 sizes="48px"
