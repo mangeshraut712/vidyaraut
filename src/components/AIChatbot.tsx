@@ -141,7 +141,9 @@ function renderMarkdown(text: string) {
     let href: string | null = null
     if (linkMatch) {
       try {
-        const url = new URL(linkMatch[2], "https://example.invalid")
+        // No base URL: a relative target like "#home" or "/en/skills" must not
+        // become a link to the placeholder host. Only absolute http(s) links render.
+        const url = new URL(linkMatch[2])
         if (url.protocol === "http:" || url.protocol === "https:") href = url.href
       } catch {
         href = null
