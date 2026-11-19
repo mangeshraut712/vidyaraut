@@ -61,3 +61,17 @@ test('header section links on locale subpages retain the static-site base path',
     'the Home section link should not resolve from the domain root',
   )
 })
+
+test('the sitemap lists every localized page and no fragment URLs', async () => {
+  const sitemap = await readFile(new URL('../out/sitemap.xml', import.meta.url), 'utf8')
+
+  assert.ok(!/<loc>[^<]*#/.test(sitemap), 'fragments are not separate pages for crawlers')
+  for (const locale of ['en', 'hi', 'mr']) {
+    for (const page of ['', '/skills', '/projects', '/certifications', '/game']) {
+      assert.ok(
+        sitemap.includes(`<loc>${siteUrl}/${locale}${page}</loc>`),
+        `the sitemap should list /${locale}${page}`,
+      )
+    }
+  }
+})
