@@ -47,6 +47,9 @@ jobs:
       - name: Unit tests
         run: node --test tests/assistant-agents.test.mjs
 
+      - name: Translation catalog check
+        run: node --test tests/i18n-messages.test.mjs
+
       - name: Build
         run: npm run build
 
