@@ -146,5 +146,5 @@ export const assistantAgentMap = Object.fromEntries(
 ) as Record<AssistantAgentId, AssistantAgent>;
 
 export function isAssistantAgentId(value: string): value is AssistantAgentId {
-  return value in assistantAgentMap;
+  return Object.prototype.hasOwnProperty.call(assistantAgentMap, value);
 }

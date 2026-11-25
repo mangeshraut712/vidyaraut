@@ -75,3 +75,15 @@ test('the sitemap lists every localized page and no fragment URLs', async () => 
     }
   }
 })
+
+test('isAssistantAgentId rejects inherited Object.prototype keys', async () => {
+  const source = await readFile(new URL('../src/lib/assistant-agents.ts', import.meta.url), 'utf8')
+  const match = source.match(/function isAssistantAgentId\([^)]*\)[^{]*\{\s*return ([^;]+);?\s*\}/)
+  assert.ok(match, 'isAssistantAgentId should be a single return expression')
+  const assistantAgentMap = { portfolio: {}, market: {}, opportunity: {}, puzzle: {} }
+  const isAssistantAgentId = new Function('assistantAgentMap', 'value', `return ${match[1]}`).bind(null, assistantAgentMap)
+  assert.equal(isAssistantAgentId('market'), true)
+  for (const value of ['constructor', 'toString', '__proto__', 'hasOwnProperty']) {
+    assert.equal(isAssistantAgentId(value), false, `${value} is not an agent id`)
+  }
+})
