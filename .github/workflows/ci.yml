@@ -44,6 +44,9 @@ jobs:
       - name: Type check
         run: npm run type-check
 
+      - name: Unit tests
+        run: node --test tests/assistant-agents.test.mjs
+
       - name: Build
         run: npm run build
 
