@@ -13,6 +13,8 @@ const locales = ['en', 'hi', 'mr']
 // `t.raw(...)` call cannot be exercised in a page yet left unchecked here.
 const MISSING = Symbol('missing')
 
+const appDir = fileURLToPath(new URL('../src/app/', import.meta.url))
+
 async function listSourceFiles(dir) {
   const entries = await readdir(dir, { withFileTypes: true })
   const files = await Promise.all(
@@ -24,28 +26,45 @@ async function listSourceFiles(dir) {
   return files.flat()
 }
 
-const appDir = fileURLToPath(new URL('../src/app/', import.meta.url))
+// `useTranslations("ns")` scopes `t`, so `t.raw("a.b")` refers to the full key
+// `ns.a.b`. With no namespace the literal is already the full key. A file may
+// declare more than one namespace, so each call is resolved against the nearest
+// preceding `useTranslations` rather than a single file-wide namespace.
+const USE_TRANSLATIONS = /\buseTranslations(?:\s*<[^>]*>)?\(\s*(?:['"]([^'"]*)['"]\s*)?\)/g
+const RAW_CALL = /\b(\w+)\.raw\(\s*(['"`])([^'"`]+)\2\s*\)/g
 
-// `useTranslations("ns")` scopes `t`, so `t.raw("a.b")` inside it refers to the
-// full key `ns.a.b`. With no namespace the literal is already the full key.
 function rawStringArrayKeysIn(source) {
-  const namespace = source.match(/useTranslations\(\s*['"]([^'"]+)['"]\s*\)/)?.[1]
+  const declarations = [...source.matchAll(USE_TRANSLATIONS)].map((match) => ({
+    index: match.index,
+    name: source.slice(0, match.index).match(/(\w+)\s*=\s*$/)?.[1],
+    namespace: match[1] ?? ''
+  }))
+
   const keys = new Set()
-  for (const match of source.matchAll(/\braw\(\s*['"]([^'"]+)['"]\s*\)\s+as\s+string\[\]/g)) {
-    keys.add(namespace ? `${namespace}.${match[1]}` : match[1])
+  for (const match of source.matchAll(RAW_CALL)) {
+    // i18n keys must be static. A template literal is treated as an error rather
+    // than skipped, so a dynamic key cannot slip past this test unnoticed.
+    assert.notEqual(
+      match[2],
+      '`',
+      `t.raw() with a template literal cannot be checked statically: ${match[0]}`
+    )
+    const scope = declarations.filter((decl) => decl.index < match.index && decl.name === match[1]).pop()
+    keys.add(scope?.namespace ? `${scope.namespace}.${match[3]}` : match[3])
   }
   return keys
 }
 
-async function rawStringArrayKeysUsedInSource() {
-  const files = await listSourceFiles(appDir)
-  const sources = await Promise.all(files.filter((f) => /\.tsx$/.test(f)).map((f) => readFile(f, 'utf8')))
-  const keys = new Set()
-  for (const source of sources) {
-    for (const key of rawStringArrayKeysIn(source)) keys.add(key)
+// Returns, per file, the raw keys it uses, so every test reads each file once.
+async function rawStringArrayKeysByFile() {
+  const files = (await listSourceFiles(appDir)).filter((file) => /\.tsx$/.test(file))
+  const result = new Map()
+  for (const file of files) {
+    const keys = rawStringArrayKeysIn(await readFile(file, 'utf8'))
+    if (keys.size > 0) result.set(file, keys)
   }
-  assert.ok(keys.size > 0, 'expected at least one t.raw(...) as string[] call in src/app')
-  return keys
+  assert.ok(result.size > 0, 'expected at least one t.raw(...) call in src/app')
+  return result
 }
 
 async function loadMessages(locale) {
@@ -56,17 +75,18 @@ async function loadMessages(locale) {
 // Records the value type at every key path. Arrays are described by their
 // element shape so that a change from `string[]` to `object[]`, or a change in
 // the keys of those objects, is a visible difference rather than both "array".
+// JSON cannot contain cycles, so no reference tracking is needed here.
 function describeArray(items) {
   if (items.length === 0) return '[]'
   if (items.every((item) => typeof item === 'string')) return 'string[]'
   if (items.every((item) => item !== null && typeof item === 'object' && !Array.isArray(item))) {
-    const shapes = new Set(items.map((item) => describeShape(item, new Set())))
+    const shapes = new Set(items.map((item) => describeShape(item)))
     return `object[]{${[...shapes].sort().join(',')}}`
   }
   return 'array'
 }
 
-function describeShape(value, seen) {
+function describeShape(value) {
   return Object.keys(value)
     .sort()
     .map((key) => `${key}:${typeof value[key]}`)
@@ -113,35 +133,21 @@ test('every locale defines the same message keys and value types as English', as
   }
 })
 
-test('keys consumed via t.raw() as string[] are non-empty string arrays in every locale', async () => {
-  const keys = [...(await rawStringArrayKeysUsedInSource())].sort()
+test('every t.raw(...) key in the source is a non-empty string array in every locale', async () => {
+  const keysByFile = await rawStringArrayKeysByFile()
   const messagesByLocale = Object.fromEntries(
     await Promise.all(locales.map(async (locale) => [locale, await loadMessages(locale)]))
   )
 
-  for (const locale of locales) {
+  for (const [file, keys] of keysByFile) {
     for (const key of keys) {
-      const value = getMessage(messagesByLocale[locale], key)
-      assert.ok(
-        value !== MISSING && Array.isArray(value) && value.length > 0 && value.every((item) => typeof item === 'string'),
-        `${locale}.json should define ${key} (used as t.raw(...) as string[]) as a non-empty string array`
-      )
-    }
-  }
-})
-
-test('the source and the catalogs agree on which keys exist', async () => {
-  // Guards the extraction itself: if namespace resolution ever breaks, this is
-  // where it shows up, instead of the previous test silently checking nothing.
-  const files = (await listSourceFiles(appDir)).filter((f) => /\.tsx$/.test(f))
-  const english = await loadMessages('en')
-  for (const file of files) {
-    const source = await readFile(file, 'utf8')
-    for (const key of rawStringArrayKeysIn(source)) {
-      assert.ok(
-        getMessage(english, key) !== MISSING,
-        `${relative(process.cwd(), file)} uses t.raw("${key}"), which en.json does not define`
-      )
+      for (const locale of locales) {
+        const value = getMessage(messagesByLocale[locale], key)
+        assert.ok(
+          value !== MISSING && Array.isArray(value) && value.length > 0 && value.every((item) => typeof item === 'string'),
+          `${relative(process.cwd(), file)} uses t.raw("${key}"), but ${locale}.json does not define it as a non-empty string array`
+        )
+      }
     }
   }
 })
