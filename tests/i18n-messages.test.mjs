@@ -30,18 +30,30 @@ async function listSourceFiles(dir) {
 // `ns.a.b`. With no namespace the literal is already the full key. A file may
 // declare more than one namespace, so each call is resolved against the nearest
 // preceding `useTranslations` rather than a single file-wide namespace.
-const USE_TRANSLATIONS = /\buseTranslations(?:\s*<[^>]*>)?\(\s*(?:['"]([^'"]*)['"]\s*)?\)/g
+const USE_TRANSLATIONS = /\b(?:useTranslations|getTranslations)(?:\s*<[^>]*>)?\(\s*(?:['"]([^'"]*)['"]\s*)?\)/g
 const RAW_CALL = /\b(\w+)\.raw\(\s*(['"`])([^'"`]+)\2\s*\)/g
 
 function rawStringArrayKeysIn(source) {
-  const declarations = [...source.matchAll(USE_TRANSLATIONS)].map((match) => ({
-    index: match.index,
-    name: source.slice(0, match.index).match(/(\w+)\s*=\s*$/)?.[1],
-    namespace: match[1] ?? ''
-  }))
+  const translators = []
+  for (const match of source.matchAll(USE_TRANSLATIONS)) {
+    const name = source.slice(0, match.index).match(/(\w+)\s*=\s*(?:await\s+)?$/)?.[1]
+    // If the binding cannot be recognised, the translator's keys would be
+    // skipped silently. Fail instead, so an unsupported pattern is never a
+    // quiet gap in coverage.
+    assert.ok(
+      name,
+      `could not determine which variable holds the translator in: ${match[0].trim()}. Update the test's binding pattern.`
+    )
+    translators.push({ index: match.index, name, namespace: match[1] ?? '' })
+  }
 
   const keys = new Set()
   for (const match of source.matchAll(RAW_CALL)) {
+    // Only an identifier bound to a translator is one. Any other `.raw()` method
+    // (response.raw, markdown.raw, ...) is unrelated to i18n and is ignored.
+    const scope = translators.filter((t) => t.index < match.index && t.name === match[1]).pop()
+    if (!scope) continue
+
     // i18n keys must be static. A template literal is treated as an error rather
     // than skipped, so a dynamic key cannot slip past this test unnoticed.
     assert.notEqual(
@@ -49,8 +61,7 @@ function rawStringArrayKeysIn(source) {
       '`',
       `t.raw() with a template literal cannot be checked statically: ${match[0]}`
     )
-    const scope = declarations.filter((decl) => decl.index < match.index && decl.name === match[1]).pop()
-    keys.add(scope?.namespace ? `${scope.namespace}.${match[3]}` : match[3])
+    keys.add(scope.namespace ? `${scope.namespace}.${match[3]}` : match[3])
   }
   return keys
 }
