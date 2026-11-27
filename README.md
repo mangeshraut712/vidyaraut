@@ -3,10 +3,10 @@
 <div align="center">
 
 ![CI](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?logo=githubactions)
-![Next.js](https://img.shields.io/badge/Next.js-16.1-black?logo=next.js)
+![Next.js](https://img.shields.io/badge/Next.js-16.4-black?logo=next.js)
 ![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?logo=tailwindcss)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.3-06B6D4?logo=tailwindcss)
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-11-FF0050?logo=framer)
 ![FastAPI](https://img.shields.io/badge/FastAPI-Optional-009688?logo=fastapi)
 ![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub_Pages-222?logo=github)
@@ -62,16 +62,16 @@
 
 | Category | Technology | Version / Notes |
 |----------|------------|-----------------|
-| **Framework** | Next.js App Router | 16.1.x |
+| **Framework** | Next.js App Router | 16.4.x |
 | **UI Library** | React | 19.2.x |
 | **React Compiler** | Next.js integrated support | enabled |
 | **Language** | TypeScript | 5.7.x |
-| **Styling** | Tailwind CSS | 3.4.x |
+| **Styling** | Tailwind CSS | 4.3.x |
 | **Animations** | Framer Motion | 11.x |
 | **i18n** | next-intl | 4.5.x |
 | **Theme** | next-themes | 0.4.x |
 | **Routing / Locale Flow** | App Router + next-intl (no middleware; static export) | locale-aware |
-| **Forms / Validation** | react-hook-form + Zod | 7.x / 3.x |
+| **Forms / Validation** | react-hook-form + Zod | 7.x / 4.x |
 | **UI Primitives** | Radix UI | multiple packages |
 | **State / Helpers** | Zustand, CVA, clsx | lightweight usage |
 | **Backend (optional)** | FastAPI + httpx + uvicorn | Python service |
